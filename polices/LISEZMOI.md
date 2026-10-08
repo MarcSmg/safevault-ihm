@@ -1,8 +1,8 @@
 # Polices de la maquette SafeVault
 
-Les polices employees par `maquette-safevault.html`. Le fichier HTML les
-embarque deja en base64 et se suffit a lui-meme ; elles sont posees ici comme
-sources, pour archive et pour toute reprise.
+Les polices de SafeVault. L'application les lit ici (`src/styles/polices.css`)
+et `npm run maquette` les embarque en base64 dans `maquette-safevault.html`,
+qui se suffit alors a lui-meme.
 
 ## Wura mi by GemmaS
 
@@ -20,4 +20,6 @@ Licence dans `OFL-WuraMi.txt`.
 
 ## William Narasi
 
-`WilliamNarasi.woff2`, graisse 400. Ne sert qu'a la signature du pied de page.
+`WilliamNarasi.woff2`, graisse 400. Servait a la signature du pied de page de
+la premiere maquette ; l'interface actuelle ne l'emploie plus. Gardee pour
+archive.

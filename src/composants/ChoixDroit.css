@@ -1,0 +1,97 @@
+/* Les deux cartes s empilent sur un telephone, se rangent cote a cote des
+   que la place le permet. */
+.choix-cartes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+/* La carte de choix : du verre, qui prend l ocean une fois retenue
+   (voir .verre[aria-checked] dans styles/verre.css). */
+.choix-carte {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.05rem;
+  border: none;
+  border-radius: 16px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.choix-carte:focus-visible { outline: 2px solid var(--ocean); outline-offset: 2px; }
+
+.choix-icone {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 11px;
+  background: hsl(0 0% 100% / 0.3);
+  color: var(--discret);
+  transition: background 0.25s var(--courbe), color 0.25s var(--courbe);
+}
+.choix-icone svg { width: 1.2rem; height: 1.2rem; }
+.choix-carte[aria-checked='true'] .choix-icone { background: var(--ocean); color: #fff; }
+
+.choix-textes { flex: 1; min-width: 0; }
+.choix-texte { display: block; font-weight: 600; font-size: 0.92rem; }
+.choix-detail { display: block; margin-top: 0.1rem; color: var(--discret); font-size: 0.8rem; }
+
+/* Le point radio, qui devient une coche une fois choisi. */
+.choix-pastille {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px hsl(229 20% 70%);
+  color: #fff;
+  transition: background 0.25s var(--courbe), box-shadow 0.25s var(--courbe);
+}
+.choix-pastille svg { width: 0.8rem; height: 0.8rem; }
+.choix-carte[aria-checked='true'] .choix-pastille { background: var(--ocean); box-shadow: none; }
+
+/* Les durees : des pastilles de verre, une seule retenue. */
+.pastilles { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+
+.pastille {
+  padding: 0.65rem 1.05rem;
+  border: none;
+  border-radius: 12px;
+  color: var(--discret);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.pastille:focus-visible { outline: 2px solid var(--ocean); outline-offset: 2px; }
+.pastille[aria-checked='true'] { color: var(--ocean); }
+
+/* Sur ces controles, l arete du verre ne court pas apres le pointeur : un
+   contour blanc qui bouge autour d un choix brouille la lecture. Il reste un
+   filet fixe, a peine plus clair au survol, et l onde a la surface. */
+.choix-carte::before,
+.pastille::before {
+  --angle: 315deg;
+  opacity: 0.45;
+  transition: opacity 0.3s var(--courbe);
+}
+.choix-carte[aria-checked='true']::before,
+.pastille[aria-checked='true']::before { opacity: 0; }
+
+@media (hover: hover) {
+  .pastille:hover { color: var(--texte); }
+  .pastille[aria-checked='true']:hover { color: var(--ocean); }
+  .choix-carte:hover:not([aria-checked='true'])::before,
+  .pastille:hover:not([aria-checked='true'])::before { opacity: 0.7; }
+}
+
+@media (min-width: 520px) {
+  .choix-cartes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

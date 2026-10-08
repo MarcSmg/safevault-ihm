@@ -1,0 +1,8 @@
+.securite {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--discret);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}

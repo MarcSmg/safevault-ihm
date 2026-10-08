@@ -1,0 +1,150 @@
+.apercu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  min-width: 0;
+}
+
+.apercu-tete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2rem;
+}
+.apercu-titre { font-weight: 600; font-size: 0.92rem; }
+
+/* Le cadre : une feuille posee sous un verre. */
+.apercu-cadre {
+  overflow: hidden auto;
+  aspect-ratio: 3 / 4;
+  max-height: min(560px, 70vh);
+  width: 100%;
+  border-radius: 18px;
+  background: var(--secondaire);
+  box-shadow:
+    inset 0 0 0 1px hsl(0 0% 100% / 0.7),
+    0 0 0 0.5px hsl(0 0% 0% / 0.1),
+    0 18px 40px -22px hsl(229 40% 25% / 0.4);
+  animation: apercu-entree 0.45s var(--courbe);
+}
+
+@keyframes apercu-entree {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Les pages du PDF, l une sous l autre, comme des feuilles. */
+.apercu-pages { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.6rem; }
+.apercu-page {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 0 0.5px hsl(0 0% 0% / 0.1), 0 4px 12px -6px hsl(229 40% 25% / 0.3);
+}
+/* La feuille qui tient la place du document pendant qu il se prepare. */
+.apercu-page[data-attente='true'] {
+  aspect-ratio: 210 / 297;
+  background: linear-gradient(100deg, #fff 30%, hsl(229 40% 96%) 50%, #fff 70%) 0 0 / 300% 100%;
+  animation: page-attente 1.4s linear infinite;
+}
+@keyframes page-attente {
+  from { background-position: 100% 0; }
+  to   { background-position: 0 0; }
+}
+
+/* Les feuilles d un document Word, composees par docx-preview. */
+.apercu-word > section {
+  margin: 0 0 14px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 0 0.5px hsl(0 0% 0% / 0.1), 0 5px 14px -7px hsl(229 40% 25% / 0.3);
+  overflow: hidden;
+}
+.apercu-word > section:last-child { margin-bottom: 0; }
+
+.apercu-attente,
+.apercu-suite { margin: 0; padding: 1.25rem; color: var(--discret); font-size: 0.88rem; text-align: center; }
+.apercu-suite { padding-top: 0.25rem; }
+.apercu-cadre img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+.apercu-vide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  height: 100%;
+  padding: 1.5rem;
+  color: var(--discret);
+  text-align: center;
+}
+.apercu-vide svg { width: 2.2rem; height: 2.2rem; }
+.apercu-vide p { margin: 0; font-size: 0.9rem; line-height: 1.5; }
+.apercu-vide b { display: block; color: var(--texte); font-weight: 600; }
+
+/* En grand. Sur un telephone, l apercu prend tout l ecran ; plus large,
+   c est une feuille au centre, le reste de la page sous un voile. */
+.apercu-grand {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0;
+  background: hsl(229 36% 95%);
+  color: inherit;
+}
+.apercu-grand[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: grand-entree 0.28s var(--courbe);
+}
+/* Un voile uni : flouter tout l ecran coute cher et retarde l ouverture. */
+.apercu-grand::backdrop { background: hsl(229 30% 20% / 0.42); }
+
+@keyframes grand-entree {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.apercu-grand-tete { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-left: 0.4rem; }
+.apercu-grand-nom { min-width: 0; overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.apercu-grand-cadre {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  border-radius: 14px;
+  background: var(--secondaire);
+}
+.apercu-grand-cadre .apercu-pages { max-width: 820px; margin: 0 auto; padding: 0.6rem; gap: 0.75rem; }
+.apercu-grand-cadre img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+@media (min-width: 700px) {
+  .apercu-grand {
+    width: min(960px, 94vw);
+    height: 92vh;
+    margin: auto;
+    padding: 0.9rem;
+    border-radius: 26px;
+    background: hsl(229 36% 96% / 0.94);
+    box-shadow:
+      inset 0 1px 0.5px hsl(0 0% 100% / 0.9),
+      0 0 0 0.5px hsl(0 0% 0% / 0.1),
+      0 50px 100px -40px hsl(229 40% 15% / 0.6);
+  }
+  .apercu-grand-tete { padding-left: 0.6rem; }
+  .apercu-grand-cadre { border-radius: 16px; }
+  .apercu-grand-cadre .apercu-pages { padding: 1rem; gap: 1rem; }
+}
+
+/* A cote du formulaire, l apercu reste a l ecran pendant qu on defile. */
+@media (min-width: 1100px) {
+  .apercu { position: sticky; top: 1.5rem; }
+}

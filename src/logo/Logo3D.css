@@ -1,0 +1,14 @@
+.logo-3d {
+  flex: none;
+  /* En em : la scene suit la taille du nom auquel elle est accrochee. */
+  width: 3em;
+  aspect-ratio: 1;
+  /* En attendant le moteur 3D, une photo du trousseau tient sa place : le
+     logo est la des la premiere image, la 3D prend le relais ensuite. */
+  background: url('/modeles/trousseau.png') center / contain no-repeat;
+  cursor: grab;
+}
+.logo-3d:active { cursor: grabbing; }
+.logo-3d canvas { display: block; width: 100% !important; height: 100% !important; }
+
+.logo-3d[data-vivant='true'] { background-image: none; }

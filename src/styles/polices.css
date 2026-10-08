@@ -1,0 +1,34 @@
+/* Wura mi by GemmaS (instance d Outfit, OFL), quatre graisses, servie
+   depuis le dossier polices/ du depot : aucun service externe. */
+
+@font-face {
+  font-family: 'WuraMi';
+  src: url('../../polices/WuraMiByGemmaS-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WuraMi';
+  src: url('../../polices/WuraMiByGemmaS.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WuraMi';
+  src: url('../../polices/WuraMiByGemmaS-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WuraMi';
+  src: url('../../polices/WuraMiByGemmaS-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

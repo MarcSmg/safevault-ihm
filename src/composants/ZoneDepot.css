@@ -1,0 +1,85 @@
+.depot {
+  padding: 1.75rem 1rem;
+  border-radius: 22px;
+  /* Les pointilles, traces dans le verre. */
+  outline: 1.5px dashed hsl(229 25% 72%);
+  outline-offset: -10px;
+  text-align: center;
+  cursor: pointer;
+  transition: outline-color 0.2s var(--courbe), background 0.2s var(--courbe);
+}
+
+/* Le fichier survole la zone : elle repond avant meme le lacher. */
+.depot[data-survol='true'] {
+  outline-color: var(--ocean);
+  background: hsl(229 97% 55% / 0.1);
+}
+
+.depot .rond {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: hsl(0 0% 100% / 0.3);
+  box-shadow:
+    inset 0 1px 0.5px hsl(0 0% 100% / 0.9),
+    inset 0 -6px 8px -6px hsl(0 0% 100% / 0.6),
+    0 0 0 0.5px hsl(229 40% 30% / 0.1),
+    0 8px 20px -12px hsl(229 40% 25% / 0.35);
+}
+.depot .rond svg { width: 1.5rem; height: 1.5rem; color: var(--texte); overflow: visible; }
+
+/* La fleche tombe dans le bac et y rebondit, comme un document qu on y
+   laisse tomber, puis remonte et recommence. Les valeurs sont dans la grille
+   de l icone (24) : le bac, lui, ne bouge pas. */
+.depot .icone-fleche { animation: fleche-depot 2.6s infinite both; }
+.depot[data-survol='true'] .icone-fleche { animation-duration: 1.3s; }
+
+@keyframes fleche-depot {
+  0%   { transform: translateY(-3.5px); animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.45); }
+  24%  { transform: translateY(1.75px); animation-timing-function: cubic-bezier(0.1, 0.55, 0.45, 1); }
+  37%  { transform: translateY(-0.9px); animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.45); }
+  49%  { transform: translateY(1.75px); animation-timing-function: cubic-bezier(0.1, 0.55, 0.45, 1); }
+  57%  { transform: translateY(0.9px); animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.45); }
+  64%, 80% { transform: translateY(1.75px); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  100% { transform: translateY(-3.5px); }
+}
+
+.depot p { margin: 0; font-weight: 600; font-size: 1.05rem; }
+.depot .ou { margin: 0.4rem 0 1.1rem; color: var(--discret); font-size: 0.88rem; font-weight: 400; }
+
+.depot-textes { display: block; }
+
+/* Avec des documents deja la, la zone se fait petite. Sur un telephone, le
+   bouton passe sous le texte ; plus large, tout tient sur une ligne. */
+.depot[data-compacte='true'] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.3rem 1.4rem;
+  text-align: left;
+}
+.depot[data-compacte='true'] .rond { width: 2.75rem; height: 2.75rem; margin: 0; flex: none; }
+.depot[data-compacte='true'] .rond svg { width: 1.25rem; height: 1.25rem; }
+.depot[data-compacte='true'] .depot-textes { flex: 1; min-width: 0; }
+.depot[data-compacte='true'] p { font-size: 0.98rem; }
+.depot[data-compacte='true'] .ou { margin: 0.15rem 0 0; }
+.depot[data-compacte='true'] .bouton-verre { flex: 1 1 100%; }
+
+@media (hover: hover) {
+  .depot:hover { outline-color: hsl(229 35% 58%); }
+}
+
+@media (min-width: 640px) {
+  .depot { padding: clamp(2rem, 6vw, 3.25rem) 1.5rem; }
+  .depot[data-compacte='true'] { flex-wrap: nowrap; gap: 1rem; padding: 1.1rem 1.25rem; }
+  .depot[data-compacte='true'] .bouton-verre { flex: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depot .icone-fleche { animation: none; }
+}

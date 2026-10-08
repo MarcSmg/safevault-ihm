@@ -1,0 +1,17 @@
+.icone-fichier {
+  flex: none;
+  width: 2.35rem;
+  height: 2.75rem;
+  overflow: visible;
+  filter: drop-shadow(0 3px 5px hsl(229 40% 25% / 0.18));
+}
+
+.icone-fichier .feuille { fill: #fff; stroke: hsl(229 25% 62% / 0.7); stroke-width: 0.9; stroke-linejoin: round; }
+.icone-fichier .pli { fill: hsl(229 30% 90%); stroke: hsl(229 25% 62% / 0.7); stroke-width: 0.9; stroke-linejoin: round; }
+.icone-fichier .trait { fill: none; stroke: hsl(229 20% 68%); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.icone-fichier .texte { fill: #fff; font-family: inherit; font-size: 7.4px; font-weight: 700; letter-spacing: 0.04em; }
+
+.icone-fichier[data-genre='pdf'] .etiquette { fill: var(--erreur); }
+.icone-fichier[data-genre='word'] .etiquette { fill: var(--ocean); }
+.icone-fichier[data-genre='image'] .etiquette { fill: var(--limonade); }
+.icone-fichier[data-genre='image'] .texte { fill: var(--texte); }

@@ -1,0 +1,32 @@
+.reussite {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--limonade);
+  color: var(--texte);
+  animation: reussite-entree 0.5s var(--souple);
+}
+.reussite svg { width: 1.5rem; height: 1.5rem; }
+
+@keyframes reussite-entree {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: none; }
+}
+
+.recapitulatif {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--discret);
+  font-size: 0.92rem;
+}
+.recapitulatif li { display: flex; align-items: center; gap: 0.65rem; }
+.recapitulatif svg { flex: none; width: 1.05rem; height: 1.05rem; }
+.recapitulatif b { color: var(--texte); font-weight: 600; }

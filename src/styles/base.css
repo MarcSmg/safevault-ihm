@@ -1,0 +1,71 @@
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+
+/* La barre de defilement d e-freeshop : un filet de 5px, ocean. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(229 97% 55% / 0.6) transparent;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar { width: 5px; height: 5px; }
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track { background: transparent; }
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb { background: hsl(229 97% 55% / 0.6); border-radius: 9999px; }
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover { background: var(--ocean); }
+
+/* La meme barre, pour les zones qui defilent dans la page (l apercu). */
+.defilement-fin { scrollbar-width: thin; scrollbar-color: hsl(229 97% 55% / 0.6) transparent; }
+.defilement-fin::-webkit-scrollbar { width: 5px; height: 5px; }
+.defilement-fin::-webkit-scrollbar-track { background: transparent; }
+.defilement-fin::-webkit-scrollbar-thumb { background: hsl(229 97% 55% / 0.6); border-radius: 9999px; }
+.defilement-fin::-webkit-scrollbar-thumb:hover { background: var(--ocean); }
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: 'WuraMi', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* La page occupe toute la largeur : le logo au bord gauche, le profil au
+   bord droit, le formulaire entre les deux. */
+.scene {
+  position: relative;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: clamp(0.75rem, 2vw, 1.5rem) var(--marge) clamp(3rem, 8vw, 6rem);
+}
+
+/* Lu par les lecteurs d ecran, invisible a l oeil. */
+.visuellement-cache {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.pied {
+  margin-top: clamp(3rem, 8vw, 5rem);
+  color: var(--discret);
+  font-size: 0.8rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

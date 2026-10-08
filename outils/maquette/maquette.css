@@ -1,0 +1,98 @@
+/* Ce que la maquette statique ajoute aux styles de l application : le cadre
+   qui presente chaque ecran, les deux photos qui remplacent la 3D, et les
+   feuilles dessinees de l apercu. Tout le reste vient de src/, tel quel. */
+
+.maquette {
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(0.5rem, 2vw, 1.5rem) 0;
+}
+
+.maquette-tete {
+  max-width: 46rem;
+  margin: 0 auto clamp(1.75rem, 4vw, 3rem);
+  text-align: center;
+}
+.maquette-sur {
+  margin: 0;
+  color: var(--ocean);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.maquette-titre {
+  margin: 0.4rem 0 0;
+  font-weight: 600;
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.maquette-chapo {
+  margin: 0.75rem 0 0;
+  color: var(--discret);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-wrap: balance;
+}
+.maquette-liens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1rem;
+}
+.maquette-liens a {
+  color: var(--texte);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: hsl(229 97% 55% / 0.45);
+  text-underline-offset: 0.3em;
+}
+.maquette-liens a:hover,
+.maquette-liens a:focus-visible { color: var(--ocean); }
+
+/* Un ecran : la page de l application, entiere, dans un cadre fin qui porte
+   son numero et son adresse. */
+.ecran {
+  max-width: 1720px;
+  margin: 0 auto clamp(2rem, 5vw, 4rem);
+  border-radius: clamp(20px, 3vw, 36px);
+  box-shadow:
+    0 0 0 1px hsl(229 30% 40% / 0.14),
+    0 50px 90px -70px hsl(229 50% 20% / 0.45);
+  scroll-margin-top: 1rem;
+}
+.ecran-barre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.9rem;
+  margin: 0;
+  padding: 0.8rem clamp(1rem, 4vw, 1.75rem);
+  border-bottom: 1px solid hsl(229 30% 40% / 0.12);
+  font-size: 0.82rem;
+}
+.ecran-numero { font-weight: 600; }
+.ecran-adresse { color: var(--discret); }
+
+.maquette > .pied { margin: 0 0 2.5rem; text-align: center; }
+
+/* Les deux photos qui tiennent lieu de 3D : le trousseau du logo, et le
+   cadenas des documents scelles. Posees ici, elles ne sont embarquees qu une
+   fois (--photo-trousseau et --photo-cadenas sont ecrites par l assembleur). */
+.logo-3d {
+  background: var(--photo-trousseau) center / contain no-repeat;
+  cursor: default;
+}
+.cadenas-3d {
+  background: var(--photo-cadenas) center / contain no-repeat;
+  filter: drop-shadow(0 3px 4px hsl(229 60% 25% / 0.28));
+}
+
+/* Les feuilles du contrat, dans l apercu. Les mesures sont celles d une page
+   A4 en millimetres (viewBox 210 x 297). */
+.feuille-titre { fill: var(--texte); font-size: 11px; font-weight: 700; letter-spacing: -0.02em; }
+.feuille-sous { fill: var(--discret); font-size: 4.4px; }
+.feuille-article { fill: var(--texte); font-size: 5px; font-weight: 600; }
+.feuille-pied { fill: var(--discret); font-size: 4px; }
+.feuille-filet { fill: none; stroke: hsl(229 25% 85%); stroke-width: 0.4; }
+.feuille-lignes path { fill: none; stroke: hsl(229 20% 86%); stroke-width: 2.1; stroke-linecap: round; }
+.feuille-signature { fill: none; stroke: var(--ocean); stroke-width: 0.8; stroke-linecap: round; stroke-linejoin: round; }

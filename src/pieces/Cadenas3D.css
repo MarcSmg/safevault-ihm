@@ -1,0 +1,17 @@
+.cadenas-3d {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+}
+.cadenas-3d img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* L ombre de l objet pose sur le verre. */
+  filter: drop-shadow(0 3px 4px hsl(229 60% 25% / 0.28));
+}
+.cadenas-3d svg { width: 62%; height: 62%; color: var(--ocean); }

@@ -1,0 +1,28 @@
+.destinataires {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.destinataire {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 100%;
+  padding: 0.35rem 0.4rem 0.35rem 0.35rem;
+  border-radius: 100px;
+  animation: pastille-entree 0.3s var(--courbe);
+}
+
+@keyframes pastille-entree {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: none; }
+}
+
+.destinataire .jeton { width: 1.8rem; height: 1.8rem; font-size: 0.7rem; }
+.destinataire .ligne { min-width: 0; line-height: 1.15; }
+.destinataire .ligne b { display: block; font-weight: 600; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; }
+.destinataire .ligne small { display: block; color: var(--discret); font-size: 0.74rem; }

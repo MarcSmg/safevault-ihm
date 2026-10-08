@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SafeVault</title>
+    <link rel="icon" href="/icone.svg" type="image/svg+xml" />
+    <!-- Le trousseau du logo : sa photo d attente d abord, puis sa cle et ses
+         matieres, se telechargent avec la page, sans attendre le moteur 3D. -->
+    <link rel="preload" href="/modeles/trousseau.png" as="image" />
+    <link rel="preload" href="/modeles/cle.glb" as="fetch" crossorigin />
+    <link rel="preload" href="/modeles/matcap-chrome.png" as="image" crossorigin />
+    <link rel="preload" href="/modeles/matcap-ocean.png" as="image" crossorigin />
+    <link rel="preload" href="/modeles/matcap-limonade.png" as="image" crossorigin />
+  </head>
+  <body>
+    <div id="racine"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

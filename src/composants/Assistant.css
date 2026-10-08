@@ -1,0 +1,121 @@
+/* Mobile d abord : les regles de base sont celles du telephone, une seule
+   colonne ou tout s empile. Les ecrans plus larges ajoutent leurs colonnes
+   plus bas, par paliers (640, 900, 1100). */
+
+.assistant-tete { margin-bottom: clamp(1.75rem, 5vw, 3.5rem); text-align: center; }
+
+.assistant-titre {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 6.5vw, 4.25rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.assistant-chapo {
+  margin: 1rem auto 0;
+  max-width: 44ch;
+  color: var(--discret);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.55;
+  text-wrap: balance;
+}
+
+.assistant-grille {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.panneau {
+  min-width: 0;
+  border-radius: 22px;
+}
+
+.panneau-colonnes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.15rem;
+  animation: panneau-entree 0.32s var(--courbe);
+}
+
+.panneau-corps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.panneau-cote { min-width: 0; }
+
+/* L etape qui change se voit changer : un fondu et une courte montee. */
+@keyframes panneau-entree {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.panneau-tete { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.panneau-titre {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.panneau-titre:focus { outline: none; }
+
+.guide {
+  margin: 0;
+  max-width: 52ch;
+  color: var(--discret);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* Les actions. Sur un telephone, l action principale prend toute la largeur
+   et vient en premier sous le pouce ; la sortie se range dessous. */
+.panneau-barre {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+  padding: 0.9rem 1.15rem 1rem;
+  border-top: 1px solid hsl(0 0% 100% / 0.75);
+  box-shadow: 0 -1px 0 hsl(229 30% 40% / 0.1);
+}
+
+.barre-groupe { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.barre-groupe:empty { display: none; }
+.barre-groupe .bouton-verre.plein { flex: 1; min-width: 0; }
+
+@media (min-width: 640px) {
+  .panneau-colonnes { gap: clamp(1.5rem, 3vw, 2.75rem); padding: clamp(1.5rem, 3.5vw, 2.75rem); }
+  .panneau-corps { gap: 1.75rem; }
+
+  .panneau-barre {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem clamp(1rem, 3vw, 1.5rem);
+  }
+  .barre-groupe { flex-wrap: wrap; justify-content: flex-start; }
+  .barre-groupe:last-child { margin-left: auto; }
+  .barre-groupe .bouton-verre.plein { flex: none; }
+}
+
+/* Le formulaire prend la page : les etapes a gauche, le panneau jusqu au bord droit. */
+@media (min-width: 900px) {
+  .assistant-grille { grid-template-columns: 260px minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); }
+  .panneau { border-radius: 28px; }
+  .panneau-colonnes { min-height: 420px; }
+}
+
+/* Avec un document, l apercu occupe la colonne de droite. */
+@media (min-width: 1100px) {
+  .panneau-colonnes[data-cote='true'] { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); }
+}

@@ -1,0 +1,59 @@
+/* Au-dessus de ce qui suit, pour que la liste le recouvre. */
+.champ-zone { position: relative; z-index: 3; }
+
+/* Le champ : une lame de verre, le texte pose dessus. */
+.champ {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.95rem 1.05rem;
+  border-radius: 14px;
+  transition: outline-color 0.2s var(--courbe);
+  outline: 2px solid transparent;
+  outline-offset: 0;
+}
+.champ:focus-within { outline-color: var(--ocean); }
+.champ svg { flex: none; width: 1.15rem; height: 1.15rem; color: var(--discret); }
+.champ input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: var(--texte);
+  outline: none;
+}
+.champ input::placeholder { color: var(--discret); }
+
+.propositions {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  border-radius: 18px;
+  background: hsl(0 0% 100% / 0.94);
+  animation: propositions-entree 0.25s var(--courbe);
+}
+
+@keyframes propositions-entree {
+  from { opacity: 0; transform: translateY(-6px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+.propositions li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.propositions li[aria-selected='true'] { background: hsl(229 97% 55% / 0.1); }
+.propositions .jeton { width: 1.9rem; height: 1.9rem; font-size: 0.72rem; }
+.propositions .ligne { line-height: 1.2; }
+.propositions .ligne b { font-weight: 600; font-size: 0.92rem; }
+.propositions .ligne small { display: block; color: var(--discret); font-size: 0.78rem; }

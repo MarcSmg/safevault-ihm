@@ -1,0 +1,60 @@
+.champ-bloc { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.champ-tete { display: flex; align-items: center; gap: 0.45rem; }
+
+.champ-libelle { font-weight: 600; font-size: 0.92rem; }
+.champ-requis { margin-left: 0.2rem; color: var(--ocean); }
+
+.champ-aide {
+  margin: 0;
+  color: var(--discret);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+/* La bulle d aide : elle s ouvre au survol comme au clavier. */
+.bulle { position: relative; display: inline-flex; }
+
+.bulle-bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  padding: 0;
+  border: 1px solid var(--bord);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--discret);
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: help;
+  transition: border-color 0.15s var(--courbe), color 0.15s var(--courbe);
+}
+/* La cible deborde le rond : 44px sous le doigt. */
+.bulle-bouton { position: relative; }
+.bulle-bouton::after { content: ''; position: absolute; inset: -0.8rem; }
+.bulle-bouton:hover, .bulle-bouton:focus-visible { border-color: var(--texte); color: var(--texte); outline: none; }
+
+.bulle-texte {
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  width: max-content;
+  max-width: min(260px, 68vw);
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  background: var(--texte);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.45;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity 0.18s var(--courbe), transform 0.18s var(--courbe);
+}
+.bulle:hover .bulle-texte,
+.bulle:focus-within .bulle-texte { opacity: 1; transform: translate(-50%, 0); }
