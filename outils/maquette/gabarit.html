@@ -7,11 +7,11 @@
 <!--
   SafeVault, maquette EC1 (ergonomie), ouverte dans god2-design.
 
-  god2-design est l atelier qui presente une maquette comme un fichier de
+  god2-design est l atelier qui ouvre une maquette comme un fichier de
   design : les ecrans poses sur une toile ou l on se deplace et ou l on zoome,
-  leurs calques a gauche, les proprietes du calque choisi a droite. On y lit
-  la maquette, on ne la modifie pas. Presenter montre chaque ecran en vrai, a
-  la taille de la fenetre.
+  leurs calques a gauche, les proprietes du calque choisi a droite. On y
+  retouche la maquette : deplacer, dimensionner, reecrire, dessiner, annuler.
+  Presenter montre chaque ecran en vrai, a la taille de la fenetre.
 
   La maquette elle-meme est un document .god2 (voir outils/maquette/FORMAT-GOD2.md),
   embarque plus bas. god2-design sait aussi en ouvrir un autre, et exporter
@@ -38,10 +38,33 @@
             <a role="menuitem" id="gd-accueil" href="#" hidden>Toutes les maquettes</a>
             <span class="gd-menu-filet" id="gd-accueil-filet" role="separator" hidden></span>
             <button type="button" role="menuitem" data-action="ouvrir">Ouvrir un fichier .god2…</button>
-            <button type="button" role="menuitem" data-action="enregistrer">Enregistrer en .god2</button>
+            <button type="button" role="menuitem" data-action="enregistrer">Enregistrer <kbd>Ctrl S</kbd></button>
+            <button type="button" role="menuitem" data-action="enregistrer-copie">Enregistrer une copie en .god2…</button>
             <span class="gd-menu-filet" role="separator"></span>
             <button type="button" role="menuitem" data-action="exporter-choix">Exporter la sélection en SVG</button>
             <button type="button" role="menuitem" data-action="exporter-tout">Exporter tous les cadres en SVG</button>
+          </div>
+        </div>
+        <div class="gd-menu-hote">
+          <button type="button" class="gd-menu-titre" data-menu="menu-edition" aria-haspopup="menu" aria-expanded="false">Édition</button>
+          <div class="gd-menu" id="menu-edition" role="menu" hidden>
+            <button type="button" role="menuitem" data-action="annuler">Annuler <kbd>Ctrl Z</kbd></button>
+            <button type="button" role="menuitem" data-action="refaire">Rétablir <kbd>Ctrl Maj Z</kbd></button>
+            <span class="gd-menu-filet" role="separator"></span>
+            <button type="button" role="menuitem" data-action="copier">Copier <kbd>Ctrl C</kbd></button>
+            <button type="button" role="menuitem" data-action="coller">Coller <kbd>Ctrl V</kbd></button>
+            <button type="button" role="menuitem" data-action="dupliquer">Dupliquer <kbd>Ctrl D</kbd></button>
+            <button type="button" role="menuitem" data-action="supprimer">Supprimer <kbd>Suppr</kbd></button>
+            <span class="gd-menu-filet" role="separator"></span>
+            <button type="button" role="menuitem" data-action="ecrire">Modifier le texte <kbd>Entrée</kbd></button>
+            <button type="button" role="menuitem" data-action="renommer">Renommer le calque <kbd>F2</kbd></button>
+            <button type="button" role="menuitem" data-action="masquer">Masquer ou montrer <kbd>Ctrl Maj H</kbd></button>
+            <button type="button" role="menuitem" data-action="avancer">Avancer d'un rang</button>
+            <button type="button" role="menuitem" data-action="reculer">Reculer d'un rang</button>
+            <span class="gd-menu-filet" role="separator"></span>
+            <button type="button" role="menuitem" data-action="ecran-nouveau">Nouvel écran</button>
+            <button type="button" role="menuitem" data-action="ecran-dupliquer">Dupliquer l'écran</button>
+            <button type="button" role="menuitem" data-action="ecran-supprimer">Supprimer l'écran</button>
           </div>
         </div>
         <div class="gd-menu-hote">
@@ -146,12 +169,17 @@
         <span class="gd-contour gd-contour-choix" id="gd-choix" hidden><span class="gd-mesure" id="gd-mesure"></span></span>
       </div>
       <p class="gd-attente" id="gd-attente" role="status">Préparation des écrans…</p>
-      <p class="gd-depose" id="gd-depose" hidden>Lâchez le fichier .god2 pour l'ouvrir</p>
+      <p class="gd-depose" id="gd-depose" hidden>Lâchez un fichier .god2 pour l'ouvrir, ou une image sur un cadre</p>
+      <div class="gd-reprise" id="gd-reprise" role="status" hidden>
+        <span>Cette maquette a été retouchée sur cet ordinateur.</span>
+        <button type="button" class="gd-bouton gd-bouton-plein" data-action="reprendre">Reprendre mes retouches</button>
+        <button type="button" class="gd-bouton" data-action="oublier">Les oublier</button>
+      </div>
 
-      <!-- Les outils. La maquette se lit, elle ne se modifie pas : seuls les
-           outils de lecture sont actifs, les autres sont montres pour memoire. -->
+      <!-- Les outils : choisir et se deplacer d abord, dessiner ensuite. Sur un
+           telephone, ou le doigt deplace la toile, seuls les premiers sont montres. -->
       <div class="gd-outils" role="toolbar" aria-label="Outils" aria-orientation="vertical">
-        <button type="button" class="gd-outil" data-outil="deplacer" aria-pressed="true" title="Déplacer et choisir (V)" aria-label="Déplacer et choisir">
+        <button type="button" class="gd-outil" data-outil="deplacer" aria-pressed="true" title="Choisir, déplacer, dimensionner (V)" aria-label="Choisir et déplacer">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5 15.8 9l-4.7 1.5-1.6 4.8z" /></svg>
         </button>
         <button type="button" class="gd-outil" data-outil="main" aria-pressed="false" title="Main : se déplacer sur la toile (H, ou Espace maintenue)" aria-label="Main">
@@ -161,22 +189,25 @@
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7.5V4h3.5M16 7.5V4h-3.5M4 12.5V16h3.5M16 12.5V16h-3.5" /></svg>
         </button>
         <span class="gd-outils-filet" aria-hidden="true"></span>
-        <button type="button" class="gd-outil" aria-disabled="true" title="Cadre (F) · maquette en lecture seule" aria-label="Cadre, indisponible en lecture seule">
+        <button type="button" class="gd-outil gd-outil-dessin" data-outil="cadre" aria-pressed="false" title="Cadre (F)" aria-label="Cadre">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3v14M13 3v14M3 7h14M3 13h14" /></svg>
         </button>
-        <button type="button" class="gd-outil" aria-disabled="true" title="Forme (R) · maquette en lecture seule" aria-label="Forme, indisponible en lecture seule">
+        <button type="button" class="gd-outil gd-outil-dessin" data-outil="forme" aria-pressed="false" title="Rectangle (R)" aria-label="Rectangle">
           <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="1.75" /></svg>
         </button>
-        <button type="button" class="gd-outil" aria-disabled="true" title="Trait (L) · maquette en lecture seule" aria-label="Trait, indisponible en lecture seule">
+        <button type="button" class="gd-outil gd-outil-dessin" data-outil="ellipse" aria-pressed="false" title="Ellipse (O)" aria-label="Ellipse">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.25" /></svg>
+        </button>
+        <button type="button" class="gd-outil gd-outil-dessin" data-outil="trait" aria-pressed="false" title="Trait (L)" aria-label="Trait">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4.5 15.5 11-11" /></svg>
         </button>
-        <button type="button" class="gd-outil" aria-disabled="true" title="Plume (P) · maquette en lecture seule" aria-label="Plume, indisponible en lecture seule">
+        <button type="button" class="gd-outil gd-outil-dessin" data-outil="plume" aria-pressed="false" title="Plume : un clic par point, double-clic pour finir (Maj P)" aria-label="Plume">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 16 1.4-5.3L12.6 3.5l3.9 3.9-7.2 7.2z" /><path d="m10.9 5.2 3.9 3.9" /></svg>
         </button>
-        <button type="button" class="gd-outil" aria-disabled="true" title="Texte (T) · maquette en lecture seule" aria-label="Texte, indisponible en lecture seule">
+        <button type="button" class="gd-outil gd-outil-dessin" data-outil="texte" aria-pressed="false" title="Texte (T)" aria-label="Texte">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 6V4.25h10V6M10 4.25v11.5M8 15.75h4" /></svg>
         </button>
-        <button type="button" class="gd-outil" aria-disabled="true" title="Image (I) · maquette en lecture seule" aria-label="Image, indisponible en lecture seule">
+        <button type="button" class="gd-outil gd-outil-dessin" data-outil="image" aria-pressed="false" title="Image (I)" aria-label="Image">
           <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3.5" y="4.5" width="13" height="11" rx="1.75" /><path d="m4 13.5 3.5-3.25 2.75 2.25 2-1.75 3.75 3" /></svg>
         </button>
       </div>
@@ -205,7 +236,8 @@
           </section>
           <section class="gd-bloc">
             <h3 class="gd-bloc-titre">Fichier</h3>
-            <button type="button" class="gd-bouton gd-bouton-large" data-action="enregistrer">Enregistrer en .god2</button>
+            <button type="button" class="gd-bouton gd-bouton-large" data-action="enregistrer">Enregistrer la maquette</button>
+            <button type="button" class="gd-bouton gd-bouton-large" data-action="enregistrer-copie">Enregistrer une copie en .god2</button>
             <p class="gd-note">
               Le <b>.god2</b> se rouvre dans god2-design. Le <b>SVG</b> s'ouvre dans les éditeurs de design
               (Figma, Lunacy, Penpot, Illustrator) : formes, textes et icônes y restent modifiables. Les textes
@@ -238,11 +270,19 @@
         <div><dt>Se déplacer</dt><dd>Molette, <kbd>Espace</kbd> + glisser, ou l'outil Main <kbd>H</kbd></dd></div>
         <div><dt>Zoomer</dt><dd><kbd>Ctrl</kbd> + molette, <kbd>+</kbd> et <kbd>-</kbd>, ou pincer</dd></div>
         <div><dt>Tout voir</dt><dd><kbd>Maj</kbd> <kbd>1</kbd></dd></div>
-        <div><dt>Voir la sélection</dt><dd><kbd>Maj</kbd> <kbd>2</kbd>, ou double-clic sur un calque</dd></div>
+        <div><dt>Voir la sélection</dt><dd><kbd>Maj</kbd> <kbd>2</kbd></dd></div>
         <div><dt>Taille réelle</dt><dd><kbd>Maj</kbd> <kbd>0</kbd></dd></div>
         <div><dt>Choisir</dt><dd>Clic sur la toile ou dans les calques, outil <kbd>V</kbd></dd></div>
         <div><dt>Calque parent</dt><dd><kbd>Maj</kbd> <kbd>Entrée</kbd></dd></div>
         <div><dt>Ne plus rien choisir</dt><dd><kbd>Échap</kbd></dd></div>
+        <div><dt>Déplacer un calque</dt><dd>Le choisir, puis le glisser ; les flèches le poussent d'un pixel, de dix avec <kbd>Maj</kbd></dd></div>
+        <div><dt>Dimensionner</dt><dd>Tirer une poignée du calque choisi</dd></div>
+        <div><dt>Réécrire un texte</dt><dd>Double-clic sur le texte, ou <kbd>Entrée</kbd></dd></div>
+        <div><dt>Dessiner</dt><dd><kbd>F</kbd> cadre, <kbd>R</kbd> rectangle, <kbd>O</kbd> ellipse, <kbd>L</kbd> trait, <kbd>Maj</kbd> <kbd>P</kbd> plume, <kbd>T</kbd> texte, <kbd>I</kbd> image</dd></div>
+        <div><dt>Dupliquer, supprimer</dt><dd><kbd>Ctrl</kbd> <kbd>D</kbd>, <kbd>Suppr</kbd></dd></div>
+        <div><dt>Renommer un calque</dt><dd>Double-clic sur son nom, ou <kbd>F2</kbd></dd></div>
+        <div><dt>Annuler, rétablir</dt><dd><kbd>Ctrl</kbd> <kbd>Z</kbd>, <kbd>Ctrl</kbd> <kbd>Maj</kbd> <kbd>Z</kbd></dd></div>
+        <div><dt>Enregistrer</dt><dd><kbd>Ctrl</kbd> <kbd>S</kbd></dd></div>
         <div><dt>Présenter</dt><dd><kbd>P</kbd>, puis les flèches pour changer d'écran</dd></div>
         <div><dt>Ouvrir un .god2</dt><dd>Menu Fichier, ou glisser le fichier sur la fenêtre</dd></div>
       </dl>
@@ -250,6 +290,7 @@
     </dialog>
 
     <input type="file" id="gd-fichier" accept=".god2,application/json" hidden />
+    <input type="file" id="gd-image" accept="image/*" hidden />
     <p class="gd-annonce" id="gd-annonce" role="status" hidden></p>
   </div>
 

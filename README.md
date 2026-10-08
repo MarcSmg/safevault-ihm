@@ -30,14 +30,14 @@ mini-audit.
 
 ### La maquette statique, dans god2-design
 
-Le fichier est **autonome** (environ 530 Ko) : les polices et les images sont
+Le fichier est **autonome** (environ 590 Ko) : les polices et les images sont
 embarquees en base64, il n'appelle aucun serveur. Il s'ouvre par un double-clic
 dans n'importe quel navigateur, en ligne ou hors ligne.
 
-Il s'ouvre dans **god2-design**, un atelier ecrit pour ce projet qui presente la
-maquette comme un fichier de design :
+Il s'ouvre dans **god2-design**, un atelier ecrit pour ce projet qui ouvre la
+maquette comme un fichier de design, pour la lire et la retoucher :
 
-- **la barre** : les menus Fichier, Affichage et Aide, le fichier ouvert,
+- **la barre** : les menus Fichier, Edition, Affichage et Aide, le fichier ouvert,
   Presenter, le zoom, le theme clair ou sombre ;
 - **le volet de gauche** : les calques de chaque ecran (avec une recherche),
   les composants et combien de fois ils servent, les styles de couleur et de
@@ -47,14 +47,37 @@ maquette comme un fichier de design :
   ou `Espace` maintenue), on zoome avec `Ctrl` + molette, `+` et `-` ;
   `Maj 1` montre tout, `Maj 2` le calque choisi, `Maj 0` revient a 100 % ;
 - **les proprietes**, a droite : un clic sur un element donne sa position, ses
-  dimensions, son rayon, ses couleurs, sa typographie, ses effets. L'onglet
-  Export enregistre la selection en SVG ou le fichier en `.god2` ;
+  dimensions, son rayon, ses couleurs, sa typographie, ses effets, et chacune
+  se modifie dans son champ. L'onglet Export enregistre la selection en SVG ou
+  le fichier en `.god2` ;
 - **Presenter** (touche `P`) : l'ecran en vrai, a la taille de la fenetre, avec
   ses survols. Sur un telephone, le fichier s'ouvre directement ainsi.
 
-La maquette se lit, elle ne se modifie pas : les outils de dessin sont montres
-mais inactifs, les boutons des ecrans ne menent nulle part, aucun fichier
-n'est lu.
+La maquette se retouche sur place :
+
+- **deplacer et dimensionner** : choisir un calque, le glisser, tirer ses
+  poignees ; les fleches le poussent d'un pixel, de dix avec `Maj` ;
+- **reecrire** : double-clic sur un texte, ou `Entree` ;
+- **dessiner** : cadre (`F`), rectangle (`R`), ellipse (`O`), trait (`L`),
+  plume (`Maj P`), texte (`T`), image (`I`, ou une image glissee sur un cadre) ;
+- **ranger** : dupliquer (`Ctrl D`), supprimer (`Suppr`), copier et coller,
+  masquer (l'oeil dans les calques), renommer (double-clic sur le nom, ou
+  `F2`), avancer ou reculer d'un rang ;
+- **les ecrans** : en ajouter, en dupliquer, en supprimer (menu Edition) ;
+- **annuler et retablir** : `Ctrl Z`, `Ctrl Maj Z` ;
+- **enregistrer** : `Ctrl S` ecrit un fichier `.god2`. Tant que ce n'est pas
+  fait, les retouches sont gardees dans le navigateur et proposees a la
+  reouverture.
+
+Une retouche vaut pour les deux formats d'un ecran (bureau et telephone).
+Les boutons des ecrans ne menent nulle part : pour essayer le parcours, c'est
+l'application. Sur un telephone, on lit et on presente ; on retouche a la
+souris.
+
+A savoir : `npm run maquette` refabrique `maquette-safevault.god2` a partir de
+l'application. Une retouche faite a la main dans l'atelier doit donc etre
+enregistree sous un autre nom, ou reportee dans `outils/maquette/`, sinon la
+prochaine fabrication l'efface.
 
 Les six ecrans suivent le parcours, de gauche a droite :
 

@@ -1,7 +1,8 @@
 # Le format .god2
 
 Un fichier `.god2` est une maquette : des ecrans, leurs styles, et de quoi
-nommer leurs calques. C'est le format que **god2-design** ouvre et enregistre.
+nommer leurs calques. C'est le format que **god2-design** ouvre, retouche et
+enregistre.
 
 Un `.god2` est un fichier texte, en JSON (UTF-8). Il se suffit a lui-meme :
 polices et images y sont embarquees en base64, il n'appelle rien d'exterieur.
@@ -53,6 +54,22 @@ polices et images y sont embarquees en base64, il n'appelle rien d'exterieur.
 Chaque ecran est pose sur la toile une fois par format : six ecrans et deux
 formats donnent douze cadres. Un cadre est une vraie page, a sa largeur : les
 regles `@media` de `styles` s'y appliquent comme dans une fenetre.
+
+## Ce que l'atelier ecrit dans le balisage
+
+Une retouche faite dans god2-design s'inscrit dans le `balisage` de l'ecran,
+sur l'element lui-meme :
+
+- des styles en ligne : `translate` pour un deplacement, `width` et `height`
+  pour une taille, puis couleurs, rayon, opacite, typographie ;
+- `data-nom` : le nom donne a un calque, qui l'emporte sur le nom deduit ;
+- `data-masque` : un calque masque (il porte aussi `display: none`), que
+  l'atelier garde dans son arbre pour pouvoir le remontrer.
+
+Ce qu'on dessine (cadre, forme, trait, texte, image) est ajoute a la racine de
+l'ecran, en `position: absolute`, avec tous ses styles sur lui : un `.god2`
+retouche reste lisible sans l'atelier. Le balisage etant commun a tous les
+formats, une retouche vaut pour chacun.
 
 ## Ouvrir un .god2
 
