@@ -1,0 +1,31 @@
+/* Ce que la maquette ajoute aux styles de l application, dans chaque ecran :
+   les deux photos qui remplacent la 3D, les feuilles dessinees de l apercu et
+   l apercu agrandi, ouvert d office. Tout le reste vient de src/, tel quel. */
+
+/* Les deux photos qui tiennent lieu de 3D : le trousseau du logo, et le
+   cadenas des documents scelles. Posees ici, elles ne sont embarquees qu une
+   fois (--photo-trousseau et --photo-cadenas sont ecrites par l assembleur). */
+.logo-3d {
+  background: var(--photo-trousseau) center / contain no-repeat;
+  cursor: default;
+}
+.cadenas-3d {
+  background: var(--photo-cadenas) center / contain no-repeat;
+  filter: drop-shadow(0 3px 4px hsl(229 60% 25% / 0.28));
+}
+
+/* Les feuilles du contrat, dans l apercu. Les mesures sont celles d une page
+   A4 en millimetres (viewBox 210 x 297). */
+.feuille-titre { fill: var(--texte); font-size: 11px; font-weight: 700; letter-spacing: -0.02em; }
+.feuille-sous { fill: var(--discret); font-size: 4.4px; }
+.feuille-article { fill: var(--texte); font-size: 5px; font-weight: 600; }
+.feuille-pied { fill: var(--discret); font-size: 4px; }
+.feuille-filet { fill: none; stroke: hsl(229 25% 85%); stroke-width: 0.4; }
+.feuille-lignes path { fill: none; stroke: hsl(229 20% 86%); stroke-width: 2.1; stroke-linecap: round; }
+.feuille-signature { fill: none; stroke: var(--ocean); stroke-width: 0.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* L apercu agrandi. Dans l application, c est une fenetre modale : le
+   navigateur la pose au-dessus de tout, avec son voile. Ici elle est ouverte
+   d office, et le voile est un calque comme un autre. */
+.voile { position: fixed; z-index: 70; inset: 0; background: hsl(229 30% 20% / 0.42); }
+dialog.apercu-grand { position: fixed; z-index: 71; inset: 0; }

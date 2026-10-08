@@ -1,0 +1,66 @@
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+  <symbol id="feuille-une" viewBox="0 0 210 297">
+    <text class="feuille-titre" x="24" y="40">Contrat de prestation</text>
+    <text class="feuille-sous" x="24" y="49.5">Marché de Dantokpa, Cotonou · 12 mars 2026</text>
+    <path class="feuille-filet" d="M24 58H186"></path>
+    <text class="feuille-article" x="24" y="74">Article 1. Objet</text>
+    <g class="feuille-lignes">
+      <path d="M24 82H186"></path>
+      <path d="M24 88.4H186"></path>
+      <path d="M24 94.8H186"></path>
+      <path d="M24 101.2H137"></path>
+    </g>
+    <text class="feuille-article" x="24" y="118">Article 2. Durée</text>
+    <g class="feuille-lignes">
+      <path d="M24 126H186"></path>
+      <path d="M24 132.4H186"></path>
+      <path d="M24 138.8H186"></path>
+      <path d="M24 145.2H186"></path>
+      <path d="M24 151.6H97"></path>
+    </g>
+    <text class="feuille-article" x="24" y="168">Article 3. Tarifs</text>
+    <g class="feuille-lignes">
+      <path d="M24 176H186"></path>
+      <path d="M24 182.4H186"></path>
+      <path d="M24 188.8H186"></path>
+      <path d="M24 195.2H157"></path>
+    </g>
+    <text class="feuille-article" x="24" y="212">Article 4. Confidentialité</text>
+    <g class="feuille-lignes">
+      <path d="M24 220H186"></path>
+      <path d="M24 226.4H186"></path>
+      <path d="M24 232.8H186"></path>
+      <path d="M24 239.2H186"></path>
+      <path d="M24 245.6H118"></path>
+    </g>
+    <text class="feuille-pied" x="105" y="282" text-anchor="middle">1 / 2</text>
+  </symbol>
+  <symbol id="feuille-deux" viewBox="0 0 210 297">
+    <text class="feuille-article" x="24" y="40">Article 5. Résiliation</text>
+    <g class="feuille-lignes">
+      <path d="M24 48H186"></path>
+      <path d="M24 54.4H186"></path>
+      <path d="M24 60.8H186"></path>
+      <path d="M24 67.2H186"></path>
+      <path d="M24 73.6H131"></path>
+    </g>
+    <text class="feuille-article" x="24" y="90">Article 6. Litiges</text>
+    <g class="feuille-lignes">
+      <path d="M24 98H186"></path>
+      <path d="M24 104.4H186"></path>
+      <path d="M24 110.8H186"></path>
+      <path d="M24 117.2H89"></path>
+    </g>
+    <path class="feuille-filet" d="M24 150H186"></path>
+    <text class="feuille-article" x="24" y="168">Le prestataire</text>
+    <text class="feuille-article" x="118" y="168">Le client</text>
+    <path class="feuille-signature" d="M26 196c6-14 10-14 9-2s8-16 13-8-3 12 4 6 9-8 14-2 8 2 12-2"></path>
+    <path class="feuille-signature" d="M120 198c4-16 12-18 10-4s10-14 14-6 2 10 8 4 10-6 16-4"></path>
+    <g class="feuille-lignes">
+      <path d="M24 206H92"></path>
+      <path d="M118 206H186"></path>
+    </g>
+    <text class="feuille-sous" x="24" y="216">Fait à Cotonou, en deux exemplaires</text>
+    <text class="feuille-pied" x="105" y="282" text-anchor="middle">2 / 2</text>
+  </symbol>
+</svg>

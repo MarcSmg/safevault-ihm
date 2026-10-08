@@ -1,0 +1,240 @@
+    <div class="scene">
+      <header class="entete">
+        <span class="logo">
+          <span class="logo-nom">SafeVault</span>
+          <span class="logo-3d" aria-hidden="true"></span>
+          <span class="logo-s" aria-hidden="true">S</span>
+        </span>
+        <div class="verre compte">
+          <span class="jeton" aria-hidden="true">G</span>
+          <span class="qui">Gblewa</span>
+        </div>
+      </header>
+      <div class="assistant">
+        <header class="assistant-tete">
+          <h2 class="assistant-titre">Envoyer un document</h2>
+          <p class="assistant-chapo">Déposez-le, choisissez qui peut l'ouvrir. SafeVault chiffre tout à votre place.</p>
+        </header>
+        <div class="assistant-grille">
+          <nav class="etapes" aria-label="Étapes de l'envoi">
+            <ol>
+              <li>
+                <button type="button" class="etape verre" data-etat="active" aria-current="step" disabled="">
+                  <span class="etape-numero" aria-hidden="true">1</span>
+                  <span class="etape-textes">
+                    <span class="etape-titre">Déposer</span>
+                    <span class="etape-aide">Le document à protéger</span>
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="etape" data-etat="a-venir" disabled="">
+                  <span class="etape-numero" aria-hidden="true">2</span>
+                  <span class="etape-textes">
+                    <span class="etape-titre">Partager</span>
+                    <span class="etape-aide">Qui, quel droit, combien de temps</span>
+                  </span>
+                </button>
+              </li>
+            </ol>
+          </nav>
+          <section class="panneau verre-plaque" aria-labelledby="titre-etape">
+            <div class="panneau-colonnes" data-cote="true">
+              <div class="panneau-corps">
+                <div class="panneau-tete">
+                  <h3 id="titre-etape" tabindex="-1" class="panneau-titre">Déposer des documents</h3>
+                  <p class="guide">Ajoutez vos fichiers dans la zone ci-dessous. Chacun est chiffré dès son arrivée.</p>
+                </div>
+                <div class="alerte" role="alert">
+                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path pathLength="1" d="M10.4 4.6 3.3 17.1a1.85 1.85 0 0 0 1.6 2.65h14.2a1.85 1.85 0 0 0 1.6-2.65L13.6 4.6a1.85 1.85 0 0 0-3.2 0z"></path>
+                    <path pathLength="1" d="M12 9.5v4"></path>
+                    <path pathLength="1" d="M12 16.75h.01"></path>
+                  </svg>
+                  <span class="texte">
+                    <b>Le fichier « photo-piece-identite.heic » n'a pas pu être ajouté.</b>
+                    <span>Ce format n'est pas accepté. Formats possibles : PDF, Word, JPG, PNG.</span>
+                  </span>
+                </div>
+                <ul class="fichiers" aria-label="Documents à déposer">
+                  <li>
+                    <div class="verre fichier" data-actif="true">
+                      <button type="button" class="fichier-voir" aria-pressed="true" aria-label="Voir l'aperçu de Contrat-Dantokpa-2026.pdf">
+                        <svg class="icone-fichier" data-genre="pdf" viewBox="0 0 34 40" aria-hidden="true">
+                          <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
+                          <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
+                          <path class="trait" d="M12 13.5h10"></path>
+                          <path class="trait" d="M12 17.5h14"></path>
+                          <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
+                          <text class="texte" x="13.5" y="30.6" text-anchor="middle">PDF</text>
+                        </svg>
+                        <span class="infos">
+                          <span class="nom" title="Contrat-Dantokpa-2026.pdf">Contrat-Dantokpa-2026.pdf</span>
+                          <span class="meta" aria-live="polite">
+                            <b>2,4 Mo</b> · chiffré, prêt à déposer
+                          
+                          </span>
+                          <span class="progres" data-fini="true" aria-hidden="true">
+                            <span style="width: 100%"></span>
+                          </span>
+                        </span>
+                      </button>
+                      <button type="button" class="croix" aria-label="Retirer Contrat-Dantokpa-2026.pdf">
+                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path pathLength="1" d="m6.75 6.75 10.5 10.5"></path>
+                          <path pathLength="1" d="m17.25 6.75-10.5 10.5"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="verre fichier" data-actif="false">
+                      <button type="button" class="fichier-voir" aria-pressed="false" aria-label="Voir l'aperçu de piece-identite.png">
+                        <svg class="icone-fichier" data-genre="image" viewBox="0 0 34 40" aria-hidden="true">
+                          <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
+                          <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
+                          <circle class="trait" cx="14.5" cy="15" r="1.75"></circle>
+                          <path class="trait" d="m11 22 4-3.5 3 2.5 2.5-2 4.5 3.5"></path>
+                          <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
+                          <text class="texte" x="13.5" y="30.6" text-anchor="middle">IMG</text>
+                        </svg>
+                        <span class="infos">
+                          <span class="nom" title="piece-identite.png">piece-identite.png</span>
+                          <span class="meta" aria-live="polite">
+                            <b>1,1 Mo</b> · chiffré, prêt à déposer
+                          
+                          </span>
+                          <span class="progres" data-fini="true" aria-hidden="true">
+                            <span style="width: 100%"></span>
+                          </span>
+                        </span>
+                      </button>
+                      <button type="button" class="croix" aria-label="Retirer piece-identite.png">
+                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path pathLength="1" d="m6.75 6.75 10.5 10.5"></path>
+                          <path pathLength="1" d="m17.25 6.75-10.5 10.5"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+                <div class="verre depot" data-survol="false" data-compacte="true">
+                  <span class="rond">
+                    <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <g class="icone-fleche">
+                        <path pathLength="1" d="M12 3.75v10.5"></path>
+                        <path pathLength="1" d="m7.75 10 4.25 4.25L16.25 10"></path>
+                      </g>
+                      <path pathLength="1" d="M4.75 15.25v2a2.5 2.5 0 0 0 2.5 2.5h9.5a2.5 2.5 0 0 0 2.5-2.5v-2"></path>
+                    </svg>
+                  </span>
+                  <span class="depot-textes">
+                    <p>Ajoutez un autre document</p>
+                    <p class="ou">Glissez-le ici, ou parcourez vos fichiers.</p>
+                  </span>
+                  <button type="button" class="bouton-verre verre verre-appuyable">
+                    <span class="bouton-verre-texte">Parcourir mes fichiers</span>
+                  </button>
+                </div>
+                <span class="securite">
+                  <svg class="document-vivant" viewBox="0 0 40 48" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="papier" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#ffffff"></stop>
+                        <stop offset="1" stop-color="#eef0f8"></stop>
+                      </linearGradient>
+                      <linearGradient id="pli" x1="0" y1="1" x2="1" y2="0">
+                        <stop offset="0" stop-color="#f6f7fc"></stop>
+                        <stop offset="1" stop-color="#cfd4e6"></stop>
+                      </linearGradient>
+                    </defs>
+                    <path class="feuille" d="M8 2.5h17.5l10 10V41a4.5 4.5 0 0 1-4.5 4.5H8A4.5 4.5 0 0 1 3.5 41V7A4.5 4.5 0 0 1 8 2.5z" fill="url(#papier)"></path>
+                    <path d="M25.5 2.5 35.5 12.5V16l-10-6z" fill="#1b2350" opacity="0.07"></path>
+                    <path class="pli" d="M25.5 2.5V9a3.5 3.5 0 0 0 3.5 3.5h6.5z" fill="url(#pli)"></path>
+                    <path class="ligne ligne-1" d="M9 18.5c1.5-1.5 3 1.5 4.5 0s3 1.5 4.5 0 3 1.5 4.5 0" pathLength="1"></path>
+                    <path class="ligne ligne-2" d="M9 24.5c1.75-1.4 3.5 1.4 5.25 0s3.5 1.4 5.25 0 3.5 1.4 5.25 0 3.5 1.4 5.25 0" pathLength="1"></path>
+                    <path class="ligne ligne-3" d="M9 29.5c1.6-1.4 3.2 1.4 4.8 0s3.2 1.4 4.8 0 3.2 1.4 4.8 0 3.2 1.4 3.6 0" pathLength="1"></path>
+                    <path class="ligne ligne-4" d="M9 34.5c1.75-1.4 3.5 1.4 5.25 0s3.5 1.4 5.25 0 3.5 1.4 5.25 0 3.5 1.4 5.25 0" pathLength="1"></path>
+                    <path class="ligne ligne-5" d="M9 39.5c1.5-1.4 3 1.4 4.5 0s3 1.4 4.5 0" pathLength="1"></path>
+                  </svg>
+                  <span>Chiffré de bout en bout. Vous seul, puis vos destinataires, pouvez l'ouvrir. Formats acceptés : PDF, Word, JPG, PNG.</span>
+                </span>
+              </div>
+              <aside class="panneau-cote">
+                <figure class="apercu">
+                  <figcaption class="apercu-tete">
+                    <span class="apercu-titre">Aperçu</span>
+                    <button type="button" class="bouton-discret petit">
+                      <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path pathLength="1" d="M14.25 4.75h5v5"></path>
+                        <path pathLength="1" d="m19.25 4.75-5.5 5.5"></path>
+                        <path pathLength="1" d="M9.75 19.25h-5v-5"></path>
+                        <path pathLength="1" d="m4.75 19.25 5.5-5.5"></path>
+                      </svg>Agrandir
+                    
+                    </button>
+                  </figcaption>
+                  <div class="apercu-cadre defilement-fin">
+                    <div class="apercu-pages">
+                      <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 1 du contrat">
+                        <use href="#feuille-une">
+                      </use>
+                    </svg>
+                    <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 2 du contrat">
+                      <use href="#feuille-deux">
+                    </use>
+                  </svg>
+                </div>
+              </div>
+            </figure>
+          </aside>
+        </div>
+        <div class="panneau-barre">
+          <div class="barre-groupe">
+            <button type="button" class="bouton-discret sortie">Annuler</button>
+          </div>
+          <div class="barre-groupe">
+            <button type="button" class="bouton-verre verre verre-appuyable plein">
+              <span class="bouton-verre-texte">Déposer les 2 documents
+                
+                <span class="fleche" aria-hidden="true">
+                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path pathLength="1" d="M4.75 12h14.5"></path>
+                    <path pathLength="1" d="m13.75 6.5 5.5 5.5-5.5 5.5"></path>
+                  </svg>
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="voile" aria-hidden="true">
+  </div>
+  <dialog class="apercu-grand" aria-label="Aperçu de Contrat-Dantokpa-2026.pdf" open>
+    <div class="apercu-grand-tete">
+      <span class="apercu-grand-nom">Contrat-Dantokpa-2026.pdf</span>
+      <button type="button" class="bouton-verre verre verre-appuyable sortie">
+        <span class="bouton-verre-texte">
+          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path pathLength="1" d="m6.75 6.75 10.5 10.5"></path>
+            <path pathLength="1" d="m17.25 6.75-10.5 10.5"></path>
+          </svg>Fermer
+        </span>
+      </button>
+    </div>
+    <div class="apercu-grand-cadre defilement-fin">
+      <div class="apercu-pages">
+        <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 1 du contrat">
+          <use href="#feuille-une">
+        </use>
+      </svg>
+      <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 2 du contrat">
+        <use href="#feuille-deux">
+      </use>
+    </svg>
+  </div>
+</div>
+</dialog>
+</div>

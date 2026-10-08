@@ -1,613 +1,265 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="clair">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SafeVault, maquette EC1 : dépôt et partage</title>
+<title>SafeVault · Maquette EC1 · god2-design</title>
 <!--
-  SafeVault, maquette EC1 (ergonomie) : la reference statique des deux ecrans.
+  SafeVault, maquette EC1 (ergonomie), ouverte dans god2-design.
 
-  Ce fichier est assemble par `npm run maquette` (outils/maquette.mjs) a partir
-  de ce gabarit, des feuilles de style de l application (src/) et des polices
-  (polices/). Ne pas retoucher maquette-safevault.html a la main : corriger le
-  gabarit ou les styles, puis relancer la commande.
+  god2-design est l atelier qui presente une maquette comme un fichier de
+  design : les ecrans poses sur une toile ou l on se deplace et ou l on zoome,
+  leurs calques a gauche, les proprietes du calque choisi a droite. On y lit
+  la maquette, on ne la modifie pas. Presenter montre chaque ecran en vrai, a
+  la taille de la fenetre.
 
-  Rien ici ne fonctionne vraiment : les boutons ne menent nulle part, aucun
-  fichier n est lu. C est une photo de l interface, avec ses survols.
+  La maquette elle-meme est un document .god2 (voir outils/maquette/FORMAT-GOD2.md),
+  embarque plus bas. god2-design sait aussi en ouvrir un autre, et exporter
+  chaque cadre en SVG pour les autres editeurs de design.
+
+  Ce fichier est assemble par `npm run maquette` (outils/maquette.mjs). Ne pas
+  le retoucher a la main : corriger les sources, puis relancer la commande.
 -->
 <style>
-/*{{STYLES}}*/
+/*{{STYLES_ATELIER}}*/
 </style>
 </head>
 <body>
-  <!-- Les deux feuilles du contrat montrees dans l apercu, dessinees une fois. -->
-  <svg width="0" height="0" style="position: absolute" aria-hidden="true">
-    <symbol id="feuille-une" viewBox="0 0 210 297">
-      <text class="feuille-titre" x="24" y="40">Contrat de prestation</text>
-      <text class="feuille-sous" x="24" y="49.5">Marché de Dantokpa, Cotonou · 12 mars 2026</text>
-      <path class="feuille-filet" d="M24 58H186"></path>
-      <text class="feuille-article" x="24" y="74">Article 1. Objet</text>
-      <g class="feuille-lignes">
-        <path d="M24 82H186"></path>
-        <path d="M24 88.4H186"></path>
-        <path d="M24 94.8H186"></path>
-        <path d="M24 101.2H137"></path>
-      </g>
-      <text class="feuille-article" x="24" y="118">Article 2. Durée</text>
-      <g class="feuille-lignes">
-        <path d="M24 126H186"></path>
-        <path d="M24 132.4H186"></path>
-        <path d="M24 138.8H186"></path>
-        <path d="M24 145.2H186"></path>
-        <path d="M24 151.6H97"></path>
-      </g>
-      <text class="feuille-article" x="24" y="168">Article 3. Tarifs</text>
-      <g class="feuille-lignes">
-        <path d="M24 176H186"></path>
-        <path d="M24 182.4H186"></path>
-        <path d="M24 188.8H186"></path>
-        <path d="M24 195.2H157"></path>
-      </g>
-      <text class="feuille-article" x="24" y="212">Article 4. Confidentialité</text>
-      <g class="feuille-lignes">
-        <path d="M24 220H186"></path>
-        <path d="M24 226.4H186"></path>
-        <path d="M24 232.8H186"></path>
-        <path d="M24 239.2H186"></path>
-        <path d="M24 245.6H118"></path>
-      </g>
-      <text class="feuille-pied" x="105" y="282" text-anchor="middle">1 / 2</text>
-    </symbol>
-    <symbol id="feuille-deux" viewBox="0 0 210 297">
-      <text class="feuille-article" x="24" y="40">Article 5. Résiliation</text>
-      <g class="feuille-lignes">
-        <path d="M24 48H186"></path>
-        <path d="M24 54.4H186"></path>
-        <path d="M24 60.8H186"></path>
-        <path d="M24 67.2H186"></path>
-        <path d="M24 73.6H131"></path>
-      </g>
-      <text class="feuille-article" x="24" y="90">Article 6. Litiges</text>
-      <g class="feuille-lignes">
-        <path d="M24 98H186"></path>
-        <path d="M24 104.4H186"></path>
-        <path d="M24 110.8H186"></path>
-        <path d="M24 117.2H89"></path>
-      </g>
-      <path class="feuille-filet" d="M24 150H186"></path>
-      <text class="feuille-article" x="24" y="168">Le prestataire</text>
-      <text class="feuille-article" x="118" y="168">Le client</text>
-      <path class="feuille-signature" d="M26 196c6-14 10-14 9-2s8-16 13-8-3 12 4 6 9-8 14-2 8 2 12-2"></path>
-      <path class="feuille-signature" d="M120 198c4-16 12-18 10-4s10-14 14-6 2 10 8 4 10-6 16-4"></path>
-      <g class="feuille-lignes">
-        <path d="M24 206H92"></path>
-        <path d="M118 206H186"></path>
-      </g>
-      <text class="feuille-sous" x="24" y="216">Fait à Cotonou, en deux exemplaires</text>
-      <text class="feuille-pied" x="105" y="282" text-anchor="middle">2 / 2</text>
-    </symbol>
-  </svg>
+  <div class="gd" id="gd" data-outil="deplacer" data-section="calques">
 
-  <main class="maquette">
-    <header class="maquette-tete">
-      <p class="maquette-sur">Maquette EC1, ergonomie</p>
-      <h1 class="maquette-titre">SafeVault, les deux écrans clés</h1>
-      <p class="maquette-chapo">
-        Référence statique de l'interface. Rien ne s'envoie et les boutons ne mènent nulle part :
-        chaque écran est figé dans l'état qui montre le mieux ce qu'il sait faire.
-      </p>
-      <nav class="maquette-liens" aria-label="Écrans de la maquette">
-        <a href="#ecran-deposer">Écran 1 · Déposer</a>
-        <a href="#ecran-partager">Écran 2 · Partager</a>
+    <!-- ============ Barre du haut : la marque, les menus, le fichier ouvert ============ -->
+    <header class="gd-barre">
+      <span class="gd-marque" aria-hidden="true"><svg viewBox="0 0 9 10"><path d="M0 0H6.6V2.4H2.4V7.6H0Z" /><path d="M9 10H2.4V7.6H6.6V2.4H9Z" /></svg></span>
+
+      <nav class="gd-menus" aria-label="Menus">
+        <div class="gd-menu-hote">
+          <button type="button" class="gd-menu-titre" data-menu="menu-fichier" aria-haspopup="menu" aria-expanded="false">Fichier</button>
+          <div class="gd-menu" id="menu-fichier" role="menu" hidden>
+            <a role="menuitem" id="gd-accueil" href="#" hidden>Toutes les maquettes</a>
+            <span class="gd-menu-filet" id="gd-accueil-filet" role="separator" hidden></span>
+            <button type="button" role="menuitem" data-action="ouvrir">Ouvrir un fichier .god2…</button>
+            <button type="button" role="menuitem" data-action="enregistrer">Enregistrer en .god2</button>
+            <span class="gd-menu-filet" role="separator"></span>
+            <button type="button" role="menuitem" data-action="exporter-choix">Exporter la sélection en SVG</button>
+            <button type="button" role="menuitem" data-action="exporter-tout">Exporter tous les cadres en SVG</button>
+          </div>
+        </div>
+        <div class="gd-menu-hote">
+          <button type="button" class="gd-menu-titre" data-menu="menu-affichage" aria-haspopup="menu" aria-expanded="false">Affichage</button>
+          <div class="gd-menu" id="menu-affichage" role="menu" hidden>
+            <button type="button" role="menuitem" data-action="zoom-ajuster">Tout voir <kbd>Maj 1</kbd></button>
+            <button type="button" role="menuitem" data-action="zoom-choix">Voir la sélection <kbd>Maj 2</kbd></button>
+            <button type="button" role="menuitem" data-action="zoom-100">Taille réelle <kbd>Maj 0</kbd></button>
+            <span class="gd-menu-filet" role="separator"></span>
+            <button type="button" role="menuitem" data-action="theme">Thème clair ou sombre</button>
+            <button type="button" role="menuitem" data-action="presenter">Présenter <kbd>P</kbd></button>
+          </div>
+        </div>
+        <div class="gd-menu-hote">
+          <button type="button" class="gd-menu-titre" data-menu="menu-aide" aria-haspopup="menu" aria-expanded="false">Aide</button>
+          <div class="gd-menu" id="menu-aide" role="menu" hidden>
+            <button type="button" role="menuitem" data-action="aide">Raccourcis et gestes</button>
+          </div>
+        </div>
       </nav>
+
+      <span class="gd-onglet-fichier" title="Le fichier ouvert">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.25 2.25H5A1.5 1.5 0 0 0 3.5 3.75v8.5A1.5 1.5 0 0 0 5 13.75h6a1.5 1.5 0 0 0 1.5-1.5V5.5z" /><path d="M9.25 2.25V4.5a1 1 0 0 0 1 1h2.25" /></svg>
+        <span id="gd-nom-fichier">Maquette</span>
+      </span>
+
+      <span class="gd-barre-fin">
+        <span class="gd-equipe" id="gd-equipe"></span>
+        <button type="button" class="gd-bouton gd-bouton-plein" data-action="presenter" title="Présenter : voir l'écran en vrai (P)">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4.75v10.5l8.5-5.25z" /></svg><span>Présenter</span>
+        </button>
+        <span class="gd-menu-hote gd-zoom">
+          <button type="button" class="gd-zoom-valeur" id="gd-zoom-valeur" data-menu="menu-zoom" aria-haspopup="menu" aria-expanded="false" title="Options de zoom">100 %</button>
+          <div class="gd-menu gd-menu-droite" id="menu-zoom" role="menu" hidden>
+            <button type="button" role="menuitem" data-action="zoom-plus">Zoom avant <kbd>+</kbd></button>
+            <button type="button" role="menuitem" data-action="zoom-moins">Zoom arrière <kbd>-</kbd></button>
+            <span class="gd-menu-filet" role="separator"></span>
+            <button type="button" role="menuitem" data-action="zoom-ajuster">Tout voir <kbd>Maj 1</kbd></button>
+            <button type="button" role="menuitem" data-action="zoom-choix">Voir la sélection <kbd>Maj 2</kbd></button>
+            <button type="button" role="menuitem" data-action="zoom-50">50 %</button>
+            <button type="button" role="menuitem" data-action="zoom-100">100 % <kbd>Maj 0</kbd></button>
+            <button type="button" role="menuitem" data-action="zoom-200">200 %</button>
+          </div>
+        </span>
+        <button type="button" class="gd-icone-bouton" data-action="theme" title="Thème clair ou sombre" aria-label="Changer de thème">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 11.6A6.4 6.4 0 0 1 8.4 4 6.4 6.4 0 1 0 16 11.6z" /></svg>
+        </button>
+      </span>
+
+      <!-- Sur un telephone, les volets s ouvrent d ici. -->
+      <button type="button" class="gd-bouton gd-barre-volet" data-action="volet-gauche" aria-controls="gd-volet-gauche" aria-expanded="false">Calques</button>
+      <button type="button" class="gd-bouton gd-barre-volet" data-action="volet-droit" aria-controls="gd-volet-droit" aria-expanded="false">Design</button>
     </header>
 
-    <!-- ============ Ecran 1 : deposer un document ============ -->
-    <section class="ecran" id="ecran-deposer" aria-label="Écran 1 : déposer un document">
-      <p class="ecran-barre">
-        <span class="ecran-numero">Écran 1</span>
-        <span class="ecran-adresse">safevault.app/deposer</span>
-      </p>
-      <div class="scene">
-        <header class="entete">
-          <span class="logo">
-            <span class="logo-nom">SafeVault</span>
-            <span class="logo-3d" aria-hidden="true"></span>
-            <span class="logo-s" aria-hidden="true">S</span>
-          </span>
-          <div class="verre compte">
-            <span class="jeton" aria-hidden="true">G</span>
-            <span class="qui">Gblewa</span>
-          </div>
-        </header>
-        <div class="assistant">
-          <header class="assistant-tete">
-            <h2 class="assistant-titre">Envoyer un document</h2>
-            <p class="assistant-chapo">Déposez-le, choisissez qui peut l'ouvrir. SafeVault chiffre tout à votre place.</p>
-          </header>
-          <div class="assistant-grille">
-            <nav class="etapes" aria-label="Étapes de l'envoi">
-              <ol>
-                <li>
-                  <button type="button" class="etape verre" data-etat="active" aria-current="step" disabled="">
-                    <span class="etape-numero" aria-hidden="true">1</span>
-                    <span class="etape-textes">
-                      <span class="etape-titre">Déposer</span>
-                      <span class="etape-aide">Le document à protéger</span>
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button type="button" class="etape" data-etat="a-venir" disabled="">
-                    <span class="etape-numero" aria-hidden="true">2</span>
-                    <span class="etape-textes">
-                      <span class="etape-titre">Partager</span>
-                      <span class="etape-aide">Qui, quel droit, combien de temps</span>
-                    </span>
-                  </button>
-                </li>
-              </ol>
-            </nav>
-            <section class="panneau verre-plaque" aria-labelledby="titre-etape">
-              <div class="panneau-colonnes" data-cote="true">
-                <div class="panneau-corps">
-                  <div class="panneau-tete">
-                    <h3 id="titre-etape" tabindex="-1" class="panneau-titre">Déposer des documents</h3>
-                    <p class="guide">Ajoutez vos fichiers dans la zone ci-dessous. Chacun est chiffré dès son arrivée.</p>
-                  </div>
-                  <div class="alerte" role="alert">
-                    <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path pathLength="1" d="M10.4 4.6 3.3 17.1a1.85 1.85 0 0 0 1.6 2.65h14.2a1.85 1.85 0 0 0 1.6-2.65L13.6 4.6a1.85 1.85 0 0 0-3.2 0z"></path>
-                      <path pathLength="1" d="M12 9.5v4"></path>
-                      <path pathLength="1" d="M12 16.75h.01"></path>
-                    </svg>
-                    <span class="texte">
-                      <b>Le fichier « photo-piece-identite.heic » n'a pas pu être ajouté.</b>
-                      <span>Ce format n'est pas accepté. Formats possibles : PDF, Word, JPG, PNG.</span>
-                    </span>
-                  </div>
-                  <ul class="fichiers" aria-label="Documents à déposer">
-                    <li>
-                      <div class="verre fichier" data-actif="true">
-                        <button type="button" class="fichier-voir" aria-pressed="true" aria-label="Voir l'aperçu de Contrat-Dantokpa-2026.pdf">
-                          <svg class="icone-fichier" data-genre="pdf" viewBox="0 0 34 40" aria-hidden="true">
-                            <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
-                            <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
-                            <path class="trait" d="M12 13.5h10"></path>
-                            <path class="trait" d="M12 17.5h14"></path>
-                            <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
-                            <text class="texte" x="13.5" y="30.6" text-anchor="middle">PDF</text>
-                          </svg>
-                          <span class="infos">
-                            <span class="nom" title="Contrat-Dantokpa-2026.pdf">Contrat-Dantokpa-2026.pdf</span>
-                            <span class="meta" aria-live="polite">
-                              <b>2,4 Mo</b> · chiffré, prêt à déposer
-                            </span>
-                            <span class="progres" data-fini="true" aria-hidden="true">
-                              <span style="width: 100%"></span>
-                            </span>
-                          </span>
-                        </button>
-                        <button type="button" class="croix" aria-label="Retirer Contrat-Dantokpa-2026.pdf">
-                          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path pathLength="1" d="m6.75 6.75 10.5 10.5"></path>
-                            <path pathLength="1" d="m17.25 6.75-10.5 10.5"></path>
-                          </svg>
-                        </button>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="verre fichier" data-actif="false">
-                        <button type="button" class="fichier-voir" aria-pressed="false" aria-label="Voir l'aperçu de piece-identite.png">
-                          <svg class="icone-fichier" data-genre="image" viewBox="0 0 34 40" aria-hidden="true">
-                            <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
-                            <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
-                            <circle class="trait" cx="14.5" cy="15" r="1.75"></circle>
-                            <path class="trait" d="m11 22 4-3.5 3 2.5 2.5-2 4.5 3.5"></path>
-                            <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
-                            <text class="texte" x="13.5" y="30.6" text-anchor="middle">IMG</text>
-                          </svg>
-                          <span class="infos">
-                            <span class="nom" title="piece-identite.png">piece-identite.png</span>
-                            <span class="meta" aria-live="polite">
-                              <b>1,1 Mo</b> · chiffré, prêt à déposer
-                            </span>
-                            <span class="progres" data-fini="true" aria-hidden="true">
-                              <span style="width: 100%"></span>
-                            </span>
-                          </span>
-                        </button>
-                        <button type="button" class="croix" aria-label="Retirer piece-identite.png">
-                          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path pathLength="1" d="m6.75 6.75 10.5 10.5"></path>
-                            <path pathLength="1" d="m17.25 6.75-10.5 10.5"></path>
-                          </svg>
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
-                  <div class="verre depot" data-survol="false" data-compacte="true">
-                    <span class="rond">
-                      <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <g class="icone-fleche">
-                          <path pathLength="1" d="M12 3.75v10.5"></path>
-                          <path pathLength="1" d="m7.75 10 4.25 4.25L16.25 10"></path>
-                        </g>
-                        <path pathLength="1" d="M4.75 15.25v2a2.5 2.5 0 0 0 2.5 2.5h9.5a2.5 2.5 0 0 0 2.5-2.5v-2"></path>
-                      </svg>
-                    </span>
-                    <span class="depot-textes">
-                      <p>Ajoutez un autre document</p>
-                      <p class="ou">Glissez-le ici, ou parcourez vos fichiers.</p>
-                    </span>
-                    <button type="button" class="bouton-verre verre verre-appuyable">
-                      <span class="bouton-verre-texte">Parcourir mes fichiers</span>
-                    </button>
-                  </div>
-                  <span class="securite">
-                    <svg class="document-vivant" viewBox="0 0 40 48" aria-hidden="true">
-                      <defs>
-                        <linearGradient id="papier" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0" stop-color="#ffffff"></stop>
-                          <stop offset="1" stop-color="#eef0f8"></stop>
-                        </linearGradient>
-                        <linearGradient id="pli" x1="0" y1="1" x2="1" y2="0">
-                          <stop offset="0" stop-color="#f6f7fc"></stop>
-                          <stop offset="1" stop-color="#cfd4e6"></stop>
-                        </linearGradient>
-                      </defs>
-                      <path class="feuille" d="M8 2.5h17.5l10 10V41a4.5 4.5 0 0 1-4.5 4.5H8A4.5 4.5 0 0 1 3.5 41V7A4.5 4.5 0 0 1 8 2.5z" fill="url(#papier)"></path>
-                      <path d="M25.5 2.5 35.5 12.5V16l-10-6z" fill="#1b2350" opacity="0.07"></path>
-                      <path class="pli" d="M25.5 2.5V9a3.5 3.5 0 0 0 3.5 3.5h6.5z" fill="url(#pli)"></path>
-                      <path class="ligne ligne-1" d="M9 18.5c1.5-1.5 3 1.5 4.5 0s3 1.5 4.5 0 3 1.5 4.5 0" pathLength="1"></path>
-                      <path class="ligne ligne-2" d="M9 24.5c1.75-1.4 3.5 1.4 5.25 0s3.5 1.4 5.25 0 3.5 1.4 5.25 0 3.5 1.4 5.25 0" pathLength="1"></path>
-                      <path class="ligne ligne-3" d="M9 29.5c1.6-1.4 3.2 1.4 4.8 0s3.2 1.4 4.8 0 3.2 1.4 4.8 0 3.2 1.4 3.6 0" pathLength="1"></path>
-                      <path class="ligne ligne-4" d="M9 34.5c1.75-1.4 3.5 1.4 5.25 0s3.5 1.4 5.25 0 3.5 1.4 5.25 0 3.5 1.4 5.25 0" pathLength="1"></path>
-                      <path class="ligne ligne-5" d="M9 39.5c1.5-1.4 3 1.4 4.5 0s3 1.4 4.5 0" pathLength="1"></path>
-                    </svg>
-                    <span>Chiffré de bout en bout. Vous seul, puis vos destinataires, pouvez l'ouvrir. Formats acceptés : PDF, Word, JPG, PNG.</span>
-                  </span>
-                </div>
-                <aside class="panneau-cote">
-                  <figure class="apercu">
-                    <figcaption class="apercu-tete">
-                      <span class="apercu-titre">Aperçu</span>
-                      <button type="button" class="bouton-discret petit">
-                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                          <path pathLength="1" d="M14.25 4.75h5v5"></path>
-                          <path pathLength="1" d="m19.25 4.75-5.5 5.5"></path>
-                          <path pathLength="1" d="M9.75 19.25h-5v-5"></path>
-                          <path pathLength="1" d="m4.75 19.25 5.5-5.5"></path>
-                        </svg>Agrandir
-                      </button>
-                    </figcaption>
-                    <div class="apercu-cadre defilement-fin">
-                      <div class="apercu-pages">
-                        <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 1 du contrat">
-                          <use href="#feuille-une">
-                        </use>
-                      </svg>
-                      <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 2 du contrat">
-                        <use href="#feuille-deux">
-                      </use>
-                    </svg>
-                  </div>
-                </div>
-              </figure>
-            </aside>
-          </div>
-          <div class="panneau-barre">
-            <div class="barre-groupe">
-              <button type="button" class="bouton-discret sortie">Annuler</button>
-            </div>
-            <div class="barre-groupe">
-              <button type="button" class="bouton-verre verre verre-appuyable plein">
-                <span class="bouton-verre-texte">Déposer les 2 documents
-                  <span class="fleche" aria-hidden="true">
-                    <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path pathLength="1" d="M4.75 12h14.5"></path>
-                      <path pathLength="1" d="m13.75 6.5 5.5 5.5-5.5 5.5"></path>
-                    </svg>
-                  </span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-    </section>
+    <!-- ============ Rail : ce que le volet de gauche montre ============ -->
+    <nav class="gd-rail" aria-label="Contenu du volet">
+      <button type="button" class="gd-rail-bouton" data-section="calques" aria-pressed="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 4.5 8 4-8 4-8-4z" /><path d="m4 12.5 8 4 8-4" /><path d="m4 16.25 8 4 8-4" /></svg>
+        <span>Calques</span>
+      </button>
+      <button type="button" class="gd-rail-bouton" data-section="composants" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 3.25 3.25L12 10 8.75 6.75z" /><path d="m12 14 3.25 3.25L12 20.5l-3.25-3.25z" /><path d="m6.75 8.75 3.25 3.25-3.25 3.25L3.5 12z" /><path d="m17.25 8.75 3.25 3.25-3.25 3.25L14 12z" /></svg>
+        <span>Composants</span>
+      </button>
+      <button type="button" class="gd-rail-bouton" data-section="styles" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9.5" r="4.75" /><circle cx="15" cy="9.5" r="4.75" /><circle cx="12" cy="14.75" r="4.75" /></svg>
+        <span>Styles</span>
+      </button>
+    </nav>
 
-    <!-- ============ Ecran 2 : partager avec un collegue ============ -->
-    <section class="ecran" id="ecran-partager" aria-label="Écran 2 : partager avec un collègue">
-      <p class="ecran-barre">
-        <span class="ecran-numero">Écran 2</span>
-        <span class="ecran-adresse">safevault.app/partager</span>
-      </p>
-      <div class="scene">
-        <header class="entete">
-          <span class="logo">
-            <span class="logo-nom">SafeVault</span>
-            <span class="logo-3d" aria-hidden="true"></span>
-            <span class="logo-s" aria-hidden="true">S</span>
-          </span>
-          <div class="verre compte">
-            <span class="jeton" aria-hidden="true">G</span>
-            <span class="qui">Gblewa</span>
-          </div>
-        </header>
-        <div class="assistant">
-          <header class="assistant-tete">
-            <h2 class="assistant-titre">Envoyer un document</h2>
-            <p class="assistant-chapo">Déposez-le, choisissez qui peut l'ouvrir. SafeVault chiffre tout à votre place.</p>
-          </header>
-          <div class="assistant-grille">
-            <nav class="etapes" aria-label="Étapes de l'envoi">
-              <ol>
-                <li>
-                  <button type="button" class="etape" data-etat="faite">
-                    <span class="etape-numero" aria-hidden="true">✓</span>
-                    <span class="etape-textes">
-                      <span class="etape-titre">Déposer
-                        <span class="visuellement-cache"> (terminée)</span>
-                      </span>
-                      <span class="etape-aide">Le document à protéger</span>
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button type="button" class="etape verre" data-etat="active" aria-current="step" disabled="">
-                    <span class="etape-numero" aria-hidden="true">2</span>
-                    <span class="etape-textes">
-                      <span class="etape-titre">Partager</span>
-                      <span class="etape-aide">Qui, quel droit, combien de temps</span>
-                    </span>
-                  </button>
-                </li>
-              </ol>
-            </nav>
-            <section class="panneau verre-plaque" aria-labelledby="titre-etape-2">
-              <div class="panneau-colonnes" data-cote="true">
-                <div class="panneau-corps">
-                  <ul class="fichiers" aria-label="Documents déposés">
-                    <li>
-                      <div class="verre fichier" data-actif="true">
-                        <button type="button" class="fichier-voir" aria-pressed="true" aria-label="Voir l'aperçu de Contrat-Dantokpa-2026.pdf">
-                          <svg class="icone-fichier" data-genre="pdf" viewBox="0 0 34 40" aria-hidden="true">
-                            <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
-                            <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
-                            <path class="trait" d="M12 13.5h10"></path>
-                            <path class="trait" d="M12 17.5h14"></path>
-                            <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
-                            <text class="texte" x="13.5" y="30.6" text-anchor="middle">PDF</text>
-                          </svg>
-                          <span class="infos">
-                            <span class="nom" title="Contrat-Dantokpa-2026.pdf">Contrat-Dantokpa-2026.pdf</span>
-                            <span class="meta" aria-live="polite">
-                              <b>2,4 Mo</b> · déposé et chiffré
-                            </span>
-                          </span>
-                        </button>
-                        <span class="cadenas-3d" aria-hidden="true"></span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="verre fichier" data-actif="false">
-                        <button type="button" class="fichier-voir" aria-pressed="false" aria-label="Voir l'aperçu de piece-identite.png">
-                          <svg class="icone-fichier" data-genre="image" viewBox="0 0 34 40" aria-hidden="true">
-                            <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
-                            <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
-                            <circle class="trait" cx="14.5" cy="15" r="1.75"></circle>
-                            <path class="trait" d="m11 22 4-3.5 3 2.5 2.5-2 4.5 3.5"></path>
-                            <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
-                            <text class="texte" x="13.5" y="30.6" text-anchor="middle">IMG</text>
-                          </svg>
-                          <span class="infos">
-                            <span class="nom" title="piece-identite.png">piece-identite.png</span>
-                            <span class="meta" aria-live="polite">
-                              <b>1,1 Mo</b> · déposé et chiffré
-                            </span>
-                          </span>
-                        </button>
-                        <span class="cadenas-3d" aria-hidden="true"></span>
-                      </div>
-                    </li>
-                  </ul>
-                  <div class="panneau-tete">
-                    <h3 id="titre-etape-2" tabindex="-1" class="panneau-titre">Partager avec un collègue</h3>
-                    <p class="guide">Ajoutez la personne qui pourra consulter ces documents. Elle recevra un lien sécurisé, rien ne quitte le coffre.</p>
-                  </div>
-                  <div class="champ-bloc">
-                    <div class="champ-tete">
-                      <label class="champ-libelle" for="champ-destinataire-2">Destinataire
-                        <span class="champ-requis" aria-hidden="true">*</span>
-                      </label>
-                      <span class="bulle">
-                        <button type="button" class="bulle-bouton" aria-label="À quoi sert ce champ ?" aria-describedby="_r_a_-2">?</button>
-                        <span role="tooltip" id="_r_a_-2" class="bulle-texte">Seules les personnes ajoutées ici pourront ouvrir le lien. Un collègue hors annuaire s'ajoute par son adresse e-mail.</span>
-                      </span>
-                    </div>
-                    <div class="champ-zone">
-                      <div class="verre champ">
-                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                          <circle pathLength="1" cx="12" cy="8.25" r="3.5"></circle>
-                          <path pathLength="1" d="M5.25 19.5c.9-3.1 3.55-5 6.75-5s5.85 1.9 6.75 5"></path>
-                        </svg>
-                        <input id="champ-destinataire-2" role="combobox" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="propositions" placeholder="Nom ou e-mail du collègue" type="text" value="">
-                      </div>
-                    </div>
-                    <ul class="destinataires" aria-label="Destinataires retenus">
-                      <li>
-                        <div class="verre destinataire">
-                          <span class="jeton" aria-hidden="true">AS</span>
-                          <span class="ligne">
-                            <b>Ayélé Sagbo</b>
-                            <small>a.sagbo@entreprise.bj</small>
-                          </span>
-                          <button type="button" class="croix" aria-label="Retirer Ayélé Sagbo">
-                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                              <path pathLength="1" d="m6.75 6.75 10.5 10.5"></path>
-                              <path pathLength="1" d="m17.25 6.75-10.5 10.5"></path>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                    <p class="champ-aide" aria-live="polite">1 personne recevra le lien. Vous pouvez en ajouter d'autres.</p>
-                  </div>
-                  <div class="champ-bloc">
-                    <div class="champ-tete">
-                      <span class="champ-libelle" id="libelle-droit-2">Ce qu'elle pourra faire</span>
-                      <span class="bulle">
-                        <button type="button" class="bulle-bouton" aria-label="À quoi sert ce champ ?" aria-describedby="_r_c_-2">?</button>
-                        <span role="tooltip" id="_r_c_-2" class="bulle-texte">Consulter suffit dans la plupart des cas. Modifier permet aussi de remplacer le document par une nouvelle version.</span>
-                      </span>
-                    </div>
-                    <div class="choix-cartes" role="radiogroup" aria-labelledby="libelle-droit-2">
-                      <button type="button" class="verre verre-appuyable choix-carte" role="radio" aria-checked="true">
-                        <span class="choix-icone">
-                          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path pathLength="1" d="M2.75 12C4.6 8.1 8 5.75 12 5.75s7.4 2.35 9.25 6.25C19.4 15.9 16 18.25 12 18.25S4.6 15.9 2.75 12z"></path>
-                            <circle pathLength="1" cx="12" cy="12" r="3"></circle>
-                          </svg>
-                        </span>
-                        <span class="choix-textes">
-                          <span class="choix-texte">Peut consulter</span>
-                          <span class="choix-detail">Lire et télécharger</span>
-                        </span>
-                        <span class="choix-pastille" aria-hidden="true">
-                          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path pathLength="1" d="m5.25 12.5 4.25 4.25 9.25-9.5"></path>
-                          </svg>
-                        </span>
-                      </button>
-                      <button type="button" class="verre verre-appuyable choix-carte" role="radio" aria-checked="false">
-                        <span class="choix-icone">
-                          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path pathLength="1" d="m14.75 5.75 3.5 3.5"></path>
-                            <path pathLength="1" d="M4.75 19.25 5.5 15.5 15.9 5.1a2.47 2.47 0 0 1 3.5 3.5L9 19l-4.25.25z"></path>
-                          </svg>
-                        </span>
-                        <span class="choix-textes">
-                          <span class="choix-texte">Peut modifier</span>
-                          <span class="choix-detail">Déposer une nouvelle version</span>
-                        </span>
-                        <span class="choix-pastille" aria-hidden="true"></span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="champ-bloc">
-                    <div class="champ-tete">
-                      <span class="champ-libelle" id="libelle-duree-2">Durée de l'accès</span>
-                      <span class="bulle">
-                        <button type="button" class="bulle-bouton" aria-label="À quoi sert ce champ ?" aria-describedby="_r_f_-2">?</button>
-                        <span role="tooltip" id="_r_f_-2" class="bulle-texte">Par sécurité, le lien s'éteint tout seul. Vous pourrez toujours le retirer plus tôt.</span>
-                      </span>
-                    </div>
-                    <div class="pastilles" role="radiogroup" aria-labelledby="libelle-duree-2">
-                      <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="false">24 heures</button>
-                      <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="true">7 jours</button>
-                      <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="false">30 jours</button>
-                      <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="false">Sans limite</button>
-                    </div>
-                    <p class="champ-aide" aria-live="polite">Le lien cessera de fonctionner le mercredi 14 octobre.</p>
-                  </div>
-                </div>
-                <aside class="panneau-cote">
-                  <figure class="apercu">
-                    <figcaption class="apercu-tete">
-                      <span class="apercu-titre">Aperçu</span>
-                      <button type="button" class="bouton-discret petit">
-                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                          <path pathLength="1" d="M14.25 4.75h5v5"></path>
-                          <path pathLength="1" d="m19.25 4.75-5.5 5.5"></path>
-                          <path pathLength="1" d="M9.75 19.25h-5v-5"></path>
-                          <path pathLength="1" d="m4.75 19.25 5.5-5.5"></path>
-                        </svg>Agrandir
-                      </button>
-                    </figcaption>
-                    <div class="apercu-cadre defilement-fin">
-                      <div class="apercu-pages">
-                        <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 1 du contrat">
-                          <use href="#feuille-une">
-                        </use>
-                      </svg>
-                      <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 2 du contrat">
-                        <use href="#feuille-deux">
-                      </use>
-                    </svg>
-                  </div>
-                </div>
-              </figure>
-            </aside>
-          </div>
-          <div class="panneau-barre">
-            <div class="barre-groupe">
-              <button type="button" class="bouton-discret sortie">Annuler</button>
-            </div>
-            <div class="barre-groupe">
-              <button type="button" class="bouton-discret">
-                <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path pathLength="1" d="M19.25 12H4.75"></path>
-                  <path pathLength="1" d="M10.25 6.5 4.75 12l5.5 5.5"></path>
-                </svg>Retour
-              </button>
-              <button type="button" class="bouton-verre verre verre-appuyable plein">
-                <span class="bouton-verre-texte">Partager les documents
-                  <span class="fleche" aria-hidden="true">
-                    <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path pathLength="1" d="M4.75 12h14.5"></path>
-                      <path pathLength="1" d="m13.75 6.5 5.5 5.5-5.5 5.5"></path>
-                    </svg>
-                  </span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </section>
+    <!-- ============ Volet gauche ============ -->
+    <aside class="gd-volet gd-volet-gauche" id="gd-volet-gauche" aria-label="Calques, composants et styles">
+      <div class="gd-volet-tete">
+        <div class="gd-sections" role="tablist" aria-label="Contenu du volet">
+          <button type="button" class="gd-section-onglet" role="tab" data-section="calques" aria-selected="true">Calques</button>
+          <button type="button" class="gd-section-onglet" role="tab" data-section="composants" aria-selected="false">Composants</button>
+          <button type="button" class="gd-section-onglet" role="tab" data-section="styles" aria-selected="false">Styles</button>
+        </div>
+        <button type="button" class="gd-icone-bouton gd-fermer-volet" data-action="volet-gauche" aria-label="Fermer le volet">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 5.5 9 9M14.5 5.5l-9 9" /></svg>
+        </button>
       </div>
-    </div>
-  </div>
-    </section>
 
-    <p class="pied">Maquette EC1, ergonomie. Police Wura mi by GemmaS.</p>
-  </main>
+      <div class="gd-pan" data-pan="calques">
+        <label class="gd-recherche">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="4.75" /><path d="m12.5 12.5 3.5 3.5" /></svg>
+          <span class="gd-cache">Chercher un calque</span>
+          <input type="search" id="gd-recherche" placeholder="Chercher un calque" autocomplete="off" />
+        </label>
+        <div class="gd-arbre gd-defile" id="gd-arbre" role="tree" aria-label="Calques de la page"></div>
+      </div>
+      <div class="gd-pan gd-defile" data-pan="composants" id="gd-composants" hidden></div>
+      <div class="gd-pan gd-defile" data-pan="styles" id="gd-styles" hidden></div>
+    </aside>
+
+    <!-- ============ La toile ============ -->
+    <main class="gd-toile" id="gd-toile" aria-label="Toile : les écrans de la maquette">
+      <div class="gd-monde" id="gd-monde"></div>
+      <div class="gd-capteur" id="gd-capteur"></div>
+      <div class="gd-dessus" id="gd-dessus" aria-hidden="true">
+        <span class="gd-contour gd-contour-survol" id="gd-survol" hidden></span>
+        <span class="gd-contour gd-contour-choix" id="gd-choix" hidden><span class="gd-mesure" id="gd-mesure"></span></span>
+      </div>
+      <p class="gd-attente" id="gd-attente" role="status">Préparation des écrans…</p>
+      <p class="gd-depose" id="gd-depose" hidden>Lâchez le fichier .god2 pour l'ouvrir</p>
+
+      <!-- Les outils. La maquette se lit, elle ne se modifie pas : seuls les
+           outils de lecture sont actifs, les autres sont montres pour memoire. -->
+      <div class="gd-outils" role="toolbar" aria-label="Outils" aria-orientation="vertical">
+        <button type="button" class="gd-outil" data-outil="deplacer" aria-pressed="true" title="Déplacer et choisir (V)" aria-label="Déplacer et choisir">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5 15.8 9l-4.7 1.5-1.6 4.8z" /></svg>
+        </button>
+        <button type="button" class="gd-outil" data-outil="main" aria-pressed="false" title="Main : se déplacer sur la toile (H, ou Espace maintenue)" aria-label="Main">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 11.5V5.75a1.25 1.25 0 0 1 2.5 0V10 4.5a1.25 1.25 0 0 1 2.5 0V10 5.75a1.25 1.25 0 0 1 2.5 0v6.75c0 2.9-2 4.75-4.9 4.75-2.1 0-3.3-.85-4.45-2.7L3.5 11.9a1.15 1.15 0 0 1 1.9-1.3L7 12.4" /></svg>
+        </button>
+        <button type="button" class="gd-outil gd-outil-ajuster" data-action="zoom-ajuster" title="Tout voir (Maj 1)" aria-label="Tout voir">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7.5V4h3.5M16 7.5V4h-3.5M4 12.5V16h3.5M16 12.5V16h-3.5" /></svg>
+        </button>
+        <span class="gd-outils-filet" aria-hidden="true"></span>
+        <button type="button" class="gd-outil" aria-disabled="true" title="Cadre (F) · maquette en lecture seule" aria-label="Cadre, indisponible en lecture seule">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3v14M13 3v14M3 7h14M3 13h14" /></svg>
+        </button>
+        <button type="button" class="gd-outil" aria-disabled="true" title="Forme (R) · maquette en lecture seule" aria-label="Forme, indisponible en lecture seule">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="1.75" /></svg>
+        </button>
+        <button type="button" class="gd-outil" aria-disabled="true" title="Trait (L) · maquette en lecture seule" aria-label="Trait, indisponible en lecture seule">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4.5 15.5 11-11" /></svg>
+        </button>
+        <button type="button" class="gd-outil" aria-disabled="true" title="Plume (P) · maquette en lecture seule" aria-label="Plume, indisponible en lecture seule">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 16 1.4-5.3L12.6 3.5l3.9 3.9-7.2 7.2z" /><path d="m10.9 5.2 3.9 3.9" /></svg>
+        </button>
+        <button type="button" class="gd-outil" aria-disabled="true" title="Texte (T) · maquette en lecture seule" aria-label="Texte, indisponible en lecture seule">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 6V4.25h10V6M10 4.25v11.5M8 15.75h4" /></svg>
+        </button>
+        <button type="button" class="gd-outil" aria-disabled="true" title="Image (I) · maquette en lecture seule" aria-label="Image, indisponible en lecture seule">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3.5" y="4.5" width="13" height="11" rx="1.75" /><path d="m4 13.5 3.5-3.25 2.75 2.25 2-1.75 3.75 3" /></svg>
+        </button>
+      </div>
+
+      <!-- ============ Volet droit : les proprietes et l export ============ -->
+      <aside class="gd-volet gd-volet-droit" id="gd-volet-droit" aria-label="Propriétés et export">
+        <div class="gd-volet-tete">
+          <div class="gd-onglets" role="tablist" aria-label="Propriétés ou export">
+            <button type="button" class="gd-onglet" role="tab" data-onglet="design" aria-selected="true">Design</button>
+            <button type="button" class="gd-onglet" role="tab" data-onglet="export" aria-selected="false">Export</button>
+          </div>
+          <button type="button" class="gd-icone-bouton gd-fermer-volet" data-action="volet-droit" aria-label="Fermer le volet">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 5.5 9 9M14.5 5.5l-9 9" /></svg>
+          </button>
+        </div>
+        <div class="gd-fiche gd-defile" id="gd-fiche" aria-live="polite"></div>
+        <div class="gd-fiche gd-defile" id="gd-export" hidden>
+          <section class="gd-bloc">
+            <h3 class="gd-bloc-titre">Sélection</h3>
+            <p class="gd-note" id="gd-export-quoi">Rien de choisi : l'export porte sur tous les cadres.</p>
+            <button type="button" class="gd-bouton gd-bouton-large" data-action="exporter-choix">Exporter en SVG</button>
+          </section>
+          <section class="gd-bloc">
+            <h3 class="gd-bloc-titre">Page</h3>
+            <button type="button" class="gd-bouton gd-bouton-large" data-action="exporter-tout">Tous les cadres, un SVG par cadre</button>
+          </section>
+          <section class="gd-bloc">
+            <h3 class="gd-bloc-titre">Fichier</h3>
+            <button type="button" class="gd-bouton gd-bouton-large" data-action="enregistrer">Enregistrer en .god2</button>
+            <p class="gd-note">
+              Le <b>.god2</b> se rouvre dans god2-design. Le <b>SVG</b> s'ouvre dans les éditeurs de design
+              (Figma, Lunacy, Penpot, Illustrator) : formes, textes et icônes y restent modifiables. Les textes
+              y sont en Outfit, dont Wura mi est une instance.
+            </p>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ============ Presentation : un ecran en vrai, a la taille de la fenetre ============ -->
+    <div class="gd-presentation" id="gd-presentation" role="dialog" aria-modal="true" aria-label="Présentation de la maquette" hidden>
+      <div class="gd-presentation-barre">
+        <button type="button" class="gd-bouton" data-action="quitter-presentation">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M15.5 10h-11M8.5 5.5 4 10l4.5 4.5" /></svg>Atelier
+        </button>
+        <span class="gd-presentation-titre" id="gd-presentation-titre"></span>
+        <span class="gd-presentation-pas">
+          <button type="button" class="gd-icone-bouton" data-action="presentation-avant" aria-label="Écran précédent"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12 5 7 10l5 5" /></svg></button>
+          <button type="button" class="gd-icone-bouton" data-action="presentation-apres" aria-label="Écran suivant"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>
+        </span>
+      </div>
+      <iframe class="gd-presentation-ecran" id="gd-presentation-ecran" title="Écran de la maquette" sandbox="allow-scripts"></iframe>
+    </div>
+
+    <!-- ============ Aide ============ -->
+    <dialog class="gd-aide" id="gd-aide" aria-labelledby="gd-aide-titre">
+      <h2 id="gd-aide-titre">Raccourcis et gestes</h2>
+      <dl>
+        <div><dt>Se déplacer</dt><dd>Molette, <kbd>Espace</kbd> + glisser, ou l'outil Main <kbd>H</kbd></dd></div>
+        <div><dt>Zoomer</dt><dd><kbd>Ctrl</kbd> + molette, <kbd>+</kbd> et <kbd>-</kbd>, ou pincer</dd></div>
+        <div><dt>Tout voir</dt><dd><kbd>Maj</kbd> <kbd>1</kbd></dd></div>
+        <div><dt>Voir la sélection</dt><dd><kbd>Maj</kbd> <kbd>2</kbd>, ou double-clic sur un calque</dd></div>
+        <div><dt>Taille réelle</dt><dd><kbd>Maj</kbd> <kbd>0</kbd></dd></div>
+        <div><dt>Choisir</dt><dd>Clic sur la toile ou dans les calques, outil <kbd>V</kbd></dd></div>
+        <div><dt>Calque parent</dt><dd><kbd>Maj</kbd> <kbd>Entrée</kbd></dd></div>
+        <div><dt>Ne plus rien choisir</dt><dd><kbd>Échap</kbd></dd></div>
+        <div><dt>Présenter</dt><dd><kbd>P</kbd>, puis les flèches pour changer d'écran</dd></div>
+        <div><dt>Ouvrir un .god2</dt><dd>Menu Fichier, ou glisser le fichier sur la fenêtre</dd></div>
+      </dl>
+      <form method="dialog"><button class="gd-bouton gd-bouton-plein">Fermer</button></form>
+    </dialog>
+
+    <input type="file" id="gd-fichier" accept=".god2,application/json" hidden />
+    <p class="gd-annonce" id="gd-annonce" role="status" hidden></p>
+  </div>
+
+  <!-- ============ La maquette : un document .god2, tel qu on l enregistre ============ -->
+  <script type="application/json" id="document-god2">
+/*{{DOCUMENT_GOD2}}*/
+  </script>
 
   <script>
-  // La lumiere du verre suit la main, comme dans l application
-  // (src/verre/useLumiere.ts) : sous le pointeur, le verre recoit le point de
-  // depart de l onde (--lx, --ly) et l angle de son arete la plus vive
-  // (--angle), une ecriture par image au plus. Le reglage systeme "moins de
-  // mouvement" l emporte.
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var attente = false;
-    var dernier = null;
-
-    function poser() {
-      attente = false;
-      var e = dernier;
-      if (!e || !e.target || !e.target.closest) return;
-      var cible = e.target.closest('.verre');
-      if (!cible) return;
-      var b = cible.getBoundingClientRect();
-      var x = e.clientX - b.left;
-      var y = e.clientY - b.top;
-      cible.style.setProperty('--lx', x + 'px');
-      cible.style.setProperty('--ly', y + 'px');
-      var angle = (Math.atan2(y - b.height / 2, x - b.width / 2) * 180) / Math.PI + 90;
-      cible.style.setProperty('--angle', angle + 'deg');
-    }
-
-    window.addEventListener('pointermove', function (e) {
-      dernier = e;
-      if (attente) return;
-      attente = true;
-      window.requestAnimationFrame(poser);
-    }, { passive: true });
-  })();
+/*{{SCRIPT_ATELIER}}*/
   </script>
 </body>
 </html>

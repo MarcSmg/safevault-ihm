@@ -16,9 +16,11 @@ vraiment cet utilisateur, ou est-ce que ca complique sa vie ?
 
 | chemin | role |
 |---|---|
-| `maquette-safevault.html` | la **reference statique** : les deux ecrans, figes, dans un seul fichier a ouvrir au double-clic |
+| `maquette-safevault.html` | la **reference statique** : le parcours en six ecrans figes, ouverts dans l'atelier **god2-design**, dans un seul fichier a ouvrir au double-clic |
+| `maquette-safevault.god2` | la meme maquette, seule, au format `.god2` que god2-design ouvre et enregistre |
+| `maquette-svg/` | les douze cadres exportes en SVG, pour les autres editeurs de design (Figma, Lunacy, Penpot, Illustrator) |
 | `src/`, `index.html`, `public/` | l'**application** React, ou les deux ecrans fonctionnent vraiment |
-| `outils/` | ce qui fabrique la maquette statique et les images du logo |
+| `outils/` | ce qui fabrique la maquette statique (et son atelier god2-design) et les images du logo |
 | `polices/` | Wura mi by GemmaS, la police de l'interface |
 
 Les deux montrent la meme interface. La maquette statique sert de reference :
@@ -26,13 +28,63 @@ elle ne bouge pas, elle s'ouvre partout, on peut la joindre a un rendu.
 L'application sert a essayer le parcours pour de vrai, par exemple pour le
 mini-audit.
 
-### La maquette statique
+### La maquette statique, dans god2-design
 
-Le fichier est **autonome** (environ 290 Ko) : les polices et les images sont
+Le fichier est **autonome** (environ 520 Ko) : les polices et les images sont
 embarquees en base64, il n'appelle aucun serveur. Il s'ouvre par un double-clic
-dans n'importe quel navigateur, en ligne ou hors ligne. Les boutons ne menent
-nulle part, aucun fichier n'est lu : chaque ecran est fige dans l'etat qui
-montre le mieux ce qu'il sait faire. Les survols, eux, sont vivants.
+dans n'importe quel navigateur, en ligne ou hors ligne.
+
+Il s'ouvre dans **god2-design**, un atelier ecrit pour ce projet qui presente la
+maquette comme un fichier de design :
+
+- **la barre** : les menus Fichier, Affichage et Aide, le fichier ouvert,
+  Presenter, le zoom, le theme clair ou sombre ;
+- **le volet de gauche** : les calques de chaque ecran (avec une recherche),
+  les composants et combien de fois ils servent, les styles de couleur et de
+  texte ;
+- **la toile**, au centre : douze cadres, les six ecrans en bureau (1440) et
+  en telephone (390). On s'y deplace a la molette ou avec la main (touche `H`,
+  ou `Espace` maintenue), on zoome avec `Ctrl` + molette, `+` et `-` ;
+  `Maj 1` montre tout, `Maj 2` le calque choisi, `Maj 0` revient a 100 % ;
+- **les proprietes**, a droite : un clic sur un element donne sa position, ses
+  dimensions, son rayon, ses couleurs, sa typographie, ses effets. L'onglet
+  Export enregistre la selection en SVG ou le fichier en `.god2` ;
+- **Presenter** (touche `P`) : l'ecran en vrai, a la taille de la fenetre, avec
+  ses survols. Sur un telephone, le fichier s'ouvre directement ainsi.
+
+La maquette se lit, elle ne se modifie pas : les outils de dessin sont montres
+mais inactifs, les boutons des ecrans ne menent nulle part, aucun fichier
+n'est lu.
+
+Les six ecrans suivent le parcours, de gauche a droite :
+
+1. **Deposer, au depart** : la zone de depot vide, avant le premier document ;
+2. **Deposer, documents ajoutes** : deux documents chiffres, un fichier refuse
+   et son message, l'apercu ;
+3. **Apercu agrandi** : la fenetre qui montre le document en grand ;
+4. **Partager, a l'arrivee** : le formulaire vide, et la notification
+   « 2 documents deposes » ;
+5. **Partager, pret a envoyer** : un destinataire, un droit, une duree ;
+6. **Documents partages** : la fin du parcours, sa notification, et le bouton
+   pour envoyer un autre document.
+
+### Le format .god2 et les autres editeurs
+
+Une maquette est un document `.god2` : ses ecrans, leurs styles, les noms de
+ses calques, dans un seul fichier JSON autonome. god2-design en ouvre un par le
+menu Fichier ou en le glissant sur la fenetre. Le format est decrit dans
+`outils/maquette/FORMAT-GOD2.md`.
+
+Aucun editeur de design n'ouvre une extension qu'il ne connait pas. Pour
+Figma, Lunacy, Penpot ou Illustrator, god2-design exporte chaque cadre en
+**SVG** : un groupe par calque, des formes et des textes modifiables. Les
+douze cadres sont deja exportes dans `maquette-svg/`. Verifie dans Lunacy :
+le cadre s'ouvre a sa taille, avec ses calques, ses textes et ses icones. Les
+ombres et les reflets du verre ne passent pas dans le SVG.
+
+god2-design existe aussi comme application a part (un projet Next, dans son
+propre depot), qui range plusieurs maquettes `.god2` et les ouvre dans le
+meme atelier. Les trois fichiers de l'atelier y sont les memes qu'ici.
 
 ### L'application
 
@@ -173,17 +225,27 @@ trait de 1,5, bouts arrondis. Elles se retracent au survol de leur bouton.
 npm run maquette
 ```
 
-Le script `outils/maquette.mjs` lit le gabarit (`outils/maquette/gabarit.html`,
-le balisage des deux ecrans), y verse les feuilles de style de l'application
-telles qu'elles sont dans `src/`, embarque les polices et les deux images du
-logo, et ecrit `maquette-safevault.html`. Il n'a besoin que de Node.
+Le script `outils/maquette.mjs` ecrit `maquette-safevault.god2` et
+`maquette-safevault.html` a partir de `outils/maquette/` :
+
+- `gabarit.html`, `atelier.css`, `atelier.js` : l'atelier god2-design ;
+- `document.json` : le nom de la maquette, ses formats, les noms des calques ;
+- `ecran-*.html` : le balisage des six ecrans, releve dans l'application ;
+- `feuilles.svg`, `ecrans.css` : le contrat montre dans l'apercu, et ce que la
+  maquette ajoute aux styles de l'application ;
+- `trousseau.png`, `cadenas.png` : les photos qui remplacent la 3D.
+
+Il y verse les feuilles de style de l'application telles qu'elles sont dans
+`src/`, et embarque les polices. Il n'a besoin que de Node.
 
 - Une couleur, un rayon, un espacement change dans `src/` : relancer la
   commande suffit, la maquette suit.
-- Un texte ou un element change dans un ecran : le reporter dans le gabarit,
-  puis relancer la commande.
-- Ne pas retoucher `maquette-safevault.html` a la main : la prochaine
-  fabrication effacerait la retouche.
+- Un texte ou un element change dans un ecran : le reporter dans
+  `ecran-*.html`, puis relancer la commande.
+- Ne pas retoucher `maquette-safevault.html` ni le `.god2` a la main : la
+  prochaine fabrication effacerait la retouche.
+- Les SVG de `maquette-svg/` ne sont pas refaits par la commande : ouvrir la
+  maquette, puis Fichier, Exporter tous les cadres en SVG.
 
 ### Refaire les images du logo
 

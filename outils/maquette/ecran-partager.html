@@ -1,0 +1,244 @@
+    <div class="scene">
+      <header class="entete">
+        <span class="logo">
+          <span class="logo-nom">SafeVault</span>
+          <span class="logo-3d" aria-hidden="true"></span>
+          <span class="logo-s" aria-hidden="true">S</span>
+        </span>
+        <div class="verre compte">
+          <span class="jeton" aria-hidden="true">G</span>
+          <span class="qui">Gblewa</span>
+        </div>
+      </header>
+      <div class="assistant">
+        <header class="assistant-tete">
+          <h2 class="assistant-titre">Envoyer un document</h2>
+          <p class="assistant-chapo">Déposez-le, choisissez qui peut l'ouvrir. SafeVault chiffre tout à votre place.</p>
+        </header>
+        <div class="assistant-grille">
+          <nav class="etapes" aria-label="Étapes de l'envoi">
+            <ol>
+              <li>
+                <button type="button" class="etape" data-etat="faite">
+                  <span class="etape-numero" aria-hidden="true">✓</span>
+                  <span class="etape-textes">
+                    <span class="etape-titre">Déposer
+                      <span class="visuellement-cache"> (terminée)</span>
+                    </span>
+                    <span class="etape-aide">Le document à protéger</span>
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="etape verre" data-etat="active" aria-current="step" disabled="">
+                  <span class="etape-numero" aria-hidden="true">2</span>
+                  <span class="etape-textes">
+                    <span class="etape-titre">Partager</span>
+                    <span class="etape-aide">Qui, quel droit, combien de temps</span>
+                  </span>
+                </button>
+              </li>
+            </ol>
+          </nav>
+          <section class="panneau verre-plaque" aria-labelledby="titre-etape-2">
+            <div class="panneau-colonnes" data-cote="true">
+              <div class="panneau-corps">
+                <ul class="fichiers" aria-label="Documents déposés">
+                  <li>
+                    <div class="verre fichier" data-actif="true">
+                      <button type="button" class="fichier-voir" aria-pressed="true" aria-label="Voir l'aperçu de Contrat-Dantokpa-2026.pdf">
+                        <svg class="icone-fichier" data-genre="pdf" viewBox="0 0 34 40" aria-hidden="true">
+                          <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
+                          <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
+                          <path class="trait" d="M12 13.5h10"></path>
+                          <path class="trait" d="M12 17.5h14"></path>
+                          <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
+                          <text class="texte" x="13.5" y="30.6" text-anchor="middle">PDF</text>
+                        </svg>
+                        <span class="infos">
+                          <span class="nom" title="Contrat-Dantokpa-2026.pdf">Contrat-Dantokpa-2026.pdf</span>
+                          <span class="meta" aria-live="polite">
+                            <b>2,4 Mo</b> · déposé et chiffré
+                          </span>
+                        </span>
+                      </button>
+                      <span class="cadenas-3d" aria-hidden="true"></span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="verre fichier" data-actif="false">
+                      <button type="button" class="fichier-voir" aria-pressed="false" aria-label="Voir l'aperçu de piece-identite.png">
+                        <svg class="icone-fichier" data-genre="image" viewBox="0 0 34 40" aria-hidden="true">
+                          <path class="feuille" d="M11 2.5h12.5l8 8V34a3.5 3.5 0 0 1-3.5 3.5H11A3.5 3.5 0 0 1 7.5 34V6A3.5 3.5 0 0 1 11 2.5z"></path>
+                          <path class="pli" d="M23.5 2.5V8a2.5 2.5 0 0 0 2.5 2.5h5.5z"></path>
+                          <circle class="trait" cx="14.5" cy="15" r="1.75"></circle>
+                          <path class="trait" d="m11 22 4-3.5 3 2.5 2.5-2 4.5 3.5"></path>
+                          <rect class="etiquette" x="2" y="22.5" width="23" height="11" rx="3"></rect>
+                          <text class="texte" x="13.5" y="30.6" text-anchor="middle">IMG</text>
+                        </svg>
+                        <span class="infos">
+                          <span class="nom" title="piece-identite.png">piece-identite.png</span>
+                          <span class="meta" aria-live="polite">
+                            <b>1,1 Mo</b> · déposé et chiffré
+                          </span>
+                        </span>
+                      </button>
+                      <span class="cadenas-3d" aria-hidden="true"></span>
+                    </div>
+                  </li>
+                </ul>
+                <div class="panneau-tete">
+                  <h3 id="titre-etape-2" tabindex="-1" class="panneau-titre">Partager avec un collègue</h3>
+                  <p class="guide">Ajoutez la personne qui pourra consulter ces documents. Elle recevra un lien sécurisé, rien ne quitte le coffre.</p>
+                </div>
+                <div class="champ-bloc">
+                  <div class="champ-tete">
+                    <label class="champ-libelle" for="champ-destinataire-2">Destinataire
+                      <span class="champ-requis" aria-hidden="true">*</span>
+                    </label>
+                    <span class="bulle">
+                      <button type="button" class="bulle-bouton" aria-label="À quoi sert ce champ ?" aria-describedby="_r_a_-2">?</button>
+                      <span role="tooltip" id="_r_a_-2" class="bulle-texte">Seules les personnes ajoutées ici pourront ouvrir le lien. Un collègue hors annuaire s'ajoute par son adresse e-mail.</span>
+                    </span>
+                  </div>
+                  <div class="champ-zone">
+                    <div class="verre champ">
+                      <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle pathLength="1" cx="12" cy="8.25" r="3.5"></circle>
+                        <path pathLength="1" d="M5.25 19.5c.9-3.1 3.55-5 6.75-5s5.85 1.9 6.75 5"></path>
+                      </svg>
+                      <input id="champ-destinataire-2" role="combobox" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="propositions" placeholder="Nom ou e-mail du collègue" type="text" value="">
+                    </div>
+                  </div>
+                  <ul class="destinataires" aria-label="Destinataires retenus">
+                    <li>
+                      <div class="verre destinataire">
+                        <span class="jeton" aria-hidden="true">AS</span>
+                        <span class="ligne">
+                          <b>Ayélé Sagbo</b>
+                          <small>a.sagbo@entreprise.bj</small>
+                        </span>
+                        <button type="button" class="croix" aria-label="Retirer Ayélé Sagbo">
+                          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path pathLength="1" d="m6.75 6.75 10.5 10.5"></path>
+                            <path pathLength="1" d="m17.25 6.75-10.5 10.5"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+                  <p class="champ-aide" aria-live="polite">1 personne recevra le lien. Vous pouvez en ajouter d'autres.</p>
+                </div>
+                <div class="champ-bloc">
+                  <div class="champ-tete">
+                    <span class="champ-libelle" id="libelle-droit-2">Ce qu'elle pourra faire</span>
+                    <span class="bulle">
+                      <button type="button" class="bulle-bouton" aria-label="À quoi sert ce champ ?" aria-describedby="_r_c_-2">?</button>
+                      <span role="tooltip" id="_r_c_-2" class="bulle-texte">Consulter suffit dans la plupart des cas. Modifier permet aussi de remplacer le document par une nouvelle version.</span>
+                    </span>
+                  </div>
+                  <div class="choix-cartes" role="radiogroup" aria-labelledby="libelle-droit-2">
+                    <button type="button" class="verre verre-appuyable choix-carte" role="radio" aria-checked="true">
+                      <span class="choix-icone">
+                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path pathLength="1" d="M2.75 12C4.6 8.1 8 5.75 12 5.75s7.4 2.35 9.25 6.25C19.4 15.9 16 18.25 12 18.25S4.6 15.9 2.75 12z"></path>
+                          <circle pathLength="1" cx="12" cy="12" r="3"></circle>
+                        </svg>
+                      </span>
+                      <span class="choix-textes">
+                        <span class="choix-texte">Peut consulter</span>
+                        <span class="choix-detail">Lire et télécharger</span>
+                      </span>
+                      <span class="choix-pastille" aria-hidden="true">
+                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path pathLength="1" d="m5.25 12.5 4.25 4.25 9.25-9.5"></path>
+                        </svg>
+                      </span>
+                    </button>
+                    <button type="button" class="verre verre-appuyable choix-carte" role="radio" aria-checked="false">
+                      <span class="choix-icone">
+                        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path pathLength="1" d="m14.75 5.75 3.5 3.5"></path>
+                          <path pathLength="1" d="M4.75 19.25 5.5 15.5 15.9 5.1a2.47 2.47 0 0 1 3.5 3.5L9 19l-4.25.25z"></path>
+                        </svg>
+                      </span>
+                      <span class="choix-textes">
+                        <span class="choix-texte">Peut modifier</span>
+                        <span class="choix-detail">Déposer une nouvelle version</span>
+                      </span>
+                      <span class="choix-pastille" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="champ-bloc">
+                  <div class="champ-tete">
+                    <span class="champ-libelle" id="libelle-duree-2">Durée de l'accès</span>
+                    <span class="bulle">
+                      <button type="button" class="bulle-bouton" aria-label="À quoi sert ce champ ?" aria-describedby="_r_f_-2">?</button>
+                      <span role="tooltip" id="_r_f_-2" class="bulle-texte">Par sécurité, le lien s'éteint tout seul. Vous pourrez toujours le retirer plus tôt.</span>
+                    </span>
+                  </div>
+                  <div class="pastilles" role="radiogroup" aria-labelledby="libelle-duree-2">
+                    <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="false">24 heures</button>
+                    <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="true">7 jours</button>
+                    <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="false">30 jours</button>
+                    <button type="button" class="verre verre-appuyable pastille" role="radio" aria-checked="false">Sans limite</button>
+                  </div>
+                  <p class="champ-aide" aria-live="polite">Le lien cessera de fonctionner le mercredi 14 octobre.</p>
+                </div>
+              </div>
+              <aside class="panneau-cote">
+                <figure class="apercu">
+                  <figcaption class="apercu-tete">
+                    <span class="apercu-titre">Aperçu</span>
+                    <button type="button" class="bouton-discret petit">
+                      <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path pathLength="1" d="M14.25 4.75h5v5"></path>
+                        <path pathLength="1" d="m19.25 4.75-5.5 5.5"></path>
+                        <path pathLength="1" d="M9.75 19.25h-5v-5"></path>
+                        <path pathLength="1" d="m4.75 19.25 5.5-5.5"></path>
+                      </svg>Agrandir
+                    </button>
+                  </figcaption>
+                  <div class="apercu-cadre defilement-fin">
+                    <div class="apercu-pages">
+                      <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 1 du contrat">
+                        <use href="#feuille-une">
+                      </use>
+                    </svg>
+                    <svg class="apercu-page" viewBox="0 0 210 297" role="img" aria-label="Page 2 du contrat">
+                      <use href="#feuille-deux">
+                    </use>
+                  </svg>
+                </div>
+              </div>
+            </figure>
+          </aside>
+        </div>
+        <div class="panneau-barre">
+          <div class="barre-groupe">
+            <button type="button" class="bouton-discret sortie">Annuler</button>
+          </div>
+          <div class="barre-groupe">
+            <button type="button" class="bouton-discret">
+              <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path pathLength="1" d="M19.25 12H4.75"></path>
+                <path pathLength="1" d="M10.25 6.5 4.75 12l5.5 5.5"></path>
+              </svg>Retour
+            </button>
+            <button type="button" class="bouton-verre verre verre-appuyable plein">
+              <span class="bouton-verre-texte">Partager les documents
+                <span class="fleche" aria-hidden="true">
+                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path pathLength="1" d="M4.75 12h14.5"></path>
+                    <path pathLength="1" d="m13.75 6.5 5.5 5.5-5.5 5.5"></path>
+                  </svg>
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
