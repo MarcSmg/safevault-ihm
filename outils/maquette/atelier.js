@@ -358,6 +358,7 @@ function atelierGod2(depart, hote) {
       poserContour(contourChoix, choix)
       if (ecriture) placerEcriture()
       if (plume) esquisserPlume()
+      if (ecartsVus) montrerEcarts(ecartsVus)
     })
   }
 
@@ -427,16 +428,24 @@ function atelierGod2(depart, hote) {
   var choix = null
   var ouverts = {}
 
-  function poserContour(contour, noeud) {
-    if (!noeud) { contour.hidden = true; return }
+  // La boite d un calque sur la toile, en pixels d ecran.
+  function boiteEcran(noeud) {
     var b = boiteMonde(noeud)
+    return { x: vue.x + b.x * vue.z, y: vue.y + b.y * vue.z, l: b.largeur * vue.z, h: b.hauteur * vue.z }
+  }
+
+  function poserContour(contour, noeud) {
+    var b = noeud ? boiteMonde(noeud) : null
     // Un calque masque n a plus de boite : pas de contour.
-    if (!b.largeur && !b.hauteur) { contour.hidden = true; return }
-    contour.hidden = false
-    contour.style.transform = 'translate(' + (vue.x + b.x * vue.z) + 'px,' + (vue.y + b.y * vue.z) + 'px)'
-    contour.style.width = b.largeur * vue.z + 'px'
-    contour.style.height = b.hauteur * vue.z + 'px'
-    if (contour === contourChoix) mesure.textContent = arrondi(b.largeur) + ' × ' + arrondi(b.hauteur)
+    contour.hidden = !b || (!b.largeur && !b.hauteur)
+    if (!contour.hidden) {
+      contour.style.transform = 'translate(' + (vue.x + b.x * vue.z) + 'px,' + (vue.y + b.y * vue.z) + 'px)'
+      contour.style.width = b.largeur * vue.z + 'px'
+      contour.style.height = b.hauteur * vue.z + 'px'
+    }
+    if (contour !== contourChoix) return
+    if (b) mesure.textContent = arrondi(b.largeur) + ' × ' + arrondi(b.hauteur)
+    poserRayons()
   }
 
   function marquer(noeud, oui) {
@@ -454,6 +463,7 @@ function atelierGod2(depart, hote) {
 
   function choisir(noeud) {
     choix = noeud || null
+    montrerEcarts(null)
     if (choix) for (var p = choix.parent; p; p = p.parent) ouverts[p.id] = true
     cadres.forEach(function (c) { c.etiquette.dataset.choisie = String(Boolean(choix) && choix === c.racine) })
     dessinerArbre()
@@ -688,7 +698,7 @@ function atelierGod2(depart, hote) {
 
     html += bloc('Position', '<dl class="gd-grille">' + champ('X', 'x', arrondi(b.left)) + champ('Y', 'y', arrondi(b.top)) + '</dl>')
     html += bloc('Dimensions', '<dl class="gd-grille">' + champ('L', 'l', arrondi(b.width)) + champ('H', 'h', arrondi(b.height)) +
-      champ('Rayon', 'rayon', arrondi(rayonDe(s, b))) + champ('Opacité', 'opacite', Math.round(s.opacity * 100)) + '</dl>')
+      champ('Rayon', 'rayon', rayonEcrit(s, b)) + champ('Opacité', 'opacite', Math.round(s.opacity * 100)) + '</dl>')
 
     if (noeud.type === 'vecteur') {
       html += bloc('Trait', '<ul class="gd-couleurs">' + champCouleur('Couleur', 'couleur', couleur(s.color)) + '</ul>' +
@@ -746,7 +756,8 @@ function atelierGod2(depart, hote) {
     return '<div class="gd-fiche-tete"><span class="gd-fiche-nom">' + echapper(doc.nom) + '</span></div>' +
       '<p class="gd-fiche-ou">Page · ' + cadres.length + ' cadres · ' + doc.ecrans.length + ' écrans</p>' +
       (fond ? bloc('Toile', '<ul class="gd-couleurs">' + ligneCouleur('Fond', fond) + '</ul>') : '') +
-      bloc('Édition', '<p class="gd-note">Cliquez un calque pour le choisir, glissez-le pour le déplacer, tirez ses poignées pour le dimensionner. ' +
+      bloc('Édition', '<p class="gd-note">Glissez un calque pour le déplacer, tirez un bord ou un coin pour le dimensionner, ' +
+        'un point rond dans un coin pour l\'arrondir. Alt montre les écarts avec le calque survolé. ' +
         'Un double-clic sur un texte permet de le réécrire. Les outils dessinent cadres, formes, traits, textes et images. ' +
         'Une retouche vaut pour tous les formats d\'un écran.</p>' + boutons([['ecran-nouveau', 'Nouvel écran']]))
   }
@@ -760,6 +771,24 @@ function atelierGod2(depart, hote) {
     var r = parseFloat(brut) || 0
     if (brut.indexOf('%') > 0) r = (r / 100) * Math.min(b.width, b.height)
     return Math.min(r, b.width / 2, b.height / 2)
+  }
+
+  // Les quatre coins, dans l ordre de border-radius : leur nom en CSS, et
+  // le sens qui mene vers le centre du calque.
+  var COINS = [['TopLeft', 1, 1], ['TopRight', -1, 1], ['BottomRight', -1, -1], ['BottomLeft', 1, -1]]
+
+  function rayonsDe(s, b) {
+    return COINS.map(function (c) {
+      var brut = s['border' + c[0] + 'Radius']
+      var r = parseFloat(brut) || 0
+      if (brut.indexOf('%') > 0) r = (r / 100) * Math.min(b.width, b.height)
+      return Math.min(r, b.width / 2, b.height / 2)
+    })
+  }
+  // Un seul nombre si les quatre coins ont le meme rayon, sinon les quatre.
+  function rayonEcrit(s, b) {
+    var r = rayonsDe(s, b).map(arrondi)
+    return r.every(function (v) { return v === r[0] }) ? r[0] : r.join(' ')
   }
 
   // ---------------------------------------------------------------- l export en SVG
@@ -1333,47 +1362,262 @@ function atelierGod2(depart, hote) {
     if (parent && fenetreDe(el).getComputedStyle(parent).display.indexOf('flex') >= 0) el.style.flex = 'none'
   }
 
-  // Tire une poignee : le bord saisi suit le pointeur, le bord oppose reste en place.
-  function dimensionner(prise, depart, dx, dy) {
+  // Tire un bord ou un coin : il suit le pointeur, le bord oppose reste en
+  // place. `garde` conserve les proportions (Maj), `centre` dimensionne
+  // autour du milieu (Alt). On repart chaque fois du style de depart : lacher
+  // Maj ou Alt en cours de geste ne laisse rien derriere.
+  function dimensionner(prise, depart, dx, dy, garde, centre) {
+    var el = choix.el
     var m = depart.mesures
-    var l = null
-    var h = null
-    var tx = 0
-    var ty = 0
-    if (prise.indexOf('e') >= 0) l = m.bl + dx
-    if (prise.indexOf('w') >= 0) { l = m.bl - dx; tx = dx }
-    if (prise.indexOf('s') >= 0) h = m.bh + dy
-    if (prise.indexOf('n') >= 0) { h = m.bh - dy; ty = dy }
-    // Un calque ne se retourne pas : il s arrete a un pixel.
-    if (l !== null && l < 1) { if (tx) tx = m.bl - 1; l = 1 }
-    if (h !== null && h < 1) { if (ty) ty = m.bh - 1; h = 1 }
-    tailler(choix.el, m, l, h)
-    if (prise.indexOf('w') >= 0 || prise.indexOf('n') >= 0) deplacer(choix.el, depart.decalage, tx, ty)
+    if (depart.style === null) el.removeAttribute('style')
+    else if (depart.style !== undefined) el.setAttribute('style', depart.style)
+    var ouest = prise.indexOf('w') >= 0
+    var est = prise.indexOf('e') >= 0
+    var nord = prise.indexOf('n') >= 0
+    var sud = prise.indexOf('s') >= 0
+    var l = est ? m.bl + dx : ouest ? m.bl - dx : null
+    var h = sud ? m.bh + dy : nord ? m.bh - dy : null
+    if (centre) {
+      if (l !== null) l = m.bl + (l - m.bl) * 2
+      if (h !== null) h = m.bh + (h - m.bh) * 2
+    }
+    if (garde && m.bl > 0 && m.bh > 0) {
+      var rapport = m.bl / m.bh
+      if (l !== null && h !== null) { if (l / m.bl > h / m.bh) h = l / rapport; else l = h * rapport }
+      else if (l !== null) h = l / rapport
+      else l = h * rapport
+    }
+    // Un calque ne se retourne pas : il s arrete a un pixel. Et il tombe sur des pixels entiers.
+    if (l !== null) l = Math.max(1, Math.round(l))
+    if (h !== null) h = Math.max(1, Math.round(h))
+    tailler(el, m, l, h)
+    // Ce que la boite prend a gauche ou en haut se rattrape par un decalage.
+    var tx = l === null ? 0 : centre || !(est || ouest) ? (m.bl - l) / 2 : ouest ? m.bl - l : 0
+    var ty = h === null ? 0 : centre || !(nord || sud) ? (m.bh - h) / 2 : nord ? m.bh - h : 0
+    if (ouest || nord || centre || garde) deplacer(el, depart.decalage, tx, ty)
   }
 
-  // Les huit poignees du calque choisi, par leur place sur son contour.
-  var POIGNEES = { nw: [0, 0], ne: [1, 0], se: [1, 1], sw: [0, 1], n: [0.5, 0], e: [1, 0.5], s: [0.5, 1], w: [0, 0.5] }
   var CURSEURS = { nw: 'nwse-resize', se: 'nwse-resize', ne: 'nesw-resize', sw: 'nesw-resize', n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize' }
 
   function retouchable(noeud) { return Boolean(noeud) && noeud.type !== 'ecran' && !noeud.masque }
 
+  // Ce qu on saisit du calque choisi : un coin, ou un bord sur toute sa
+  // longueur. Un bord se prend donc aussi de tres pres, quand ses coins sont
+  // sortis de la vue.
   function poigneeSous(clientX, clientY) {
     if (!retouchable(choix)) return null
     var boite = toile.getBoundingClientRect()
-    var b = boiteMonde(choix)
-    var l = b.largeur * vue.z
-    var h = b.hauteur * vue.z
-    var x = clientX - boite.left - vue.x - b.x * vue.z
-    var y = clientY - boite.top - vue.y - b.y * vue.z
-    var trouvee = null
-    Object.keys(POIGNEES).forEach(function (cle) {
-      if (trouvee) return
-      // Sur un petit calque, les poignees des bords laissent la place au deplacement.
-      if ((cle === 'n' || cle === 's') && l < 28) return
-      if ((cle === 'e' || cle === 'w') && h < 28) return
-      if (Math.abs(x - POIGNEES[cle][0] * l) <= 6 && Math.abs(y - POIGNEES[cle][1] * h) <= 6) trouvee = cle
+    var b = boiteEcran(choix)
+    if (b.l < 1 && b.h < 1) return null
+    var x = clientX - boite.left - b.x
+    var y = clientY - boite.top - b.y
+    var dehors = 7
+    if (x < -dehors || y < -dehors || x > b.l + dehors || y > b.h + dehors) return null
+    // Vers l interieur, la prise ne mange jamais plus du quart du calque :
+    // le milieu reste a qui veut le deplacer.
+    var dx = Math.min(5, b.l / 4)
+    var dy = Math.min(5, b.h / 4)
+    var haut = y <= dy
+    var bas = y >= b.h - dy
+    var gauche = x <= dx
+    var droite = x >= b.l - dx
+    if (!haut && !bas && !gauche && !droite) return null
+    // Pres d un coin, on tient les deux bords a la fois.
+    var cx = Math.max(dx, Math.min(10, b.l / 3))
+    var cy = Math.max(dy, Math.min(10, b.h / 3))
+    var vertical = haut ? 'n' : bas ? 's' : y <= cy ? 'n' : y >= b.h - cy ? 's' : ''
+    var horizontal = gauche ? 'w' : droite ? 'e' : x <= cx ? 'w' : x >= b.l - cx ? 'e' : ''
+    return vertical + horizontal
+  }
+
+  // Le pointeur est-il dans la boite du calque choisi (ses bords compris) ?
+  function dansLeChoix(clientX, clientY) {
+    if (!retouchable(choix)) return false
+    var boite = toile.getBoundingClientRect()
+    var b = boiteEcran(choix)
+    var x = clientX - boite.left - b.x
+    var y = clientY - boite.top - b.y
+    return x >= -7 && y >= -7 && x <= b.l + 7 && y <= b.h + 7
+  }
+
+  // ---- L arrondi des coins
+  //
+  // Quatre points ronds, un par coin, se montrent sur le calque choisi des
+  // que le pointeur le survole et qu il est assez grand a l ecran (on zoome
+  // pour les faire venir sur un petit calque). Tirer un point vers le centre
+  // arrondit les quatre coins ; avec Alt, ce coin seulement.
+
+  var pointsRayon = COINS.map(function () {
+    var p = document.createElement('span')
+    p.className = 'gd-rayon'
+    p.hidden = true
+    contourChoix.appendChild(p)
+    return p
+  })
+  var dessusChoix = false
+
+  // Un arrondi ne se voit que sur un calque qui peint sa boite.
+  function arrondissable(noeud) {
+    if (!retouchable(noeud) || noeud.type === 'vecteur') return false
+    if (noeud.type === 'image') return true
+    var s = fenetreDe(noeud.el).getComputedStyle(noeud.el)
+    return Boolean(couleur(s.backgroundColor)) || s.backgroundImage !== 'none' || s.boxShadow !== 'none' ||
+      (parseFloat(s.borderTopWidth) > 0 && s.borderTopStyle !== 'none') || s.overflowX !== 'visible'
+  }
+
+  function poserRayons() {
+    var g = glisse
+    var tire = Boolean(g && g.rayon)
+    var montre = !contourChoix.hidden && (dessusChoix || tire) && !(g && (g.taille || g.deplace)) && arrondissable(choix)
+    var b = montre ? boiteEcran(choix) : null
+    if (b && Math.min(b.l, b.h) < 44) montre = false
+    if (!montre) { pointsRayon.forEach(function (p) { p.hidden = true }); return }
+    var el = choix.el
+    var rayons = rayonsDe(fenetreDe(el).getComputedStyle(el), el.getBoundingClientRect())
+    pointsRayon.forEach(function (p, i) {
+      // Le point se tient au centre de l arrondi, jamais plus pres du coin que 14 pixels.
+      var d = Math.min(Math.max(rayons[i] * vue.z, 14), Math.min(b.l, b.h) / 2)
+      p.style.left = (COINS[i][1] > 0 ? d : b.l - d) + 'px'
+      p.style.top = (COINS[i][2] > 0 ? d : b.h - d) + 'px'
+      p.hidden = tire && g.rayon.coin !== i
+      p.dataset.tire = String(tire)
     })
-    return trouvee
+  }
+
+  // Le point d arrondi sous le pointeur : son rang dans COINS, ou -1.
+  function rayonSous(clientX, clientY) {
+    for (var i = 0; i < pointsRayon.length; i++) {
+      if (pointsRayon[i].hidden) continue
+      var r = pointsRayon[i].getBoundingClientRect()
+      if (Math.hypot(clientX - r.left - r.width / 2, clientY - r.top - r.height / 2) <= 9) return i
+    }
+    return -1
+  }
+
+  // Tire un point d arrondi : vers le centre du calque, le rayon grandit.
+  function arrondir(g, dx, dy, seul) {
+    var c = COINS[g.coin]
+    var r = Math.round(Math.max(0, Math.min(g.max, g.depart[g.coin] + (dx * c[1] + dy * c[2]) / 2 / vue.z)))
+    var valeurs = g.depart.map(function (v, i) { return seul && i !== g.coin ? arrondi(v) : r })
+    var memes = valeurs.every(function (v) { return v === valeurs[0] })
+    choix.el.style.borderRadius = memes ? r + 'px' : valeurs.join('px ') + 'px'
+    pointsRayon[g.coin].dataset.valeur = String(r)
+  }
+
+  // ---- Les aimants
+  //
+  // Pendant un deplacement, les bords et le milieu du calque s accrochent a
+  // ceux de son parent et de ses voisins, et un trait montre l alignement.
+  // Ctrl les met de cote le temps du geste.
+
+  var aimants = ['x', 'y'].map(function (axe) {
+    var t = document.createElement('span')
+    t.className = 'gd-aimant gd-aimant-' + axe
+    t.hidden = true
+    dessus.appendChild(t)
+    return t
+  })
+
+  // Les lignes ou s accrocher, et la boite du calque avant le geste.
+  function reperes(noeud, aussiDepart) {
+    var r = { xs: [], ys: [], boite: noeud.el.getBoundingClientRect() }
+    function noter(b) {
+      r.xs.push(b.left, b.left + b.width / 2, b.left + b.width)
+      r.ys.push(b.top, b.top + b.height / 2, b.top + b.height)
+    }
+    if (aussiDepart) noter(r.boite)
+    if (noeud.parent) {
+      noter(boiteDe(noeud.parent))
+      noeud.parent.enfants.forEach(function (f) { if (f !== noeud && !f.masque) noter(boiteDe(f)) })
+    }
+    return r
+  }
+
+  // Le repere le plus proche de l une des trois lignes du calque, a portee de `seuil`.
+  function accrocher(lignes, cibles, seuil) {
+    var meilleur = null
+    lignes.forEach(function (l) {
+      cibles.forEach(function (c) {
+        var e = c - l
+        if (Math.abs(e) <= seuil && (!meilleur || Math.abs(e) < Math.abs(meilleur.ecart))) meilleur = { ecart: e, ou: c }
+      })
+    })
+    return meilleur
+  }
+
+  function montrerAimants(cadre, x, y) {
+    aimants[0].hidden = !x
+    aimants[1].hidden = !y
+    if (x) {
+      aimants[0].style.transform = 'translate(' + Math.round(vue.x + (cadre.x + x.ou) * vue.z) + 'px,' + (vue.y + cadre.y * vue.z) + 'px)'
+      aimants[0].style.height = cadre.hauteur * vue.z + 'px'
+    }
+    if (y) {
+      aimants[1].style.transform = 'translate(' + (vue.x + cadre.x * vue.z) + 'px,' + Math.round(vue.y + (cadre.y + y.ou) * vue.z) + 'px)'
+      aimants[1].style.width = cadre.largeur * vue.z + 'px'
+    }
+  }
+
+  // Deplace le calque choisi pendant un glisser : `maj` tient un seul axe,
+  // `libre` (Ctrl) coupe les aimants.
+  function emporter(d, dx, dy, maj, libre) {
+    if (maj) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0 }
+    var b = d.reperes.boite
+    var ax = null
+    var ay = null
+    if (!libre) {
+      var seuil = 5 / vue.z
+      if (!(maj && dx === 0)) ax = accrocher([b.left + dx, b.left + b.width / 2 + dx, b.left + b.width + dx], d.reperes.xs, seuil)
+      if (!(maj && dy === 0)) ay = accrocher([b.top + dy, b.top + b.height / 2 + dy, b.top + b.height + dy], d.reperes.ys, seuil)
+      if (ax) dx += ax.ecart
+      if (ay) dy += ay.ecart
+    }
+    // Sans aimant, on avance par pixels entiers.
+    if (!ax) dx = Math.round(dx)
+    if (!ay) dy = Math.round(dy)
+    deplacer(choix.el, d.decalage, dx, dy)
+    montrerAimants(choix.cadre, ax, ay)
+  }
+
+  // ---- Les ecarts
+  //
+  // Alt enfonce, survoler un autre calque montre ce qui le separe du calque
+  // choisi : l espace entre eux, ou la distance a ses bords s il le contient.
+
+  var ecarts = document.createElement('div')
+  ecarts.className = 'gd-ecarts'
+  dessus.appendChild(ecarts)
+  var ecartsVus = null
+
+  // Sur un axe, les intervalles a mesurer entre [a1, a2] et [b1, b2].
+  function intervalles(a1, a2, b1, b2) {
+    if (a2 <= b1) return [[a2, b1]]
+    if (b2 <= a1) return [[b2, a1]]
+    var s = []
+    if (Math.abs(a1 - b1) >= 0.5) s.push([Math.min(a1, b1), Math.max(a1, b1)])
+    if (Math.abs(a2 - b2) >= 0.5) s.push([Math.min(a2, b2), Math.max(a2, b2)])
+    return s
+  }
+
+  function montrerEcarts(autre) {
+    if (!autre || !retouchable(choix) || autre === choix || autre.cadre !== choix.cadre) {
+      if (ecartsVus) { ecarts.innerHTML = ''; ecartsVus = null }
+      return
+    }
+    ecartsVus = autre
+    var a = boiteDe(choix)
+    var b = boiteDe(autre)
+    var c = choix.cadre
+    var html = ''
+    var my = vue.y + (c.y + a.top + a.height / 2) * vue.z
+    intervalles(a.left, a.left + a.width, b.left, b.left + b.width).forEach(function (s) {
+      html += '<span class="gd-ecart gd-ecart-x" style="left:' + (vue.x + (c.x + s[0]) * vue.z) + 'px;top:' + my + 'px;width:' + (s[1] - s[0]) * vue.z + 'px"><b>' + arrondi(s[1] - s[0]) + '</b></span>'
+    })
+    var mx = vue.x + (c.x + a.left + a.width / 2) * vue.z
+    intervalles(a.top, a.top + a.height, b.top, b.top + b.height).forEach(function (s) {
+      html += '<span class="gd-ecart gd-ecart-y" style="left:' + mx + 'px;top:' + (vue.y + (c.y + s[0]) * vue.z) + 'px;height:' + (s[1] - s[0]) * vue.z + 'px"><b>' + arrondi(s[1] - s[0]) + '</b></span>'
+    })
+    ecarts.innerHTML = html
   }
 
   // Le pointeur est-il sur le calque choisi, ou sur l un de ses calques ?
@@ -1394,6 +1638,29 @@ function atelierGod2(depart, hote) {
   function supprimer() {
     var n = aRetoucher()
     if (n) retoucher(n.cadre, function () { n.el.remove(); return null })
+  }
+
+  function couper() {
+    if (!aRetoucher()) return
+    copier()
+    supprimer()
+  }
+
+  // Ctrl et une fleche : le calque grandit ou retrecit d un pixel, de dix avec Maj.
+  function etirer(sens, pas) {
+    var n = choix
+    retoucher(n.cadre, function () {
+      var m = mesures(n.el)
+      tailler(n.el, m, sens[0] ? Math.max(1, m.bl + sens[0] * pas) : null, sens[1] ? Math.max(1, m.bh + sens[1] * pas) : null)
+      return n.el
+    })
+  }
+
+  // Tab passe au calque voisin, dans le meme parent.
+  function voisin(sens) {
+    if (!choix || !choix.parent) return
+    var f = choix.parent.enfants
+    choisir(f[(f.indexOf(choix) + sens + f.length) % f.length])
   }
 
   function dupliquer() {
@@ -1641,6 +1908,8 @@ function atelierGod2(depart, hote) {
 
   var DESSIN = { cadre: true, forme: true, ellipse: true, trait: true, plume: true, texte: true, image: true }
   var ENCRE = '#121212'
+  // R une seconde fois : le rectangle a venir aura les coins arrondis.
+  var arrondie = false
   var esquisse = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
   esquisse.setAttribute('class', 'gd-esquisse')
   esquisse.innerHTML = '<path/>'
@@ -1724,20 +1993,21 @@ function atelierGod2(depart, hote) {
   // Fin du geste : ce qui etait esquisse devient un calque.
   function finirDessin(t, p) {
     dessinerEsquisse(null)
-    var x = Math.min(t.x, p.x)
-    var y = Math.min(t.y, p.y)
-    var l = Math.abs(p.x - t.x)
-    var h = Math.abs(p.y - t.y)
+    var x = Math.round(Math.min(t.x, p.x))
+    var y = Math.round(Math.min(t.y, p.y))
+    var l = Math.round(Math.abs(p.x - t.x))
+    var h = Math.round(Math.abs(p.y - t.y))
     // Un simple clic pose une forme a une taille de depart.
     var clic = l < 3 && h < 3
     var cree = outil
+    var ronde = arrondie
     retoucher(t.cadre, function () {
       if (cree === 'trait') return poserTrace(t.cadre, clic ? [{ x: t.x, y: t.y }, { x: t.x + 120, y: t.y }] : [{ x: t.x, y: t.y }, p], false, 'Trait')
       if (clic) { x = t.x; y = t.y; l = 120; h = 120 }
       var place = { x: x, y: y, l: l, h: h }
       if (cree === 'cadre') return poserNeuf(t.cadre, 'div', place, 'overflow:hidden;background:#FFFFFF;box-shadow:0 0 0 1px #0000001f', '', 'data-nom="Cadre"')
       if (cree === 'ellipse') return poserNeuf(t.cadre, 'div', place, 'border-radius:50%;background:#D9D9D9', '', 'data-nom="Ellipse"')
-      return poserNeuf(t.cadre, 'div', place, 'background:#D9D9D9', '', 'data-nom="Rectangle"')
+      return poserNeuf(t.cadre, 'div', place, 'background:#D9D9D9' + (ronde ? ';border-radius:12px' : ''), '', 'data-nom="Rectangle"')
     })
     prendre('deplacer')
   }
@@ -1893,7 +2163,10 @@ function atelierGod2(depart, hote) {
       else if (prop === 'y') deplacer(el, decalage(el), 0, n - b.top)
       else if (prop === 'l') tailler(el, mesures(el), n, null)
       else if (prop === 'h') tailler(el, mesures(el), null, n)
-      else if (prop === 'rayon') el.style.borderRadius = Math.max(0, n) + 'px'
+      // Un nombre pour les quatre coins, ou quatre : haut gauche, haut droit, bas droit, bas gauche.
+      else if (prop === 'rayon') {
+        el.style.borderRadius = String(brut).trim().split(/[\s;]+/).slice(0, 4).map(function (v) { return Math.max(0, nombreSaisi(v) || 0) + 'px' }).join(' ')
+      }
       // A zero, le calque sortirait de l arbre : un pour cent le garde a portee.
       else if (prop === 'opacite') el.style.opacity = String(Math.min(100, Math.max(1, n)) / 100)
       else if (prop === 'fond') el.style.background = hex ? teinter(hex, fond) : 'transparent'
@@ -2053,11 +2326,23 @@ function atelierGod2(depart, hote) {
       }
       return
     }
-    // Sur le calque choisi : une poignee le dimensionne, le reste le deplace.
-    var prise = poigneeSous(e.clientX, e.clientY)
-    if (prise) glisse.taille = { prise: prise, mesures: mesures(choix.el), decalage: decalage(choix.el) }
-    else if (surLeChoix(e.clientX, e.clientY)) glisse.deplace = { decalage: decalage(choix.el) }
-    if (glisse.taille || glisse.deplace) glisse.temoin = balisageDe(choix.el.ownerDocument)
+    // Sur le calque choisi : un point l arrondit, un bord ou un coin le
+    // dimensionne, le reste le deplace.
+    var coin = rayonSous(e.clientX, e.clientY)
+    var prise = coin < 0 ? poigneeSous(e.clientX, e.clientY) : null
+    // Glisser un calque qui n est pas choisi le choisit et l emporte d un seul geste.
+    if (coin < 0 && !prise && !surLeChoix(e.clientX, e.clientY)) {
+      var vise = calqueSous(e.clientX, e.clientY)
+      if (retouchable(vise)) { choisir(vise); glisse.pris = true }
+      else return
+    }
+    var el = choix.el
+    if (coin >= 0) {
+      var boiteChoix = el.getBoundingClientRect()
+      glisse.rayon = { coin: coin, depart: rayonsDe(fenetreDe(el).getComputedStyle(el), boiteChoix), max: Math.floor(Math.min(boiteChoix.width, boiteChoix.height) / 2) }
+    } else if (prise) glisse.taille = { prise: prise, mesures: mesures(el), decalage: decalage(el), style: el.getAttribute('style') }
+    else glisse.deplace = { decalage: decalage(el), copie: e.altKey }
+    glisse.temoin = balisageDe(el.ownerDocument)
   })
 
   capteur.addEventListener('pointermove', function (e) {
@@ -2081,13 +2366,24 @@ function atelierGod2(depart, hote) {
         appliquer()
       } else if (glisse.dessin) {
         esquisser(glisse.dessin, pointDans(glisse.dessin.cadre, e.clientX, e.clientY))
+      } else if (glisse.rayon) {
+        contourChoix.dataset.geste = 'rayon'
+        arrondir(glisse.rayon, dx, dy, e.altKey)
+        poserContour(contourChoix, choix)
       } else if (glisse.taille) {
-        dimensionner(glisse.taille.prise, glisse.taille, dx / vue.z, dy / vue.z)
+        // Maj garde les proportions, Alt dimensionne autour du centre.
+        contourChoix.dataset.geste = 'taille'
+        dimensionner(glisse.taille.prise, glisse.taille, dx / vue.z, dy / vue.z, e.shiftKey, e.altKey)
         poserContour(contourChoix, choix)
       } else if (glisse.deplace) {
-        // Maj garde le deplacement sur un seul axe.
-        if (e.shiftKey) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0 }
-        deplacer(choix.el, glisse.deplace.decalage, dx / vue.z, dy / vue.z)
+        var d = glisse.deplace
+        if (!d.reperes) {
+          // Alt : une copie reste a la place du calque, et c est lui qu on emporte.
+          if (d.copie) { choix.el.before(choix.el.cloneNode(true)); choix.el.removeAttribute('id') }
+          d.reperes = reperes(choix, d.copie)
+        }
+        contourChoix.dataset.geste = 'deplace'
+        emporter(d, dx / vue.z, dy / vue.z, e.shiftKey, e.ctrlKey || e.metaKey)
         poserContour(contourChoix, choix)
       }
       return
@@ -2095,9 +2391,16 @@ function atelierGod2(depart, hote) {
     if (e.pointerType === 'touch') return
     if (plume) esquisserPlume(e.clientX, e.clientY)
     var libre = outil === 'deplacer' && !espace
-    survoler(libre ? calqueSous(e.clientX, e.clientY) : null)
-    var prise = libre ? poigneeSous(e.clientX, e.clientY) : null
-    capteur.style.cursor = prise ? CURSEURS[prise] : libre && surLeChoix(e.clientX, e.clientY) ? 'move' : ''
+    var vise = libre ? calqueSous(e.clientX, e.clientY) : null
+    survoler(vise)
+    // Les points d arrondi viennent quand le pointeur est sur le calque choisi.
+    var dessusAvant = dessusChoix
+    dessusChoix = libre && dansLeChoix(e.clientX, e.clientY)
+    if (dessusChoix !== dessusAvant) poserRayons()
+    var coin = libre ? rayonSous(e.clientX, e.clientY) : -1
+    var prise = libre && coin < 0 ? poigneeSous(e.clientX, e.clientY) : null
+    capteur.style.cursor = coin >= 0 ? 'pointer' : prise ? CURSEURS[prise] : libre && surLeChoix(e.clientX, e.clientY) ? 'move' : ''
+    montrerEcarts(libre && e.altKey ? vise : null)
   })
 
   function lacher(e) {
@@ -2109,9 +2412,15 @@ function atelierGod2(depart, hote) {
     racine.dataset.glisse = 'false'
     var leve = e.type === 'pointerup'
     if (g.dessin) return leve ? finirDessin(g.dessin, pointDans(g.dessin.cadre, e.clientX, e.clientY)) : dessinerEsquisse(null)
-    if ((g.taille || g.deplace) && g.bouge) return inscrire(choix.cadre, g.temoin, choix.el)
+    contourChoix.dataset.geste = ''
+    montrerAimants(null, null, null)
+    if ((g.rayon || g.taille || g.deplace) && g.bouge) {
+      if (!inscrire(choix.cadre, g.temoin, choix.el)) poserContour(contourChoix, choix)
+      return
+    }
     if (g.bouge || !leve || e.button === 1 || espace) return
     // Un appui sans deplacement choisit le calque sous le pointeur...
+    if (g.pris) return
     if (g.toucher || outil === 'deplacer') return choisir(calqueSous(e.clientX, e.clientY))
     if (g.main) return
     // ... ou, avec un outil de dessin, pose un point, un texte ou une image.
@@ -2127,7 +2436,12 @@ function atelierGod2(depart, hote) {
   }
   capteur.addEventListener('pointerup', lacher)
   capteur.addEventListener('pointercancel', lacher)
-  capteur.addEventListener('pointerleave', function () { if (!glisse) survoler(null) })
+  capteur.addEventListener('pointerleave', function () {
+    if (glisse) return
+    survoler(null)
+    montrerEcarts(null)
+    if (dessusChoix) { dessusChoix = false; poserRayons() }
+  })
   // Un double-clic ouvre un texte a l ecriture, ou termine un trace a la plume.
   capteur.addEventListener('dblclick', function (e) {
     if (plume) return finirPlume(false)
@@ -2155,6 +2469,7 @@ function atelierGod2(depart, hote) {
   function prendre(nom) {
     if (plume && nom !== 'plume') { plume = null; dessinerEsquisse(null) }
     outil = nom
+    if (nom !== 'forme') arrondie = false
     racine.dataset.outil = nom
     capteur.style.cursor = ''
     document.querySelectorAll('.gd-outil[data-outil]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.outil === nom)) })
@@ -2194,6 +2509,7 @@ function atelierGod2(depart, hote) {
     'annuler': annuler,
     'refaire': refaire,
     'copier': copier,
+    'couper': couper,
     'coller': coller,
     'dupliquer': dupliquer,
     'supprimer': supprimer,
@@ -2341,6 +2657,8 @@ function atelierGod2(depart, hote) {
       else if (touche === 's') faire = function () { enregistrer(false) }
       else if (touche === 'd') faire = dupliquer
       else if (touche === 'v') faire = coller
+      else if (touche === 'x') faire = couper
+      else if (FLECHES[e.key] && retouchable(choix)) faire = function () { etirer(FLECHES[e.key], e.shiftKey ? 10 : 1) }
       else if (touche === 'h' && e.shiftKey) faire = ACTIONS.masquer
       else if (e.key === ']') faire = function () { ordonner(1) }
       else if (e.key === '[') faire = function () { ordonner(-1) }
@@ -2348,6 +2666,8 @@ function atelierGod2(depart, hote) {
       if (faire) { e.preventDefault(); faire() }
       return
     }
+    // Alt seul montre les ecarts ; on empeche le navigateur d y voir l appel de son menu.
+    if (e.key === 'Alt') { e.preventDefault(); if (!glisse) montrerEcarts(survol); return }
     if (e.altKey) return
     if (e.code === 'Space') { espace = true; racine.dataset.outil = 'main'; e.preventDefault(); return }
     if (e.shiftKey && e.code === 'Digit1') return toutVoir()
@@ -2381,6 +2701,23 @@ function atelierGod2(depart, hote) {
       return
     }
     if (e.key === 'F2') { e.preventDefault(); return ACTIONS.renommer() }
+    // Tab passe au calque voisin, tant que le clavier n est pas dans un volet ou une barre.
+    if (e.key === 'Tab') {
+      if (choix && choix.parent && (document.activeElement === document.body || !document.activeElement)) { e.preventDefault(); voisin(e.shiftKey ? -1 : 1) }
+      return
+    }
+    // Un chiffre regle l opacite du calque choisi : 1 pour 10 %, 5 pour 50 %,
+    // 0 pour 100 %. On lit le caractere, pas la touche : sur un clavier
+    // francais, la touche du 6 ecrit le tiret qui dezoome.
+    if (/^\d$/.test(e.key) && retouchable(choix)) {
+      appliquerProp(choix, 'opacite', e.key === '0' ? 100 : e.key * 10)
+      return
+    }
+    // R une seconde fois : le rectangle sera arrondi.
+    if (touche === 'r' && outil === 'forme') {
+      arrondie = !arrondie
+      return annoncer(arrondie ? 'Rectangle arrondi : tracez-le.' : 'Rectangle : tracez-le.')
+    }
     if (touche === 'p') { if (e.shiftKey) prendre('plume'); else ACTIONS.presenter(); return }
     if (TOUCHES_OUTILS[touche]) return prendre(TOUCHES_OUTILS[touche])
     if (e.key === '+' || e.key === '=') zoomer(vue.z * 1.25)
@@ -2388,6 +2725,7 @@ function atelierGod2(depart, hote) {
   }, hors)
   window.addEventListener('keyup', function (e) {
     if (e.code === 'Space') { espace = false; racine.dataset.outil = outil }
+    if (e.key === 'Alt') { e.preventDefault(); montrerEcarts(null) }
   }, hors)
   window.addEventListener('resize', appliquer, hors)
 

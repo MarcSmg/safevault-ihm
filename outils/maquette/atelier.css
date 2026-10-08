@@ -15,6 +15,7 @@
   --gd-texte: #15161b;
   --gd-discret: #6a6c7c;
   --gd-accent: #2b55f5;
+  --gd-repere: #e23d58;
   --gd-accent-fond: #2b55f51c;
   --gd-lime: #c7ee30;
   --gd-instance: #7a3ff0;
@@ -30,6 +31,7 @@
   --gd-texte: #ecedf3;
   --gd-discret: #9698a8;
   --gd-accent: #5b7cff;
+  --gd-repere: #ff6b81;
   --gd-accent-fond: #5b7cff2e;
   --gd-instance: #b58bff;
   --gd-ombre: 0 12px 32px -12px #000c, 0 0 0 1px #ffffff12;
@@ -386,6 +388,63 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round
     linear-gradient(#fff, #fff) bottom right / 7px 7px no-repeat;
   filter: drop-shadow(0 0 0 var(--gd-accent)) drop-shadow(0 0 1px var(--gd-accent));
 }
+/* Pendant un geste, les poignees s effacent : on voit ce qu on fait. */
+.gd-contour-choix[data-geste='deplace']::before,
+.gd-contour-choix[data-geste='taille']::before,
+.gd-contour-choix[data-geste='rayon']::before { display: none; }
+.gd-contour-choix[data-geste='deplace'] .gd-mesure,
+.gd-contour-choix[data-geste='rayon'] .gd-mesure { display: none; }
+.gd-contour-choix[data-geste='rayon'] { box-shadow: 0 0 0 1px var(--gd-accent); }
+
+/* Les points d arrondi, un par coin du calque choisi. */
+.gd-rayon {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--gd-accent);
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+.gd-rayon[data-tire='true'] { background: var(--gd-accent); }
+/* Le rayon en cours, a cote du point que l on tire. */
+.gd-rayon[data-tire='true']::after {
+  content: attr(data-valeur);
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: var(--gd-accent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Les aimants : un trait la ou le calque s aligne. */
+.gd-aimant { position: absolute; top: 0; left: 0; background: var(--gd-repere); }
+.gd-aimant-x { width: 1px; }
+.gd-aimant-y { height: 1px; }
+
+/* Les ecarts (Alt) : un trait et sa mesure, entre le calque choisi et celui qu on survole. */
+.gd-ecart { position: absolute; background: var(--gd-repere); }
+.gd-ecart-x { height: 1px; }
+.gd-ecart-y { width: 1px; }
+.gd-ecart b {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0 0.3rem;
+  border-radius: 3px;
+  background: var(--gd-repere);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  transform: translate(-50%, -50%);
+}
+
 .gd-mesure {
   position: absolute;
   top: calc(100% + 8px);

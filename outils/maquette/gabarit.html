@@ -52,6 +52,7 @@
             <button type="button" role="menuitem" data-action="refaire">Rétablir <kbd>Ctrl Maj Z</kbd></button>
             <span class="gd-menu-filet" role="separator"></span>
             <button type="button" role="menuitem" data-action="copier">Copier <kbd>Ctrl C</kbd></button>
+            <button type="button" role="menuitem" data-action="couper">Couper <kbd>Ctrl X</kbd></button>
             <button type="button" role="menuitem" data-action="coller">Coller <kbd>Ctrl V</kbd></button>
             <button type="button" role="menuitem" data-action="dupliquer">Dupliquer <kbd>Ctrl D</kbd></button>
             <button type="button" role="menuitem" data-action="supprimer">Supprimer <kbd>Suppr</kbd></button>
@@ -59,8 +60,8 @@
             <button type="button" role="menuitem" data-action="ecrire">Modifier le texte <kbd>Entrée</kbd></button>
             <button type="button" role="menuitem" data-action="renommer">Renommer le calque <kbd>F2</kbd></button>
             <button type="button" role="menuitem" data-action="masquer">Masquer ou montrer <kbd>Ctrl Maj H</kbd></button>
-            <button type="button" role="menuitem" data-action="avancer">Avancer d'un rang</button>
-            <button type="button" role="menuitem" data-action="reculer">Reculer d'un rang</button>
+            <button type="button" role="menuitem" data-action="avancer">Avancer d'un rang <kbd>Ctrl ]</kbd></button>
+            <button type="button" role="menuitem" data-action="reculer">Reculer d'un rang <kbd>Ctrl [</kbd></button>
             <span class="gd-menu-filet" role="separator"></span>
             <button type="button" role="menuitem" data-action="ecran-nouveau">Nouvel écran</button>
             <button type="button" role="menuitem" data-action="ecran-dupliquer">Dupliquer l'écran</button>
@@ -273,13 +274,17 @@
         <div><dt>Voir la sélection</dt><dd><kbd>Maj</kbd> <kbd>2</kbd></dd></div>
         <div><dt>Taille réelle</dt><dd><kbd>Maj</kbd> <kbd>0</kbd></dd></div>
         <div><dt>Choisir</dt><dd>Clic sur la toile ou dans les calques, outil <kbd>V</kbd></dd></div>
-        <div><dt>Calque parent</dt><dd><kbd>Maj</kbd> <kbd>Entrée</kbd></dd></div>
+        <div><dt>Calque parent, calque voisin</dt><dd><kbd>Maj</kbd> <kbd>Entrée</kbd>, <kbd>Tab</kbd></dd></div>
         <div><dt>Ne plus rien choisir</dt><dd><kbd>Échap</kbd></dd></div>
-        <div><dt>Déplacer un calque</dt><dd>Le choisir, puis le glisser ; les flèches le poussent d'un pixel, de dix avec <kbd>Maj</kbd></dd></div>
-        <div><dt>Dimensionner</dt><dd>Tirer une poignée du calque choisi</dd></div>
+        <div><dt>Déplacer un calque</dt><dd>Le glisser ; les flèches le poussent d'un pixel, de dix avec <kbd>Maj</kbd></dd></div>
+        <div><dt>Pendant qu'on glisse</dt><dd><kbd>Maj</kbd> tient un seul axe, <kbd>Alt</kbd> emporte une copie, <kbd>Ctrl</kbd> coupe les aimants</dd></div>
+        <div><dt>Dimensionner</dt><dd>Tirer un bord, n'importe où, ou un coin ; <kbd>Maj</kbd> garde les proportions, <kbd>Alt</kbd> part du centre ; <kbd>Ctrl</kbd> + flèches</dd></div>
+        <div><dt>Arrondir les coins</dt><dd>Tirer l'un des points ronds du calque choisi ; <kbd>Alt</kbd> pour un seul coin</dd></div>
+        <div><dt>Mesurer un écart</dt><dd><kbd>Alt</kbd> en survolant un autre calque</dd></div>
+        <div><dt>Opacité</dt><dd><kbd>1</kbd> à <kbd>9</kbd> pour 10 à 90 %, <kbd>0</kbd> pour 100 %</dd></div>
         <div><dt>Réécrire un texte</dt><dd>Double-clic sur le texte, ou <kbd>Entrée</kbd></dd></div>
-        <div><dt>Dessiner</dt><dd><kbd>F</kbd> cadre, <kbd>R</kbd> rectangle, <kbd>O</kbd> ellipse, <kbd>L</kbd> trait, <kbd>Maj</kbd> <kbd>P</kbd> plume, <kbd>T</kbd> texte, <kbd>I</kbd> image</dd></div>
-        <div><dt>Dupliquer, supprimer</dt><dd><kbd>Ctrl</kbd> <kbd>D</kbd>, <kbd>Suppr</kbd></dd></div>
+        <div><dt>Dessiner</dt><dd><kbd>F</kbd> cadre, <kbd>R</kbd> rectangle (deux fois : arrondi), <kbd>O</kbd> ellipse, <kbd>L</kbd> trait, <kbd>Maj</kbd> <kbd>P</kbd> plume, <kbd>T</kbd> texte, <kbd>I</kbd> image</dd></div>
+        <div><dt>Dupliquer, couper, supprimer</dt><dd><kbd>Ctrl</kbd> <kbd>D</kbd>, <kbd>Ctrl</kbd> <kbd>X</kbd>, <kbd>Suppr</kbd></dd></div>
         <div><dt>Renommer un calque</dt><dd>Double-clic sur son nom, ou <kbd>F2</kbd></dd></div>
         <div><dt>Annuler, rétablir</dt><dd><kbd>Ctrl</kbd> <kbd>Z</kbd>, <kbd>Ctrl</kbd> <kbd>Maj</kbd> <kbd>Z</kbd></dd></div>
         <div><dt>Enregistrer</dt><dd><kbd>Ctrl</kbd> <kbd>S</kbd></dd></div>

@@ -55,12 +55,24 @@ maquette comme un fichier de design, pour la lire et la retoucher :
 
 La maquette se retouche sur place :
 
-- **deplacer et dimensionner** : choisir un calque, le glisser, tirer ses
-  poignees ; les fleches le poussent d'un pixel, de dix avec `Maj` ;
+- **deplacer** : glisser un calque (il se choisit tout seul) ; il s'aligne
+  sur ses voisins, un trait le montre. `Maj` tient un seul axe, `Alt` emporte
+  une copie, `Ctrl` coupe les aimants. Les fleches le poussent d'un pixel, de
+  dix avec `Maj` ;
+- **dimensionner** : tirer un coin, ou un bord a n'importe quel endroit, meme
+  de tres pres ; `Maj` garde les proportions, `Alt` part du centre ; `Ctrl` et
+  une fleche pour un pixel ;
+- **arrondir** : quatre points ronds viennent dans les coins du calque choisi
+  quand on le survole (zoomer s'il est petit) ; en tirer un arrondit les
+  quatre coins, un seul avec `Alt`. Le champ Rayon accepte aussi quatre
+  valeurs ;
+- **mesurer** : `Alt` en survolant un autre calque montre les ecarts ;
 - **reecrire** : double-clic sur un texte, ou `Entree` ;
-- **dessiner** : cadre (`F`), rectangle (`R`), ellipse (`O`), trait (`L`),
+- **dessiner** : cadre (`F`), rectangle (`R`, deux fois pour des coins
+  arrondis), ellipse (`O`), trait (`L`),
   plume (`Maj P`), texte (`T`), image (`I`, ou une image glissee sur un cadre) ;
-- **ranger** : dupliquer (`Ctrl D`), supprimer (`Suppr`), copier et coller,
+- **ranger** : dupliquer (`Ctrl D`), supprimer (`Suppr`), copier, couper et
+  coller, passer au calque voisin (`Tab`), regler l'opacite (un chiffre),
   masquer (l'oeil dans les calques), renommer (double-clic sur le nom, ou
   `F2`), avancer ou reculer d'un rang ;
 - **les ecrans** : en ajouter, en dupliquer, en supprimer (menu Edition) ;
