@@ -91,10 +91,6 @@ export function Deposer() {
     }
   }
 
-  let action = 'Déposer le document'
-  if (plusieurs) action = `Déposer les ${fichiers.length} documents`
-  if (depose) action = 'Continuer'
-
   return (
     <Assistant
       etape={0}
@@ -132,7 +128,7 @@ export function Deposer() {
             naviguer('/partager')
           }}
         >
-          {action}
+          Suivant
         </BoutonVerre>
       }
     >

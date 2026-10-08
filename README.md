@@ -114,7 +114,7 @@ securite.
   et sa barre de chiffrement ;
 - l'apercu du document choisi (PDF, Word `.docx`, image), qu'on peut agrandir ;
 - une note de securite, le chiffrement ;
-- une seule action principale, `Deposer le document`, et une sortie, `Annuler`.
+- une seule action principale, `Suivant`, qui mene a l'etape 2, et une sortie, `Annuler`.
 
 ### Ecran 2, partager avec un collegue (`/partager`)
 

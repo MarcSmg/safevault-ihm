@@ -30,6 +30,12 @@ export function Assistant({ etape, titre, guide, avant, cote, gauche, droite, ch
     refTitre.current?.focus({ preventScroll: true })
   }, [titre])
 
+  // Une etape s ouvre en haut de la page, comme une page neuve : le bouton qui
+  // y mene est tout en bas, on n a pas a remonter soi-meme.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [etape])
+
   return (
     <div className="assistant">
       <header className="assistant-tete">
