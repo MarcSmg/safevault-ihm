@@ -125,9 +125,15 @@ export function Partager() {
         libelle="Durée de l'accès"
         idLibelle="libelle-duree"
         info="Par sécurité, le lien s'éteint tout seul. Vous pourrez toujours le retirer plus tôt."
-        aide={finAcces(envoi.duree)}
+        aide={finAcces(envoi.duree, envoi.dateFin)}
       >
-        <ChoixDuree valeur={envoi.duree} onChoisir={envoi.choisirDuree} libelle="libelle-duree" />
+        <ChoixDuree
+          valeur={envoi.duree}
+          date={envoi.dateFin}
+          onChoisir={envoi.choisirDuree}
+          onDate={envoi.choisirDate}
+          libelle="libelle-duree"
+        />
       </Champ>
     </Assistant>
   )

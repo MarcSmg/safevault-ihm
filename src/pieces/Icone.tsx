@@ -73,6 +73,16 @@ const TRACES = {
       <path pathLength={1} d="M12 7.75V12l2.75 1.75" />
     </>
   ),
+  calendrier: (
+    <>
+      <rect pathLength={1} x="3.75" y="5.25" width="16.5" height="15" rx="2.75" />
+      <path pathLength={1} d="M3.75 10h16.5" />
+      <path pathLength={1} d="M8 3.25v3.5" />
+      <path pathLength={1} d="M16 3.25v3.5" />
+    </>
+  ),
+  chevronGauche: <path pathLength={1} d="M14.25 6.25 8.5 12l5.75 5.75" />,
+  chevronDroite: <path pathLength={1} d="m9.75 6.25 5.75 5.75-5.75 5.75" />,
   croix: (
     <>
       <path pathLength={1} d="m6.75 6.75 10.5 10.5" />

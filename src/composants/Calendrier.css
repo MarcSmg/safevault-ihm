@@ -1,0 +1,84 @@
+/* Le calendrier de la duree d acces : un mois a la fois, sur une plaque de
+   verre. Mobile d abord : il prend la largeur du formulaire, puis s arrete a
+   une taille de calendrier. */
+.calendrier {
+  width: 100%;
+  max-width: 21rem;
+  margin-top: 0.75rem;
+  padding: 0.4rem;
+  border-radius: 18px;
+  animation: calendrier-entree 0.35s var(--courbe);
+}
+
+@keyframes calendrier-entree {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.calendrier-tete { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.calendrier-mois { font-weight: 600; font-size: 0.95rem; }
+.calendrier-mois::first-letter { text-transform: uppercase; }
+
+.calendrier-pas {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--texte);
+  cursor: pointer;
+  transition: background 0.2s var(--courbe);
+}
+.calendrier-pas svg { width: 1.1rem; height: 1.1rem; }
+.calendrier-pas:disabled { opacity: 0.3; cursor: default; }
+
+.calendrier-semaine,
+.calendrier-jours { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.calendrier-semaine {
+  padding: 0.2rem 0 0.35rem;
+  color: var(--discret);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendrier-jour {
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--texte);
+  font: inherit;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.2s var(--courbe), color 0.2s var(--courbe);
+}
+.calendrier-jour:disabled { color: hsl(215 16% 47% / 0.38); cursor: default; }
+/* Aujourd hui : un filet. Le jour choisi : plein, en ocean. */
+.calendrier-jour[aria-current='date'] { box-shadow: inset 0 0 0 1.5px hsl(229 20% 70%); }
+.calendrier-jour[aria-pressed='true'] {
+  background: var(--ocean);
+  box-shadow: none;
+  color: #fff;
+  font-weight: 600;
+}
+:is(.calendrier-jour, .calendrier-pas):focus-visible { outline: 2px solid var(--ocean); outline-offset: 1px; }
+
+@media (hover: hover) {
+  .calendrier-pas:not(:disabled):hover,
+  .calendrier-jour:not(:disabled, [aria-pressed='true']):hover { background: hsl(229 97% 55% / 0.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendrier { animation: none; }
+}
+
+@media (min-width: 640px) {
+  .calendrier { padding: 0.75rem; }
+}

@@ -61,6 +61,9 @@
 .pastilles { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 
 .pastille {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   padding: 0.65rem 1.05rem;
   border: none;
   border-radius: 12px;
@@ -70,6 +73,7 @@
   font-size: 0.88rem;
   cursor: pointer;
 }
+.pastille .icone { width: 1.05rem; height: 1.05rem; }
 .pastille:focus-visible { outline: 2px solid var(--ocean); outline-offset: 2px; }
 .pastille[aria-checked='true'] { color: var(--ocean); }
 

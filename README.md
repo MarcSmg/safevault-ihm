@@ -30,7 +30,7 @@ mini-audit.
 
 ### La maquette statique, dans god2-design
 
-Le fichier est **autonome** (environ 520 Ko) : les polices et les images sont
+Le fichier est **autonome** (environ 530 Ko) : les polices et les images sont
 embarquees en base64, il n'appelle aucun serveur. Il s'ouvre par un double-clic
 dans n'importe quel navigateur, en ligne ou hors ligne.
 
@@ -64,7 +64,8 @@ Les six ecrans suivent le parcours, de gauche a droite :
 3. **Apercu agrandi** : la fenetre qui montre le document en grand ;
 4. **Partager, a l'arrivee** : le formulaire vide, et la notification
    « 2 documents deposes » ;
-5. **Partager, pret a envoyer** : un destinataire, un droit, une duree ;
+5. **Partager, pret a envoyer** : un destinataire, un droit, et une date de fin
+   choisie au calendrier ;
 6. **Documents partages** : la fin du parcours, sa notification, et le bouton
    pour envoyer un autre document.
 
@@ -126,7 +127,9 @@ Etape 2 sur 2. Les documents sont deposes, il faut les transmettre.
 - le champ destinataire, qui propose les collegues de l'annuaire, et les
   personnes ajoutees (retirables) ;
 - le choix du droit, consulter ou modifier, une seule option retenue ;
-- la duree de l'acces, qui s'eteint toute seule par securite ;
+- la duree de l'acces, qui s'eteint toute seule par securite : une duree toute
+  faite (24 heures, 7 jours, 30 jours, sans limite) ou une date choisie au
+  calendrier, d'aujourd'hui a dans un an ;
 - une seule action principale, `Partager le document`, un `Retour` et une
   sortie, `Annuler`.
 

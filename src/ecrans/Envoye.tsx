@@ -61,7 +61,7 @@ export function Envoye() {
         </li>
         <li>
           <Icone nom="horloge" />
-          <span>{finAcces(envoi.duree)}</span>
+          <span>{finAcces(envoi.duree, envoi.dateFin)}</span>
         </li>
       </ul>
     </Assistant>

@@ -1,6 +1,6 @@
 import { createContext, useContext, useRef, useState, type ReactNode } from 'react'
 import type { Collegue } from './annuaire'
-import type { Duree } from './durees'
+import { dansJours, enCle, type Duree } from './durees'
 
 // L envoi en cours, partage par les ecrans : les documents deposes,
 // puis a qui on les confie, avec quel droit et pour combien de temps.
@@ -16,6 +16,8 @@ type Envoi = {
   destinataires: Collegue[]
   droit: Droit
   duree: Duree
+  /* Le dernier jour d acces, quand la duree est une date choisie ("2026-10-23"). */
+  dateFin: string | null
   partage: boolean
 }
 
@@ -25,6 +27,7 @@ const DEPART: Envoi = {
   destinataires: [],
   droit: 'consulter',
   duree: '7j',
+  dateFin: null,
   partage: false,
 }
 
@@ -67,7 +70,15 @@ function useEnvoiLocal() {
         destinataires: e.destinataires.filter((c) => c.email !== email),
       })),
     choisirDroit: (droit: Droit) => changer({ droit }),
-    choisirDuree: (duree: Duree) => changer({ duree }),
+    // Passer a "une date" en propose une tout de suite, dans une semaine :
+    // le choix n est jamais vide.
+    choisirDuree: (duree: Duree) =>
+      setEnvoi((e) => ({
+        ...e,
+        duree,
+        dateFin: duree === 'date' && !e.dateFin ? enCle(dansJours(7)) : e.dateFin,
+      })),
+    choisirDate: (dateFin: string) => changer({ duree: 'date', dateFin }),
     partager: () => changer({ partage: true }),
     recommencer: () => {
       envoi.fichiers.forEach((f) => URL.revokeObjectURL(f.url))

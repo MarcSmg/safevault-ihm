@@ -33,7 +33,7 @@
   ],
   "calques": {
     "images": ["logo-3d", "cadenas-3d"],
-    "composants": ["bouton-verre", "bouton-discret", "fichier", "choix-carte", "pastille", "etape", "destinataire", "alerte", "compte", "depot", "banniere"],
+    "composants": ["bouton-verre", "bouton-discret", "fichier", "choix-carte", "pastille", "etape", "destinataire", "alerte", "compte", "depot", "banniere", "calendrier"],
     "noms": {
       "scene": "Page",
       "entete": "En-tête",
@@ -112,7 +112,12 @@
       "apercu-grand": "Fenêtre d'aperçu",
       "apercu-grand-tete": "En-tête",
       "apercu-grand-nom": "Nom du fichier",
-      "apercu-grand-cadre": "Cadre"
+      "apercu-grand-cadre": "Cadre",
+      "calendrier": "Calendrier",
+      "calendrier-tete": "Mois",
+      "calendrier-pas": "Changer de mois",
+      "calendrier-semaine": "Jours de la semaine",
+      "calendrier-jours": "Jours"
     }
   }
 }
