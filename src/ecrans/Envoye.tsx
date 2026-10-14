@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from 'react-router'
+import { Link, Navigate, useNavigate } from 'react-router'
 import { Assistant } from '../composants/Assistant'
 import { CarteFichier } from '../composants/CarteFichier'
 import { DROITS } from '../composants/ChoixDroit'
@@ -27,6 +27,11 @@ export function Envoye() {
       etape={2}
       titre={fichiers.length > 1 ? 'Documents partagés' : 'Document partagé'}
       guide={`${noms} ${verbe} un lien sécurisé par e-mail.`}
+      gauche={
+        <Link to="/historique" className="bouton-discret">
+          Voir l'historique
+        </Link>
+      }
       avant={
         <span className="reussite" aria-hidden="true">
           <Icone nom="coche" epaisseur={2.2} />

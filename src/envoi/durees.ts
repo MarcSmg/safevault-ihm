@@ -43,3 +43,14 @@ export function finAcces(duree: Duree, dateFin: string | null = null, depuis = n
   const quand = d.heures < 48 ? `${jour.format(fin)} à ${heure.format(fin)}` : jour.format(fin)
   return `Le lien cessera de fonctionner le ${quand}.`
 }
+
+// Le jour ou l acces cesse pour un envoi reellement date, celui que
+// l historique relit : `illimitee` ne cesse jamais, les autres durees se
+// comptent depuis le moment ou le document est vraiment parti, pas depuis
+// maintenant.
+export function finLe(duree: Duree, dateFin: string | null, envoiLe: Date): Date | null {
+  if (duree === 'illimitee') return null
+  if (duree === 'date') return deCle(dateFin ?? enCle(envoiLe))
+  const d = DUREES.find((x) => x.valeur === duree)!
+  return new Date(envoiLe.getTime() + (d.heures ?? 0) * 3600_000)
+}

@@ -1,0 +1,153 @@
+.historique {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.historique-tete { text-align: center; margin-bottom: 0.5rem; }
+.historique-titre {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.historique-titre:focus { outline: none; }
+
+.historique-chapo {
+  margin: 0.75rem auto 0;
+  max-width: 44ch;
+  color: var(--discret);
+  font-size: 1rem;
+}
+
+.historique-vide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: clamp(2rem, 6vw, 3.5rem) 1.5rem;
+  border-radius: 24px;
+  text-align: center;
+}
+.historique-vide > svg { width: 2.2rem; height: 2.2rem; color: var(--discret); }
+.historique-vide p { margin: 0; }
+.historique-vide p b { display: block; font-weight: 600; }
+/* Scope au texte du paragraphe seul : un selecteur plus large atteindrait
+   aussi le span interne du bouton "Deposer un document" et lui volerait son
+   blanc herite de .verre.plein. */
+.historique-vide p span { color: var(--discret); font-size: 0.92rem; }
+
+.historique-liste {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 640px;
+}
+
+.historique-carte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 20px;
+}
+
+.historique-fichiers { display: flex; flex-direction: column; gap: 0.4rem; }
+
+/* Un bouton qui garde l air d une simple ligne d info, jusqu au survol. */
+.historique-fichier {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  margin: 0 -0.4rem;
+  padding: 0.3rem 0.4rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .historique-fichier:hover { background: hsl(0 0% 100% / 0.5); }
+}
+.historique-fichier:focus-visible { outline: 2px solid var(--ocean); outline-offset: 2px; }
+.historique-fichier svg { width: 1.2rem; height: 1.2rem; flex: none; }
+.historique-nom { min-width: 0; overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.historique-poids { flex: none; margin-left: auto; color: var(--discret); font-size: 0.8rem; }
+
+.historique-voir {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--ocean);
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+.historique-voir svg { width: 0.95rem; height: 0.95rem; }
+
+.historique-apercu { margin: 0.5rem 0 0.25rem; max-width: 360px; }
+.historique-apercu-attente,
+.historique-apercu-indisponible {
+  margin: 0;
+  padding: 1rem;
+  border-radius: 14px;
+  background: hsl(0 0% 100% / 0.4);
+  color: var(--discret);
+  font-size: 0.88rem;
+}
+
+.historique-ligne-statut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+}
+
+/* Partage : le meme vert que l acces actif plus bas, une garantie tenue.
+   Depose seul : le gris discret, un fait sans promesse de date. */
+.historique-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--discret);
+}
+.historique-badge svg { width: 1rem; height: 1rem; }
+.historique-badge[data-partage='true'] { color: hsl(140 45% 32%); }
+
+.historique-non-partage { margin: 0; color: var(--discret); font-size: 0.88rem; }
+
+.historique-date { margin: 0; color: var(--discret); font-size: 0.85rem; }
+
+.historique-destinataires { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.historique-destinataires .jeton { width: 1.6rem; height: 1.6rem; margin-left: -0.4rem; font-size: 0.68rem; }
+.historique-destinataires .jeton:first-child { margin-left: 0; }
+.historique-noms { margin-left: 0.3rem; font-size: 0.88rem; }
+
+.historique-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid hsl(0 0% 100% / 0.6);
+  font-size: 0.85rem;
+}
+.historique-droit { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; }
+.historique-droit svg { width: 1rem; height: 1rem; }
+
+/* Actif : le meme vert que le cadenas scelle ailleurs dans l app. Expire :
+   retombe au gris, ce n est plus une garantie, juste un fait passe. */
+.historique-statut { color: hsl(140 45% 32%); }
+.historique-statut[data-expire='true'] { color: var(--discret); }

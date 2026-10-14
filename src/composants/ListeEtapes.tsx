@@ -1,6 +1,7 @@
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useEnvoi } from '../envoi/EnvoiContexte'
 import './ListeEtapes.css'
+import { Icone } from '../pieces/Icone'
 
 export const ETAPES = [
   { titre: 'Déposer', aide: 'Le document à protéger', chemin: '/deposer' },
@@ -45,6 +46,10 @@ export function ListeEtapes({ courante }: { courante: number }) {
             </li>
           )
         })}
+        <Link to="/historique" className="bouton-discret petit lien-historique">
+          <Icone nom="horloge" />
+          <span className="texte-historique">Historique</span>
+        </Link>
       </ol>
     </nav>
   )

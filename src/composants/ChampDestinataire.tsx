@@ -1,18 +1,21 @@
 import { useState, type KeyboardEvent } from 'react'
-import { chercher, estEmail, initiales, type Collegue } from '../envoi/annuaire'
+import { chercher, estDansAnnuaire, estEmail, initiales, type Collegue } from '../envoi/annuaire'
 import { Icone } from '../pieces/Icone'
 import { Verre } from '../verre/useVerreLiquide'
 import { Alerte } from './Alerte'
+import { Confirmation } from './Confirmation'
 import './ChampDestinataire.css'
 
 type Props = { exclus: Collegue[]; onAjouter: (c: Collegue) => void }
 
 // Le champ destinataire : on tape un nom ou un e-mail, l annuaire propose,
-// Entree retient. Une adresse hors annuaire est acceptee telle quelle.
+// Entree retient. Une adresse hors annuaire est acceptee, mais pas sans
+// l avoir d abord dit : rien ne garantit qu elle soit bien celle voulue.
 export function ChampDestinataire({ exclus, onAjouter }: Props) {
   const [requete, setRequete] = useState('')
   const [actif, setActif] = useState(0)
   const [introuvable, setIntrouvable] = useState<string | null>(null)
+  const [horsAnnuaire, setHorsAnnuaire] = useState<string | null>(null)
 
   const propositions = chercher(requete, exclus)
   const ouvert = propositions.length > 0
@@ -22,6 +25,7 @@ export function ChampDestinataire({ exclus, onAjouter }: Props) {
     setRequete('')
     setActif(0)
     setIntrouvable(null)
+    setHorsAnnuaire(null)
   }
 
   function valider() {
@@ -31,6 +35,7 @@ export function ChampDestinataire({ exclus, onAjouter }: Props) {
     if (estEmail(saisie)) {
       const deja = exclus.some((c) => c.email.toLowerCase() === saisie.toLowerCase())
       if (deja) return setRequete('')
+      if (!estDansAnnuaire(saisie)) return setHorsAnnuaire(saisie)
       return retenir({ nom: saisie, email: saisie })
     }
     setIntrouvable(saisie)
@@ -107,6 +112,17 @@ export function ChampDestinataire({ exclus, onAjouter }: Props) {
           Vérifiez l'orthographe, ou saisissez directement son adresse e-mail.
         </Alerte>
       )}
+
+      <Confirmation
+        ouvert={horsAnnuaire !== null}
+        titre="Cette adresse n'est pas dans l'annuaire"
+        texteConfirmer="Ajouter quand même"
+        onAnnuler={() => setHorsAnnuaire(null)}
+        onConfirmer={() => horsAnnuaire && retenir({ nom: horsAnnuaire, email: horsAnnuaire })}
+      >
+        L'e-mail que vous avez entré n'est pas dans le répertoire de votre entreprise. Êtes-vous sûr que cet
+        e-mail est bien celui de votre destinataire ? L'action sera irréversible.
+      </Confirmation>
     </>
   )
 }

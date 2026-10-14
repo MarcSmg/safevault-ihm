@@ -7,11 +7,12 @@ import { Champ } from '../composants/Champ'
 import { ChampDestinataire } from '../composants/ChampDestinataire'
 import { ChoixDroit } from '../composants/ChoixDroit'
 import { ChoixDuree } from '../composants/ChoixDuree'
+import { Confirmation } from '../composants/Confirmation'
 import { PastilleDestinataire } from '../composants/PastilleDestinataire'
 import { finAcces } from '../envoi/durees'
 import { useEnvoi } from '../envoi/EnvoiContexte'
+import { useAvertirPerte } from '../envoi/useAvertirPerte'
 import { useNotifier } from '../notifications/Notifications'
-import { Icone } from '../pieces/Icone'
 import { BoutonVerre } from '../verre/BoutonVerre'
 
 const enListe = new Intl.ListFormat('fr', { type: 'conjunction' })
@@ -21,6 +22,10 @@ export function Partager() {
   const naviguer = useNavigate()
   const notifier = useNotifier()
   const [choisi, setChoisi] = useState<string | null>(null)
+  const annulerPerte = useAvertirPerte(() => {
+    envoi.recommencer()
+    naviguer('/deposer')
+  })
 
   // On n arrive ici qu avec des documents deja dans le coffre.
   if (envoi.fichiers.length === 0 || !envoi.depose) return <Navigate to="/deposer" replace />
@@ -58,23 +63,12 @@ export function Partager() {
       }
       cote={<Apercu fichier={montre} />}
       gauche={
-        <button
-          type="button"
-          className="bouton-discret sortie"
-          onClick={() => {
-            envoi.recommencer()
-            naviguer('/deposer')
-          }}
-        >
+        <button type="button" className="bouton-discret sortie" onClick={annulerPerte.demander}>
           Annuler
         </button>
       }
       droite={
         <>
-          <button type="button" className="bouton-discret" onClick={() => naviguer('/deposer')}>
-            <Icone nom="flecheGauche" />
-            Retour
-          </button>
           <BoutonVerre
             variante="plein"
             fleche
@@ -135,6 +129,16 @@ export function Partager() {
           libelle="libelle-duree"
         />
       </Champ>
+
+      <Confirmation
+        ouvert={annulerPerte.ouvert}
+        titre="Un document est en cours"
+        texteConfirmer="Continuer quand même"
+        onAnnuler={annulerPerte.annuler}
+        onConfirmer={annulerPerte.confirmer}
+      >
+        Les données seront perdues. Voulez-vous quand même continuer ?
+      </Confirmation>
     </Assistant>
   )
 }
