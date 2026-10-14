@@ -1,8 +1,7 @@
-import { Link, useNavigate } from 'react-router'
+import {  useNavigate } from 'react-router'
 import { useEnvoi } from '../envoi/EnvoiContexte'
 import { useAvertirPerte } from '../envoi/useAvertirPerte'
 import { Logo3D } from '../logo/Logo3D'
-import { Icone } from '../pieces/Icone'
 import { Verre } from '../verre/useVerreLiquide'
 import { Confirmation } from './Confirmation'
 import './Entete.css'
@@ -38,10 +37,6 @@ export function Entete() {
             S
           </span>
         </button>
-        <Link to="/historique" className="bouton-discret petit lien-historique">
-          <Icone nom="horloge" />
-          <span className="texte-historique">Historique</span>
-        </Link>
       </div>
       <Verre rayon={26} className="compte">
         <span className="jeton" aria-hidden="true">G</span>
