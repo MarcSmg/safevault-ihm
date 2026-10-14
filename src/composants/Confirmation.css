@@ -1,0 +1,70 @@
+.confirmation {
+  width: min(420px, 90vw);
+  margin: auto;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 24px;
+  color: inherit;
+}
+
+/* .verre-plaque n est rempli qu a 8-16 pour cent de blanc : pense pour etre
+   pose dans la page, sur son fond lavande deja proche. Ici, seul sur son
+   propre voile assombri, il faut un fond qui porte vraiment, comme celui de
+   .apercu-grand. Le selecteur element+classe passe devant .verre-plaque quel
+   que soit l ordre de chargement des feuilles de style. L anneau de lumiere
+   et l ombre de verre-plaque restent, par-dessus. */
+dialog.confirmation {
+  background: hsl(229 36% 96% / 0.97);
+}
+
+.confirmation[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  animation: confirmation-entree 0.28s var(--courbe);
+}
+
+/* Un voile uni, comme celui de l apercu en grand : flouter tout l ecran
+   derriere une si petite carte coute plus qu il ne rapporte. */
+.confirmation::backdrop {
+  background: hsl(229 30% 20% / 0.42);
+}
+
+@keyframes confirmation-entree {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+.confirmation-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: hsl(0 84% 60% / 0.12);
+  color: var(--erreur);
+}
+.confirmation-icone svg { width: 1.4rem; height: 1.4rem; }
+
+.confirmation-titre {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.confirmation-texte {
+  margin: 0;
+  color: var(--discret);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.confirmation-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}

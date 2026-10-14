@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import type { PDFDocumentProxy, RenderTask } from 'pdfjs-dist'
 import { fermerPdf, ouvrirPdf } from '../apercu/pdf'
-import type { FichierRetenu } from '../envoi/EnvoiContexte'
 import { genreDe, sansApercu } from '../envoi/formats'
 import { Icone } from '../pieces/Icone'
 import { IconeFichier } from '../pieces/IconeFichier'
 import { BoutonVerre } from '../verre/BoutonVerre'
 import './Apercu.css'
+
+// Tout ce que l apercu a besoin de savoir d un fichier : une adresse a
+// dessiner et un nom pour choisir comment. Decouple de FichierRetenu, pour
+// montrer aussi bien un document du parcours en cours qu un document relu
+// depuis le coffre de l historique.
+export type FichierApercu = { id: string; nom: string; url: string }
 
 // Au-dela, on ne dessine plus : l apercu sert a reconnaitre le document,
 // pas a le lire en entier.
@@ -197,7 +202,7 @@ function PagesWord({ url }: { url: string }) {
 }
 
 // Ce que le navigateur sait montrer du document, sans rien envoyer nulle part.
-function Contenu({ fichier }: { fichier: FichierRetenu }) {
+function Contenu({ fichier }: { fichier: FichierApercu }) {
   const genre = genreDe(fichier.nom)
   if (genre === 'pdf') return <PagesPdf url={fichier.url} />
   if (genre === 'image') return <img src={fichier.url} alt={`Aperçu de ${fichier.nom}`} decoding="async" />
@@ -207,7 +212,7 @@ function Contenu({ fichier }: { fichier: FichierRetenu }) {
 
 // L apercu du document : on verifie d un coup d oeil que c est le bon, avant
 // de le deposer comme avant de le partager. Il s agrandit en plein ecran.
-export function Apercu({ fichier }: { fichier: FichierRetenu }) {
+export function Apercu({ fichier }: { fichier: FichierApercu }) {
   const refGrand = useRef<HTMLDialogElement>(null)
   const [ouvert, setOuvert] = useState(false)
   const visible = !sansApercu(fichier.nom)

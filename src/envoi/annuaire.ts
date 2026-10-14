@@ -34,6 +34,13 @@ export function estEmail(texte: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(texte)
 }
 
+// Une adresse tapee a la main, hors suggestion : vrai seulement si elle
+// appartient a un collegue connu de l annuaire.
+export function estDansAnnuaire(email: string) {
+  const cle = email.trim().toLowerCase()
+  return ANNUAIRE.some((c) => c.email.toLowerCase() === cle)
+}
+
 export function initiales(nom: string) {
   const mots = nom.split(/[\s@.]+/).filter(Boolean)
   return mots

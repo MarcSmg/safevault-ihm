@@ -1,13 +1,18 @@
 import { createContext, useContext, useRef, useState, type ReactNode } from 'react'
 import type { Collegue } from './annuaire'
+import { cleCoffre, rangerFichier } from './coffre'
 import { dansJours, enCle, type Duree } from './durees'
+import { deposerHistorique, partagerHistorique } from './historique'
 
 // L envoi en cours, partage par les ecrans : les documents deposes,
 // puis a qui on les confie, avec quel droit et pour combien de temps.
 
-// `url` est une adresse locale au navigateur, pour l apercu : le fichier
-// ne quitte pas la machine. `chiffre` passe a vrai quand sa barre est pleine.
-export type FichierRetenu = { id: string; nom: string; poids: number; url: string; chiffre: boolean }
+// `url` est une adresse locale au navigateur, pour l apercu pendant cette
+// visite : le fichier ne quitte pas la machine. `brut` est le File d
+// origine, range dans le coffre (coffre.ts) au moment du depot, pour
+// pouvoir le relire depuis l historique bien apres que `url` ait expire.
+// `chiffre` passe a vrai quand sa barre est pleine.
+export type FichierRetenu = { id: string; nom: string; poids: number; url: string; chiffre: boolean; brut: File }
 export type Droit = 'consulter' | 'modifier'
 
 type Envoi = {
@@ -19,6 +24,8 @@ type Envoi = {
   /* Le dernier jour d acces, quand la duree est une date choisie ("2026-10-23"). */
   dateFin: string | null
   partage: boolean
+  /* L entree de l historique ouverte au depot, completee si le partage a lieu. */
+  idHistorique: string | null
 }
 
 const DEPART: Envoi = {
@@ -29,6 +36,7 @@ const DEPART: Envoi = {
   duree: '7j',
   dateFin: null,
   partage: false,
+  idHistorique: null,
 }
 
 function useEnvoiLocal() {
@@ -46,6 +54,7 @@ function useEnvoiLocal() {
         poids: f.size,
         url: URL.createObjectURL(f),
         chiffre: false,
+        brut: f,
       }))
       setEnvoi((e) => ({ ...e, fichiers: [...e.fichiers, ...nouveaux], depose: false }))
       return nouveaux
@@ -61,7 +70,13 @@ function useEnvoiLocal() {
         ...e,
         fichiers: e.fichiers.map((f) => (f.id === id ? { ...f, chiffre: true } : f)),
       })),
-    deposer: () => changer({ depose: true }),
+    // Un document depose entre dans le coffre tout de suite, octets compris :
+    // l historique s ouvre ici, pas seulement si un partage suit.
+    deposer: () => {
+      const id = deposerHistorique(envoi.fichiers.map((f) => ({ id: f.id, nom: f.nom, poids: f.poids })))
+      envoi.fichiers.forEach((f) => rangerFichier(cleCoffre(id, f.id), f.brut))
+      changer({ depose: true, idHistorique: id })
+    },
     ajouter: (c: Collegue) =>
       setEnvoi((e) => ({ ...e, destinataires: [...e.destinataires, c] })),
     retirer: (email: string) =>
@@ -79,7 +94,19 @@ function useEnvoiLocal() {
         dateFin: duree === 'date' && !e.dateFin ? enCle(dansJours(7)) : e.dateFin,
       })),
     choisirDate: (dateFin: string) => changer({ duree: 'date', dateFin }),
-    partager: () => changer({ partage: true }),
+    // Complete l entree ouverte au depot : meme ligne, deux temps. L acces se
+    // decompte depuis ce moment reel, pas depuis une relecture ulterieure.
+    partager: () => {
+      if (envoi.idHistorique) {
+        partagerHistorique(envoi.idHistorique, {
+          destinataires: envoi.destinataires,
+          droit: envoi.droit,
+          duree: envoi.duree,
+          dateFin: envoi.dateFin,
+        })
+      }
+      changer({ partage: true })
+    },
     recommencer: () => {
       envoi.fichiers.forEach((f) => URL.revokeObjectURL(f.url))
       setEnvoi(DEPART)

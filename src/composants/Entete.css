@@ -22,6 +22,24 @@
   line-height: 1;
 }
 
+/* Le logo est un bouton (une logique decide de la navigation), mais garde
+   l apparence muette d un simple mot de marque : aucune reinitialisation de
+   police ici, "font: inherit" aurait efface le font-size et le font-weight
+   de .logo, qui suivent plus bas dans la cascade a la meme specificite. */
+.logo-bouton {
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.logo-bouton:focus-visible {
+  outline: 2px solid var(--ocean);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
 .logo-nom { display: block; }
 
 .logo .logo-3d {
@@ -40,6 +58,22 @@
   pointer-events: none;
 }
 
+.entete-marque {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.lien-historique {
+  /* Le logo est tres grand (jusqu a 2,5rem) ; ce retrait cale le lien sur la
+     hauteur de capitale du mot "SafeVault", pas sur le haut de sa boite. */
+  margin-top: 0.6rem;
+  text-decoration: none;
+}
+.lien-historique svg { width: 1.05rem; height: 1.05rem; }
+/* Sur un petit telephone, l icone suffit ; le mot arrive avec la place. */
+.texte-historique { display: none; }
+
 .compte {
   margin-top: 0.15rem;
   display: inline-flex;
@@ -54,6 +88,7 @@
 .compte .qui { display: none; }
 
 @media (min-width: 420px) {
+  .texte-historique { display: inline; }
   .compte { padding-right: 1rem; }
   .compte .qui { display: inline; }
 }

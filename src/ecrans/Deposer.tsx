@@ -4,10 +4,12 @@ import { Alerte } from '../composants/Alerte'
 import { Apercu } from '../composants/Apercu'
 import { Assistant } from '../composants/Assistant'
 import { CarteFichier } from '../composants/CarteFichier'
+import { Confirmation } from '../composants/Confirmation'
 import { NoteSecurite } from '../composants/NoteSecurite'
 import { ZoneDepot } from '../composants/ZoneDepot'
 import { useEnvoi, type FichierRetenu } from '../envoi/EnvoiContexte'
 import { verifier, type Refus } from '../envoi/formats'
+import { useAvertirPerte } from '../envoi/useAvertirPerte'
 import { useNotifier } from '../notifications/Notifications'
 import { BoutonVerre } from '../verre/BoutonVerre'
 
@@ -65,6 +67,10 @@ export function Deposer() {
   const [choisi, setChoisi] = useState<string | null>(null)
   const naviguer = useNavigate()
   const notifier = useNotifier()
+  const annulerPerte = useAvertirPerte(() => {
+    setRefus([])
+    recommencer()
+  })
 
   const pret = fichiers.length > 0 && fichiers.every((f) => f.chiffre)
   const montre = fichiers.find((f) => f.id === choisi) ?? fichiers[fichiers.length - 1]
@@ -102,10 +108,7 @@ export function Deposer() {
           type="button"
           className="bouton-discret sortie"
           disabled={fichiers.length === 0 && refus.length === 0}
-          onClick={() => {
-            setRefus([])
-            recommencer()
-          }}
+          onClick={annulerPerte.demander}
         >
           Annuler
         </button>
@@ -161,6 +164,16 @@ export function Deposer() {
         Chiffré de bout en bout. Vous seul, puis vos destinataires, pouvez l'ouvrir. Formats acceptés : PDF,
         Word, JPG, PNG.
       </NoteSecurite>
+
+      <Confirmation
+        ouvert={annulerPerte.ouvert}
+        titre="Un document est en cours"
+        texteConfirmer="Continuer quand même"
+        onAnnuler={annulerPerte.annuler}
+        onConfirmer={annulerPerte.confirmer}
+      >
+        Les données seront perdues. Voulez-vous quand même continuer ?
+      </Confirmation>
     </Assistant>
   )
 }
